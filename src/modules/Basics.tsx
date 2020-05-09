@@ -1,10 +1,10 @@
 import * as React from 'react'
-import {BasicsProps} from '../types'
+import {BasicsModuleProps} from '../types'
 import SocialMediaBar from '../components/SocialMediaBar'
 import StyledBasics from '../styles/StyledBasics'
 import StyledPortrait from '../styles/StyledPortrait'
 
-const Basics: React.FC<BasicsProps> = props => {
+const Basics: React.FC<BasicsModuleProps> = props => {
   const {
     name,
     label,
@@ -14,19 +14,23 @@ const Basics: React.FC<BasicsProps> = props => {
     email,
     location,
     profiles,
-  } = props
+  } = props.data
 
   return (
     <StyledBasics>
       <div className="left">
         <h1 title="name">My Name Is {name}</h1>
-        <h2>{label}</h2>
+        <h2>
+          {label && <span>{label}</span>} |
+          <span>
+            {location && location.city && ` based in ${location.city}`}
+          </span>
+        </h2>
         <summary>{summary}</summary>
         <div className="button-group">
           <a href={`mailto:${email}`}>Contact Me</a>
           <a href={website}>website</a>
         </div>
-        {location && location.city && <div>{`based in ${location.city}`}</div>}
       </div>
       <div className="right">
         <StyledPortrait>

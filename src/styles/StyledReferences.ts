@@ -1,8 +1,11 @@
 import styled from 'styled-components'
 import StyledBaseModule from './StyledBaseModule'
+import {StyledBaseModuleProps} from '../types'
 
-const StyledBasics = styled(StyledBaseModule)`
+const StyledReferences = styled(StyledBaseModule)<StyledBaseModuleProps>`
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  background-color: ${props => props.theme.tertiary};
+  border-radius: 20px;
 
   .left {
     .button-group {
@@ -29,12 +32,8 @@ const StyledBasics = styled(StyledBaseModule)`
 
   .right {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
-  }
-
-  > * {
-    z-index: 1;
   }
 
   h1 {
@@ -52,4 +51,4 @@ const StyledBasics = styled(StyledBaseModule)`
   }
 `
 
-export default StyledBasics
+export default StyledReferences

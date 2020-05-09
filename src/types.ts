@@ -1,3 +1,29 @@
+//#region Modules
+
+export type ModuleList = {
+  basics: React.FC<BasicsModuleProps>
+  skills: any
+  awards: any
+  education: React.FC<EducationModuleProps>
+  interests: any
+  references: any
+  work: any
+}
+
+export type ModulesProps = {
+  module: keyof ModuleList
+  data: any
+  layout: string
+}
+
+//#endregion Modules
+
+export type SectionProps = {
+  key: string
+  children: React.ReactNode
+}
+
+//#region Basics
 export type Location = {
   city?: string
   countryCode?: string
@@ -7,6 +33,11 @@ export type Profile = {
   username?: string
   url?: string
   network: string
+}
+
+export type BaseModuleProps = {
+  background: string
+  layout: string
 }
 
 export type BasicsProps = {
@@ -20,22 +51,106 @@ export type BasicsProps = {
   profiles?: Array<Profile>
 }
 
-export type ModuleList = {
-  basics: React.FC<BasicsProps>
-  skills: any
-  awards: any
-  education: any
-  interests: any
-  references: any
-  work: any
+export interface BasicsModuleProps extends BaseModuleProps {
+  data: BasicsProps
+}
+//#endregion Basics
+
+//#region Education
+export type EducationProps = {
+  area?: string
+  endDate?: string
+  institution?: string
+  startDate?: string
+  studyType?: string
 }
 
-export type ModulesProps = {
-  module: keyof ModuleList
-  data: any
-  key: string
+export interface EducationModuleProps extends BaseModuleProps {
+  data: Array<EducationProps>
 }
+
+//#endregion Education
+
+//#region Interests
+
+export type InterestsProps = {
+  area?: string
+  endDate?: string
+  institution?: string
+  startDate?: string
+  studyType?: string
+}
+
+export interface InterestsModuleProps extends BaseModuleProps {
+  data: Array<InterestsProps>
+}
+//#endregion Interests
+
+//#region Awards
+
+export type AwardsProps = {
+  awarder?: string
+  title?: string
+}
+
+export interface AwardsModuleProps extends BaseModuleProps {
+  data: Array<AwardsProps>
+}
+//#endregion Awards
+
+//#region References
+export type ReferencesProps = {
+  name: string
+  reference: string
+}
+
+export interface ReferencesModuleProps extends BaseModuleProps {
+  data: Array<ReferencesProps>
+}
+
+//#endregion References
+
+//#region Skills
+export type SkillsProps = {
+  level: string
+  name: string
+  keywords: Array<string>
+}
+
+export interface SkillsModuleProps extends BaseModuleProps {
+  data: Array<SkillsProps>
+}
+
+//#endregion Skills
+
+//#region Work
+export type WorkProps = {
+  company?: string
+  highlights?: string[]
+  location?: string
+  pinned?: boolean
+  startDate?: string
+  endDate?: string
+  summary?: string
+  website?: string
+}
+
+//#endregion Work
+
+//#region Style Props
 
 export type StyledPageProps = {
   readonly theme: any
 }
+
+export type StyledSectionProps = {
+  readonly theme: any
+}
+
+export type StyledBaseModuleProps = {
+  readonly theme: any
+  background: string
+  layout: string
+}
+
+//#endregion Style Props

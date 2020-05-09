@@ -1,11 +1,14 @@
 import * as React from 'react'
+import {ReferencesProps, ReferencesModuleProps} from '../types'
+import StyledReferences from '../styles/StyledReferences'
 
-interface ReferencesProps {
-  references: any
-}
-
-const References: React.FunctionComponent<ReferencesProps> = ({references}) => {
-  return <div>References</div>
+const References: React.FC<ReferencesModuleProps> = (props): JSX.Element => {
+  const {data, background, layout} = props
+  return (
+    <StyledReferences layout={layout} background={background}>
+      <h3>References</h3>
+    </StyledReferences>
+  )
 }
 
 export default References

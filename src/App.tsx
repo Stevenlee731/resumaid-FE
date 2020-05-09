@@ -29,8 +29,9 @@ const theme = {
   maxWidth: '1000px',
   bs: '0 12px 24px 0 rgba(0, 0, 0, 0.09)',
   background: '#333646',
-  primary: '#333646',
-  secondary: '#FBC25C',
+  primary: '#FFF',
+  secondary: '#98B5BF',
+  tertiary: '#ffefe8',
 }
 
 const client = new ApolloClient({

@@ -1,8 +1,12 @@
 import styled from 'styled-components'
 import StyledBaseModule from './StyledBaseModule'
+import {StyledBaseModuleProps} from '../types'
 
-const StyledBasics = styled(StyledBaseModule)`
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+const StyledEducation = styled(StyledBaseModule)<StyledBaseModuleProps>`
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: 'left right';
+  background-color: ${props => props.theme.tertiary};
+  border-radius: 20px;
 
   .left {
     .button-group {
@@ -29,7 +33,7 @@ const StyledBasics = styled(StyledBaseModule)`
 
   .right {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
   }
 
@@ -52,4 +56,4 @@ const StyledBasics = styled(StyledBaseModule)`
   }
 `
 
-export default StyledBasics
+export default StyledEducation

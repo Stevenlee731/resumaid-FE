@@ -7,9 +7,7 @@ const SocialMediaBar = ({profiles}: any): JSX.Element => {
   return (
     <StyledSocialMediaBar>
       {profiles.map((profile: Profile) => {
-        return (
-          <SocialIcon key={profile.network} url={profile.url} bgColor="white" />
-        )
+        return <SocialIcon key={profile.network} url={profile.url} />
       })}
     </StyledSocialMediaBar>
   )

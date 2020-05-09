@@ -1,9 +1,20 @@
 import * as React from 'react'
+import {AwardsProps, AwardsModuleProps} from '../types'
+import StyledAwards from '../styles/StyledAwards'
 
-export interface AwardsProps {
-  awards: any
+const Awards: React.FC<AwardsModuleProps> = (props): JSX.Element => {
+  const {data, background, layout} = props
+  return (
+    <StyledAwards layout={layout} background={background}>
+      <h3>Awards</h3>
+      <div>
+        {data &&
+          data.map(award => {
+            return <div key={award.title}>{award.title}</div>
+          })}
+      </div>
+    </StyledAwards>
+  )
 }
 
-export default function Awards(props: AwardsProps) {
-  return <div>Awards</div>
-}
+export default Awards

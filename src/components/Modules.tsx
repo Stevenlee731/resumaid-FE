@@ -23,7 +23,8 @@ const Modules: FC<ModulesProps> = props => {
   if (typeof moduleList[props.module] !== 'undefined') {
     return React.createElement(moduleList[props.module], {
       key: props.module,
-      ...props.data,
+      data: props.data,
+      layout: props.layout,
     })
   }
   return React.createElement(
