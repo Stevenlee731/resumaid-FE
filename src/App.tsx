@@ -1,8 +1,8 @@
-import React from "react";
-import "./App.css";
-import { Routes, Route, Link, useParams } from "react-router-dom";
-import Home from "./components/Home";
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React from 'react'
+import './normalize.css'
+import './App.css'
+import {Routes, Route, useParams} from 'react-router-dom'
 import {
   ApolloClient,
   HttpLink,
@@ -10,81 +10,49 @@ import {
   ApolloProvider,
   gql,
   useQuery,
-} from "@apollo/client";
+} from '@apollo/client'
 
-if (process.env.NODE_ENV === "development") {
-  require("./mocks");
+import {ThemeProvider} from 'styled-components'
+import Page from './components/Page'
+import Users from './components/Users'
+
+if (process.env.NODE_ENV === 'development') {
+  require('./mocks')
+}
+
+const theme = {
+  red: '#FF0000',
+  black: '#393939',
+  grey: '#3A3A3A',
+  lightgrey: '#E1E1E1',
+  offWhite: '#EDEDED',
+  maxWidth: '1000px',
+  bs: '0 12px 24px 0 rgba(0, 0, 0, 0.09)',
+  background: '#333646',
+  primary: '#333646',
+  secondary: '#FBC25C',
 }
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: new HttpLink({
-    uri: "https://48p1r2roz4.sse.codesandbox.io",
+    uri: 'https://48p1r2roz4.sse.codesandbox.io',
   }),
-});
+})
 
-const EXCHANGE_RATES = gql`
-  query GetRates {
-    rates(currency: "USD") {
-      currency
-      rate
-    }
-  }
-`;
-
-function ExchangeRates() {
-  const { loading, error, data } = useQuery(EXCHANGE_RATES);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
-
-  return data.rates.map(({ currency, rate }: any) => (
-    <div key={currency}>
-      <p>
-        {currency}: {rate}
-      </p>
-    </div>
-  ));
-}
-
-const App = () => {
+const App = (): JSX.Element => {
   return (
     <ApolloProvider client={client}>
-      <Routes>
-        <Route path="/" element={<ExchangeRates />} />
-        <Route path="invoices/:invoiceId" element={<Invoice />} />
-        <Route path="users" element={<Users />}>
-          <Route path="me" element={<div>Me</div>} />
-          <Route path=":userId" element={<Others />} />
-        </Route>
-      </Routes>
+      <ThemeProvider theme={theme}>
+        <Page>
+          <Routes>
+            <Route path="/" element={<div>Home</div>} />
+            <Route path=":userId" element={<Users />} />
+          </Routes>
+        </Page>
+      </ThemeProvider>
     </ApolloProvider>
-  );
-};
-
-function Invoice() {
-  let { invoiceId } = useParams();
-  return <h1>Invoice {invoiceId}</h1>;
+  )
 }
 
-function Users() {
-  return (
-    <div>
-      <nav>
-        <Link to="me">My Profile</Link>
-      </nav>
-      <Routes>
-        <Route path=":id" element={<Others />} />
-        <Route path="me" element={<div>me</div>} />
-      </Routes>
-    </div>
-  );
-}
-
-function Others() {
-  let { userId } = useParams();
-  console.log(userId, "steve");
-  return <div>others</div>;
-}
-
-export default App;
+export default App
