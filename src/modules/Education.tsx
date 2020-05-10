@@ -4,7 +4,6 @@ import {EducationProps, EducationModuleProps} from '../types'
 
 export default function Education(props: EducationModuleProps): JSX.Element {
   const {data, layout} = props
-  console.log(props)
   return (
     <StyledEducation layout={layout} background={props.background}>
       <h3>Education</h3>

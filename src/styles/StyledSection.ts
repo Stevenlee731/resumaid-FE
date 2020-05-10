@@ -1,7 +1,6 @@
 import styled from 'styled-components'
-import {StyledSectionProps} from '../types'
 
-const StyledSection = styled.div<StyledSectionProps>`
+const StyledSection = styled.section`
   display: grid;
   overflow-x: hidden;
   grid-template-columns:

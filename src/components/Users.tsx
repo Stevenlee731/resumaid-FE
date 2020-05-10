@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react'
+import Header from '../components/Header'
 import {Routes, Route, Link, useParams} from 'react-router-dom'
 import Modules from './Modules'
-import Section from '../components/Section'
 import {formatResumeData} from '../util/helpers'
+import StyledSection from '../styles/StyledSection'
 
 const Users = (): JSX.Element => {
   const {userId} = useParams()
@@ -17,17 +18,24 @@ const Users = (): JSX.Element => {
 
   if (user) {
     const data = formatResumeData(user)
+
+    const refs = data.reduce<any>((acc, value) => {
+      acc[value.module] = React.createRef()
+      return acc
+    }, {})
+
     return (
       <>
+        <Header modules={data} refs={refs} />
         {data.map((section, index) => {
           return (
-            <Section key={section.module}>
+            <StyledSection key={section.module} ref={refs[section.module]}>
               <Modules
                 module={section.module}
                 data={section.data}
                 layout={index % 2 === 0 ? 'primary' : 'secondary'}
               />
-            </Section>
+            </StyledSection>
           )
         })}
       </>

@@ -3,12 +3,25 @@ import {SocialIcon} from 'react-social-icons'
 import {Profile} from '../types'
 import StyledSocialMediaBar from '../styles/StyledSocialMediaBar'
 
-const SocialMediaBar = ({profiles}: any): JSX.Element => {
+const SocialMediaBar = ({profiles, email}: any): JSX.Element => {
   return (
     <StyledSocialMediaBar>
       {profiles.map((profile: Profile) => {
-        return <SocialIcon key={profile.network} url={profile.url} />
+        return (
+          <SocialIcon
+            style={{height: '1.5rem', width: '1.5rem'}}
+            key={profile.network}
+            url={profile.url}
+          />
+        )
       })}
+      {email && (
+        <SocialIcon
+          style={{height: '1.5rem', width: '1.5rem'}}
+          network="email"
+          url={`mailto:${email}`}
+        />
+      )}
     </StyledSocialMediaBar>
   )
 }

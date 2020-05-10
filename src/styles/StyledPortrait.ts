@@ -4,14 +4,13 @@ const StyledPortrait = styled.picture`
   display: flex;
   justify-content: center;
   align-items: center;
-  grid-column: span 2;
-  border-radius: 50%;
+  position: relative;
 
   > img {
     border-radius: 50%;
-    height: 80%;
-    width: 80%;
-    border: 4px solid ${props => props.theme.secondary};
+    height: 4rem;
+    width: 4rem;
+    border: 2px solid ${props => props.theme.secondary};
   }
 `
 
