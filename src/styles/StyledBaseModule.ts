@@ -20,7 +20,7 @@ const StyledBaseModule = styled.div`
     display: grid;
     height: 100%;
     width: 100%;
-    padding: 2rem;
+    padding: 2.5rem 2rem 2rem 2rem;
   }
 `
 
