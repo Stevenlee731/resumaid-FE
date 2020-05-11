@@ -33,7 +33,7 @@ const Users = (): JSX.Element => {
               <Modules
                 module={section.module}
                 data={section.data}
-                layout={index % 2 === 0 ? 'primary' : 'secondary'}
+                background={index % 2 === 0 ? 'primary' : 'secondary'}
               />
             </StyledSection>
           )

@@ -21,9 +21,9 @@ const Institution: React.FC<EducationProps> = (props): JSX.Element => {
 }
 
 const Education: React.FC<EducationModuleProps> = (props): JSX.Element => {
-  const {data, layout} = props
+  const {data, background} = props
   return (
-    <StyledEducation layout={layout} background={props.background}>
+    <StyledEducation background={background}>
       <StyledSectionHeader>Education</StyledSectionHeader>
       <div className="inner">
         {data.map(item => {

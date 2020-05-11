@@ -16,10 +16,11 @@ const Basics: React.FC<BasicsModuleProps> = props => {
       location = '',
       profiles = '',
     } = {},
+    layout,
   } = props
 
   return (
-    <StyledBasics>
+    <StyledBasics background={layout}>
       <div className="headline">
         <h1>
           {label && <span>{`I'm a ${label},`}</span>}

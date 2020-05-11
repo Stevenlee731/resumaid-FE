@@ -13,9 +13,9 @@ const Award = (props: {awarder?: string; title?: string}): JSX.Element => {
 }
 
 const Awards: React.FC<AwardsModuleProps> = (props): JSX.Element => {
-  const {data, background, layout} = props
+  const {data, background} = props
   return (
-    <StyledAwards layout={layout} background={background}>
+    <StyledAwards background={background}>
       <StyledSectionHeader>Awards</StyledSectionHeader>
       <div className="inner">
         {data &&

@@ -4,9 +4,9 @@ import StyledInterests from '../styles/StyledInterests'
 import {StyledSectionHeader} from '../styles/Section'
 
 const Interests: React.FC<InterestsModuleProps> = (props): JSX.Element => {
-  const {data, background, layout} = props
+  const {data, background} = props
   return (
-    <StyledInterests layout={layout} background={background}>
+    <StyledInterests background={background}>
       <StyledSectionHeader>Interests</StyledSectionHeader>
       <div className="inner">
         {data.map(interest => {

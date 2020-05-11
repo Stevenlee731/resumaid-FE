@@ -24,7 +24,7 @@ const Modules: FC<ModulesProps> = props => {
     return React.createElement(moduleList[props.module], {
       key: props.module,
       data: props.data,
-      layout: props.layout,
+      background: props.background,
     })
   }
   return React.createElement(

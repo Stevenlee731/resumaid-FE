@@ -3,7 +3,6 @@ import StyledBaseModule from './StyledBaseModule'
 import {StyledBaseModuleProps} from '../types'
 
 export const StyledEducation = styled(StyledBaseModule)<StyledBaseModuleProps>`
-  background-color: ${({theme}): string => theme.primary};
   border-radius: 20px;
 `
 

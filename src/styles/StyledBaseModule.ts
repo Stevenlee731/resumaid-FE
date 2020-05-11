@@ -1,6 +1,8 @@
 import styled from 'styled-components'
+import {StyledBaseModuleProps} from '../types'
 
-const StyledBaseModule = styled.div`
+const StyledBaseModule = styled.div<StyledBaseModuleProps>`
+  background-color: ${({theme, background}): string => theme[background]};
   display: flex;
   flex-direction: column;
   height: calc(100% - 2rem);

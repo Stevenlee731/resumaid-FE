@@ -13,7 +13,7 @@ export type ModuleList = {
 export type ModulesProps = {
   module: keyof ModuleList
   data: any
-  layout: string
+  background: string
 }
 
 //#endregion Modules
@@ -146,7 +146,6 @@ export type StyledSectionProps = {
 export type StyledBaseModuleProps = {
   readonly theme: any
   background: string
-  layout: string
 }
 
 //#endregion Style Props
