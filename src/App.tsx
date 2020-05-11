@@ -11,29 +11,13 @@ import {
   gql,
   useQuery,
 } from '@apollo/client'
-import mediaQueries from './util/cssHelpers'
+import {theme} from './util/cssHelpers'
 import {ThemeProvider} from 'styled-components'
 import Page from './components/Page'
 import Users from './components/Users'
-import Header from './components/Header'
 
 if (process.env.NODE_ENV === 'development') {
   require('./mocks')
-}
-
-const theme = {
-  red: '#FF0000',
-  black: '#393939',
-  grey: '#3A3A3A',
-  lightgrey: '#E1E1E1',
-  offWhite: '#EDEDED',
-  maxWidth: '1000px',
-  bs: '0 12px 24px 0 rgba(0, 0, 0, 0.09)',
-  background: '#333646',
-  primary: '#FFF',
-  secondary: '#bfd3da',
-  tertiary: '#ffefe8',
-  ...mediaQueries,
 }
 
 const client = new ApolloClient({

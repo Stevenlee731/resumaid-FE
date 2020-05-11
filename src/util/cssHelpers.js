@@ -1,5 +1,6 @@
 import {css} from 'styled-components'
-const sizes = {
+
+export const sizes = {
   mobileS: 320,
   mobileM: 375,
   mobileL: 425,
@@ -18,4 +19,28 @@ const mediaQueries = Object.keys(sizes).reduce((acc, label) => {
   return acc
 }, {})
 
-export default mediaQueries
+export const theme = {
+  black: '#393939',
+  textDark: '#393939',
+  textLight: '#868893',
+  maxWidth: '80rem',
+  bs: '0 12px 24px 0 rgba(0, 0, 0, 0.09)',
+  nav: '#fff',
+  background: '#fff',
+  primary: '#bfd3da',
+  secondary: '#ffefe8',
+  ...mediaQueries,
+}
+
+export const darkTheme = {
+  black: '#393939',
+  textDark: '#393939',
+  textLight: '#868893',
+  maxWidth: '1000px',
+  bs: '0 12px 24px 0 rgba(0, 0, 0, 0.09)',
+  nav: '#242526',
+  background: '#18191A',
+  primary: '#bfd3da',
+  secondary: '#ffefe8',
+  ...mediaQueries,
+}

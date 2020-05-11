@@ -3,8 +3,7 @@ import StyledBaseModule from './StyledBaseModule'
 import {StyledBaseModuleProps} from '../types'
 
 const StyledWork = styled(StyledBaseModule)<StyledBaseModuleProps>`
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  background-color: ${props => props.theme.secondary};
+  background-color: ${({theme}): string => theme.primary};
   border-radius: 20px;
 
   h1 {

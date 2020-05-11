@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import StyledBaseModule from './StyledBaseModule'
 
 const StyledBasics = styled(StyledBaseModule)`
+  grid-template-rows: 1fr;
   margin-top: 0;
   .headline {
     display: flex;
@@ -22,7 +23,7 @@ const StyledBasics = styled(StyledBaseModule)`
 
   summary {
     margin: 1rem 2rem;
-    color: #868893;
+    color: ${({theme}): string => theme.textLight};
     line-height: 1.5;
     font-size: 1rem;
 
@@ -51,7 +52,7 @@ const StyledBasics = styled(StyledBaseModule)`
   }
 
   .period {
-    color: ${props => props.theme.secondary};
+    color: ${({theme}): string => theme.primary};
   }
 `
 

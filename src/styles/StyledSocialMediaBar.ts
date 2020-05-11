@@ -6,7 +6,7 @@ const StyledSocialMediaBar = styled.div`
   align-items: center;
 
   > a {
-    margin: 10px 0;
+    margin-top: 10px;
   }
 `
 

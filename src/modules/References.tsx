@@ -7,6 +7,7 @@ const References: React.FC<ReferencesModuleProps> = (props): JSX.Element => {
   return (
     <StyledReferences layout={layout} background={background}>
       <h3>References</h3>
+      <div className="inner">inner</div>
     </StyledReferences>
   )
 }

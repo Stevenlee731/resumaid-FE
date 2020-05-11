@@ -2,7 +2,8 @@ import styled from 'styled-components'
 import {StyledPageProps} from '../types'
 
 const StyledPage = styled.div<StyledPageProps>`
-  color: ${props => props.theme.black};
+  background-color: ${({theme}): string => theme.background};
+  color: ${({theme}): string => theme.textDark};
   display: grid;
   overflow-x: hidden;
   grid-row-gap: 3rem;

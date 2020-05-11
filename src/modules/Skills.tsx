@@ -7,7 +7,7 @@ const SkillsModule: React.FC<SkillsModuleProps> = (props): JSX.Element => {
   return (
     <StyledSkills layout={layout} background={background}>
       <h3>Skills</h3>
-      <div>
+      <div className="inner">
         {data.map(skill => (
           <Skill
             key={skill.name}

@@ -15,8 +15,8 @@ const StyledProfile = styled.div`
     flex-direction: column;
     margin: 0 1rem;
     > a {
-      background-color: ${props => props.theme.secondary};
-      color: ${props => props.theme.primary};
+      background-color: ${({theme}): string => theme.primary};
+      color: ${({theme}): string => theme.textLight};
       padding: 10px 15px;
       border-radius: 10px;
       text-transform: uppercase;

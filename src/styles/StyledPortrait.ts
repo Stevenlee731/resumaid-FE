@@ -10,7 +10,7 @@ const StyledPortrait = styled.picture`
     border-radius: 50%;
     height: 4rem;
     width: 4rem;
-    border: 2px solid ${props => props.theme.secondary};
+    border: 2px solid ${({theme}): string => theme.primary};
   }
 `
 

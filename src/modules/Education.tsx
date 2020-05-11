@@ -1,17 +1,36 @@
 import * as React from 'react'
-import StyledEducation from '../styles/StyledEducation'
+import {StyledEducation, StyledInstitution} from '../styles/Education'
 import {EducationProps, EducationModuleProps} from '../types'
 
-export default function Education(props: EducationModuleProps): JSX.Element {
+const Institution: React.FC<EducationProps> = (props): JSX.Element => {
+  return (
+    <StyledInstitution>
+      <div>{props.institution}</div>
+      <div>
+        <span>{props.startDate}</span>
+        <span> - </span>
+        <span>{props.endDate}</span>
+      </div>
+      <div>
+        <div>{props.area}</div>
+        <div>{props.studyType}</div>
+      </div>
+    </StyledInstitution>
+  )
+}
+
+const Education: React.FC<EducationModuleProps> = (props): JSX.Element => {
   const {data, layout} = props
   return (
     <StyledEducation layout={layout} background={props.background}>
       <h3>Education</h3>
-      <div>
+      <div className="inner">
         {data.map(item => {
-          return <div key={item.institution}>list</div>
+          return <Institution key={item.institution} {...item} />
         })}
       </div>
     </StyledEducation>
   )
 }
+
+export default Education
