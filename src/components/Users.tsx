@@ -3,7 +3,7 @@ import Header from '../components/Header'
 import {Routes, Route, Link, useParams} from 'react-router-dom'
 import Modules from './Modules'
 import {formatResumeData} from '../util/helpers'
-import StyledSection from '../styles/StyledSection'
+import {StyledSection} from '../styles/Section'
 
 const Users = (): JSX.Element => {
   const {userId} = useParams()

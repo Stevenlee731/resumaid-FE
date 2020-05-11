@@ -23,7 +23,7 @@ export const theme = {
   black: '#393939',
   textDark: '#393939',
   textLight: '#868893',
-  maxWidth: '80rem',
+  maxWidth: '60rem',
   bs: '0 12px 24px 0 rgba(0, 0, 0, 0.09)',
   nav: '#fff',
   background: '#fff',

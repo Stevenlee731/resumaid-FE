@@ -74,11 +74,7 @@ export interface EducationModuleProps extends BaseModuleProps {
 //#region Interests
 
 export type InterestsProps = {
-  area?: string
-  endDate?: string
-  institution?: string
-  startDate?: string
-  studyType?: string
+  name?: string
 }
 
 export interface InterestsModuleProps extends BaseModuleProps {
@@ -100,8 +96,8 @@ export interface AwardsModuleProps extends BaseModuleProps {
 
 //#region References
 export type ReferencesProps = {
-  name: string
-  reference: string
+  name?: string
+  reference?: string
 }
 
 export interface ReferencesModuleProps extends BaseModuleProps {

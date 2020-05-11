@@ -7,15 +7,16 @@ import StyledProfile from '../styles/StyledProfile'
 
 const Basics: React.FC<BasicsModuleProps> = props => {
   const {
-    name,
-    label,
-    image,
-    summary,
-    website,
-    email,
-    location,
-    profiles,
-  } = props.data
+    data: {
+      name = '',
+      label = '',
+      image = '',
+      summary = '',
+      email = '',
+      location = '',
+      profiles = '',
+    } = {},
+  } = props
 
   return (
     <StyledBasics>
