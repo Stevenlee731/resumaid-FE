@@ -4,6 +4,7 @@ import StyledBaseModule from './StyledBaseModule'
 const StyledBasics = styled(StyledBaseModule)`
   grid-template-rows: 1fr;
   margin-top: 0;
+  padding: 0;
   .headline {
     display: flex;
     align-items: center;

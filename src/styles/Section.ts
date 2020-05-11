@@ -16,7 +16,6 @@ export const StyledSectionHeader = styled.h3`
   top: -2rem;
   font-size: 4rem;
   position: absolute;
-  padding: 0 2rem;
 
   ${({theme}): string => theme.mobileM`
      font-size: 2rem;
