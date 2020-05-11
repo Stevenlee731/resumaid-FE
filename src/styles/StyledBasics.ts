@@ -23,6 +23,7 @@ const StyledBasics = styled(StyledBaseModule)`
   }
 
   summary {
+    transition: all ${({theme}): string => theme.transition};
     margin: 1rem 2rem;
     color: ${({theme}): string => theme.textLight};
     line-height: 1.5;
@@ -53,6 +54,7 @@ const StyledBasics = styled(StyledBaseModule)`
   }
 
   .period {
+    transition: all ${({theme}): string => theme.transition};
     color: ${({theme}): string => theme.primary};
   }
 `

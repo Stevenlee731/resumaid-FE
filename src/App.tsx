@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React from 'react'
+import React, {useState} from 'react'
 import './normalize.css'
 import './App.css'
 import {Routes, Route, useParams} from 'react-router-dom'
@@ -11,7 +11,7 @@ import {
   gql,
   useQuery,
 } from '@apollo/client'
-import {theme} from './util/cssHelpers'
+import {theme, darkTheme} from './util/cssHelpers'
 import {ThemeProvider} from 'styled-components'
 import Page from './components/Page'
 import Users from './components/Users'
@@ -28,13 +28,22 @@ const client = new ApolloClient({
 })
 
 const App = (): JSX.Element => {
+  const [isDark, setIsDark] = useState<boolean>(false)
+
+  const handleTheme = () => {
+    setIsDark(!isDark)
+  }
+
   return (
     <ApolloProvider client={client}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={isDark ? darkTheme : theme}>
         <Page>
           <Routes>
             <Route path="/" element={<div>Home</div>} />
-            <Route path=":userId" element={<Users />} />
+            <Route
+              path=":userId"
+              element={<Users isDark={isDark} handleTheme={handleTheme} />}
+            />
           </Routes>
         </Page>
       </ThemeProvider>

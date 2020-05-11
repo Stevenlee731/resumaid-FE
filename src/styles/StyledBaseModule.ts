@@ -3,6 +3,7 @@ import {StyledBaseModuleProps} from '../types'
 
 const StyledBaseModule = styled.div<StyledBaseModuleProps>`
   background-color: ${({theme, background}): string => theme[background]};
+  transition: background-color ${({theme}): string => theme.transition};
   display: flex;
   flex-direction: column;
   height: calc(100% - 2rem);

@@ -7,6 +7,7 @@ const StyledPortrait = styled.picture`
   position: relative;
 
   > img {
+    transition: all ${({theme}): string => theme.transition};
     border-radius: 50%;
     height: 4rem;
     width: 4rem;

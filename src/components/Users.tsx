@@ -5,7 +5,13 @@ import Modules from './Modules'
 import {formatResumeData} from '../util/helpers'
 import {StyledSection} from '../styles/Section'
 
-const Users = (): JSX.Element => {
+const Users = ({
+  handleTheme,
+  isDark,
+}: {
+  handleTheme: Function
+  isDark: boolean
+}): JSX.Element => {
   const {userId} = useParams()
   const [user, setUser] = useState(null)
   useEffect(() => {
@@ -26,7 +32,12 @@ const Users = (): JSX.Element => {
 
     return (
       <>
-        <Header modules={data} refs={refs} />
+        <Header
+          handleTheme={handleTheme}
+          isDark={isDark}
+          modules={data}
+          refs={refs}
+        />
         {data.map((section, index) => {
           return (
             <StyledSection key={section.module} ref={refs[section.module]}>
