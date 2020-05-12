@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import './normalize.css'
 import './App.css'
 import {Routes, Route, useParams} from 'react-router-dom'
@@ -28,7 +28,8 @@ const client = new ApolloClient({
 })
 
 const App = (): JSX.Element => {
-  const [isDark, setIsDark] = useState<boolean>(false)
+  const cachedDarkMode = localStorage.getItem('isDarkMode') === 'true'
+  const [isDark, setIsDark] = useState<boolean>(cachedDarkMode)
 
   const handleTheme = (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
@@ -37,12 +38,17 @@ const App = (): JSX.Element => {
     setIsDark(!isDark)
   }
 
+  useEffect(() => {
+    localStorage.setItem('isDarkMode', isDark.toString())
+  }, [isDark])
+
   return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={isDark ? darkTheme : theme}>
         <Page>
           <Routes>
             <Route path="/" element={<div>Home</div>} />
+            <Route path="create" element={<div>create</div>} />
             <Route
               path=":userId"
               element={<Users isDark={isDark} handleTheme={handleTheme} />}
