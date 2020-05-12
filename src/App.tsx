@@ -30,7 +30,10 @@ const client = new ApolloClient({
 const App = (): JSX.Element => {
   const [isDark, setIsDark] = useState<boolean>(false)
 
-  const handleTheme = () => {
+  const handleTheme = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+  ): void => {
+    e.preventDefault()
     setIsDark(!isDark)
   }
 

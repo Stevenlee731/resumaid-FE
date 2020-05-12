@@ -10,7 +10,7 @@ const Skill: React.FC<SkillsProps> = (props): JSX.Element => {
       <div>
         {props.keywords &&
           props.keywords.map(word => {
-            return <div>{word}</div>
+            return <div key={word}>{word}</div>
           })}
       </div>
     </div>

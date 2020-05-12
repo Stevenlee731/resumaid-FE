@@ -32,7 +32,7 @@ export type Location = {
 export type Profile = {
   username?: string
   url?: string
-  network: string
+  network?: string
 }
 
 export type BaseModuleProps = {

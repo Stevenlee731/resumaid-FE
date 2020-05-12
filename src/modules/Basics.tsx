@@ -14,7 +14,7 @@ const Basics: React.FC<BasicsModuleProps> = props => {
       summary = '',
       email = '',
       location = '',
-      profiles = '',
+      profiles = [],
     } = {},
     layout,
   } = props

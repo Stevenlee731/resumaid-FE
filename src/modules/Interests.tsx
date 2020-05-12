@@ -10,7 +10,7 @@ const Interests: React.FC<InterestsModuleProps> = (props): JSX.Element => {
       <StyledSectionHeader>Interests</StyledSectionHeader>
       <div className="inner">
         {data.map(interest => {
-          return <div>{interest.name}</div>
+          return <div key={interest.name}>{interest.name}</div>
         })}
       </div>
     </StyledInterests>

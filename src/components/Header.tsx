@@ -1,8 +1,17 @@
 import * as React from 'react'
 import {StyledNav, StyledToggle} from '../styles/Nav'
 
-const Header: React.FC<any> = (props): JSX.Element => {
-  const {modules, refs, handleTheme, isDark} = props
+const Header = ({
+  handleTheme,
+  isDark,
+  modules,
+  refs,
+}: {
+  handleTheme: Function
+  isDark: boolean
+  modules: Array<any>
+  refs: any
+}): JSX.Element => {
   const [basics, ...rest] = modules
 
   const handleClick = (
@@ -47,10 +56,12 @@ const Header: React.FC<any> = (props): JSX.Element => {
             </div>
           </div>
           <div className="nav-right">
-            <span className="dark-mode">Dark Mode</span>
+            <span className="dark-mode">
+              {isDark ? 'Dark Mode' : 'Light Mode'}
+            </span>
             <StyledToggle
               className={`switch ${isDark ? 'on' : 'off'}`}
-              onClick={handleTheme}
+              onClick={e => handleTheme(e)}
             />
           </div>
         </div>

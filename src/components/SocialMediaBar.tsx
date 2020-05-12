@@ -2,25 +2,41 @@ import * as React from 'react'
 import {SocialIcon} from 'react-social-icons'
 import {Profile} from '../types'
 import StyledSocialMediaBar from '../styles/StyledSocialMediaBar'
+import {ThemeConsumer} from 'styled-components'
 
-const SocialMediaBar = ({profiles, email}: any): JSX.Element => {
+const SocialMediaBar = ({
+  profiles,
+  email,
+}: {
+  profiles: Array<Profile>
+  email: string
+}): JSX.Element => {
   return (
     <StyledSocialMediaBar>
       {profiles.map((profile: Profile) => {
         return (
-          <SocialIcon
-            style={{height: '1.5rem', width: '1.5rem'}}
-            key={profile.network}
-            url={profile.url}
-          />
+          <ThemeConsumer key={profile.network}>
+            {theme => (
+              <SocialIcon
+                style={{height: '1.5rem', width: '1.5rem'}}
+                url={profile.url}
+                bgColor={theme.textLight}
+              />
+            )}
+          </ThemeConsumer>
         )
       })}
       {email && (
-        <SocialIcon
-          style={{height: '1.5rem', width: '1.5rem'}}
-          network="email"
-          url={`mailto:${email}`}
-        />
+        <ThemeConsumer>
+          {theme => (
+            <SocialIcon
+              style={{height: '1.5rem', width: '1.5rem'}}
+              network="email"
+              url={`mailto:${email}`}
+              bgColor={theme.textLight}
+            />
+          )}
+        </ThemeConsumer>
       )}
     </StyledSocialMediaBar>
   )
