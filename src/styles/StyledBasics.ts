@@ -18,7 +18,6 @@ const StyledBasics = styled(StyledBaseModule)`
 
     ${({theme}): string => theme.mobileM`
       font-size: 3rem;
-      margin-bottom: 1rem;
    `}
   }
 
@@ -34,6 +33,10 @@ const StyledBasics = styled(StyledBaseModule)`
     transition: all ${({theme}): string => theme.transition};
     color: ${({theme}): string => theme.primary};
   }
+
+  ${({theme}): string => theme.mobileM`
+    margin-top: 1rem;
+  `};
 `
 
 export default StyledBasics

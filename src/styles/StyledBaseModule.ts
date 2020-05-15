@@ -32,9 +32,14 @@ const StyledBaseModule = styled.div<StyledBaseModuleProps>`
       slot === 'main' ? '2.5rem 2rem 2rem 2rem' : '0'};
 
     ${({theme}): string => theme.mobileM`
-      padding: 1rem;
+      padding: 1.5rem 1rem 1rem 1rem;
     `};
   }
+
+  ${({theme}): string => theme.mobileM`
+      padding-left: 1rem;
+      padding-right: 1rem;
+    `};
 `
 
 export default StyledBaseModule

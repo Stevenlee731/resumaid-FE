@@ -50,6 +50,10 @@ export const StyledNav = styled.nav`
 
   .outer-directory {
     display: block;
+
+    ${({theme}): string => theme.mobileM`
+      display: none;
+    `};
   }
 
   .inner-directory {
