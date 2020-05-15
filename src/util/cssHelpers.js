@@ -22,7 +22,7 @@ const mediaQueries = Object.keys(sizes).reduce((acc, label) => {
 const defaultStyle = {
   transition: '0.6s',
   maxWidth: '60rem',
-  bs: '0 12px 24px 0 rgba(0, 0, 0, 0.09)',
+  boxShadow: '0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px 0 rgba(0,0,0,0.06)',
 }
 
 export const theme = {
@@ -34,6 +34,7 @@ export const theme = {
   background: '#fff',
   secondary: '#ffefe8',
   primary: '#bfd3da',
+  border: 'rgba(0,0,0,0.06)',
   ...defaultStyle,
   ...mediaQueries,
 }
@@ -45,7 +46,8 @@ export const darkTheme = {
   nav: '#242526',
   background: '#18191A',
   secondary: '#242526',
-  primary: '#3A3B3D',
+  primary: '#33353a',
+  border: '#3A3B3D',
   ...defaultStyle,
   ...mediaQueries,
 }

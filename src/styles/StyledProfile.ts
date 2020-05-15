@@ -3,6 +3,7 @@ import styled from 'styled-components'
 const StyledProfile = styled.div`
   display: flex;
   justify-content: flex-start;
+  margin-bottom: 1rem;
 
   h4 {
     margin: 0;

@@ -8,10 +8,10 @@ interface WorkModuleProps extends BaseModuleProps {
 }
 
 const WorkModule: React.FC<WorkModuleProps> = (props): JSX.Element => {
-  const {data, background} = props
+  const {data, background, slot} = props
   return (
-    <StyledWork background={background}>
-      <StyledSectionHeader>Work</StyledSectionHeader>
+    <StyledWork slot={slot} background={background}>
+      <StyledSectionHeader slot={slot}>Work</StyledSectionHeader>
       <div className="inner">
         {data.map(item => (
           <Work

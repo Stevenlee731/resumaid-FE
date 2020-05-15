@@ -18,10 +18,10 @@ const Skill: React.FC<SkillsProps> = (props): JSX.Element => {
 }
 
 const SkillsModule: React.FC<SkillsModuleProps> = (props): JSX.Element => {
-  const {data, background} = props
+  const {data, background, slot} = props
   return (
-    <StyledSkills background={background}>
-      <StyledSectionHeader>Skills</StyledSectionHeader>
+    <StyledSkills slot={slot} background={background}>
+      <StyledSectionHeader slot={slot}>Skills</StyledSectionHeader>
       <div className="inner">
         {data.map(skill => (
           <Skill

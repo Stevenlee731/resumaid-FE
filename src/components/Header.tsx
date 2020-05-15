@@ -5,15 +5,17 @@ const Header = ({
   handleTheme,
   isDark,
   modules,
+  name,
+  website,
   refs,
 }: {
   handleTheme: Function
   isDark: boolean
   modules: Array<any>
+  name: string
+  website: string
   refs: any
 }): JSX.Element => {
-  const [basics, ...rest] = modules
-
   const handleClick = (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
     item: string,
@@ -31,7 +33,7 @@ const Header = ({
         <div className="inner-container">
           <div className="nav-left">
             <div className="logo">
-              <a href="#">{basics?.data?.name}</a>
+              <a href="#">{name}</a>
             </div>
             <div className="outer-directory">
               <div className="inner-directory">
@@ -49,9 +51,7 @@ const Header = ({
                         </a>
                       )
                     })}
-                {basics?.data?.website && (
-                  <a href={basics?.data?.website}>Website</a>
-                )}
+                {website && <a href={website}>Website</a>}
               </div>
             </div>
           </div>
@@ -61,7 +61,9 @@ const Header = ({
             </span>
             <StyledToggle
               className={`switch ${isDark ? 'on' : 'off'}`}
-              onClick={e => handleTheme(e)}
+              onClick={(
+                e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
+              ): void => handleTheme(e)}
             />
           </div>
         </div>

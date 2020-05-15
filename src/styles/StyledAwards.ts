@@ -3,9 +3,6 @@ import StyledBaseModule from './StyledBaseModule'
 import {StyledBaseModuleProps} from '../types'
 
 const StyledAwards = styled(StyledBaseModule)<StyledBaseModuleProps>`
-  background-color: ${({theme}): string => theme.primary};
-  border-radius: 20px;
-
   h1 {
     font-size: 6rem;
     margin: 0;

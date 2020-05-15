@@ -8,10 +8,28 @@ const StyledPage = styled.div<StyledPageProps>`
   color: ${({theme}): string => theme.textDark};
   display: grid;
   overflow-x: hidden;
-  grid-row-gap: 3rem;
+  grid-gap: 2rem;
+
+  grid-template-columns:
+    [viewport-start] minmax(20px, 1fr) [content-start] minmax(0, 45rem)
+    [content-end] minmax(0, 15rem) [sidebar-end] minmax(20px, 1fr) [viewport-end];
+  /* background-color: white; */
+  grid-template-areas:
+    'header header header header'
+    '. subheader subheader .'
+    '. content sidebar .';
 
   ${({theme}): string => theme.mobileM`
     grid-row-gap: 1rem;
+    grid-template-areas:
+    'header header header'
+    '. subheader .'
+    '. content .';
+
+    grid-gap: initial;
+    grid-template-columns:
+    [viewport-start] minmax(20px, 1fr) [content-start] minmax(0, 45rem)
+    [content-end] minmax(20px, 1fr) [viewport-end];
     `}
 `
 

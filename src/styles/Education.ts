@@ -2,9 +2,7 @@ import styled from 'styled-components'
 import StyledBaseModule from './StyledBaseModule'
 import {StyledBaseModuleProps} from '../types'
 
-export const StyledEducation = styled(StyledBaseModule)<StyledBaseModuleProps>`
-  border-radius: 20px;
-`
+export const StyledEducation = styled(StyledBaseModule)<StyledBaseModuleProps>``
 
 export const StyledInstitution = styled.div`
   display: grid;

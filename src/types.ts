@@ -14,6 +14,7 @@ export type ModulesProps = {
   module: keyof ModuleList
   data: any
   background: string
+  slot: string
 }
 
 //#endregion Modules
@@ -37,7 +38,8 @@ export type Profile = {
 
 export type BaseModuleProps = {
   background: string
-  layout: string
+  layout?: string
+  slot?: string
 }
 
 export type BasicsProps = {
@@ -146,6 +148,11 @@ export type StyledSectionProps = {
 export type StyledBaseModuleProps = {
   readonly theme: any
   background: string
+}
+
+export type SidebarSectionProps = {
+  children: React.ReactChild
+  module: any
 }
 
 //#endregion Style Props

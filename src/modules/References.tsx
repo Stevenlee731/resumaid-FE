@@ -6,7 +6,7 @@ import {StyledReferences} from '../styles/References'
 import {StyledSectionHeader} from '../styles/Section'
 
 const References: React.FC<ReferencesModuleProps> = (props): JSX.Element => {
-  const {data, background} = props
+  const {data, background, slot} = props
 
   const [reference, setReference] = React.useState<ReferencesProps | null>(
     data && data[0] ? data[0] : null,
@@ -17,8 +17,8 @@ const References: React.FC<ReferencesModuleProps> = (props): JSX.Element => {
   }
 
   return (
-    <StyledReferences background={background}>
-      <StyledSectionHeader>References</StyledSectionHeader>
+    <StyledReferences slot={slot} background={background}>
+      <StyledSectionHeader slot={slot}>References</StyledSectionHeader>
       <div className="inner">
         {reference?.reference && <Quote quote={reference?.reference} />}
         {data && (
