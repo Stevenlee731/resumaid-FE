@@ -4,6 +4,8 @@ const StyledProfile = styled.div`
   display: flex;
   justify-content: flex-start;
   margin-bottom: 1rem;
+  flex-wrap: wrap;
+  padding: 1rem;
 
   h4 {
     margin: 0;
@@ -23,6 +25,18 @@ const StyledProfile = styled.div`
       text-transform: uppercase;
       font-weight: bold;
     }
+  }
+
+  summary {
+    margin-top: 1rem;
+    transition: all ${({theme}): string => theme.transition};
+    color: ${({theme}): string => theme.textLight};
+    line-height: 1.5;
+    font-size: 1rem;
+
+    ${({theme}): string => theme.mobileM`
+      margin: 1rem 0;
+   `}
   }
 `
 export default StyledProfile

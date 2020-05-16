@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import SidebarSection from '../components/SidebarSection'
+import SidebarSection from '../components/Sidebar/SidebarSection'
 
 export const StyledMainSection = styled.section`
   display: grid;
@@ -7,16 +7,23 @@ export const StyledMainSection = styled.section`
 `
 
 export const StyledSidebarSection = styled.div`
-  padding: 1rem;
-  border-radius: 1rem;
-  border: ${({theme}): string => `1px solid ${theme.border}`};
-  transition: border ${({theme}): string => theme.transition};
-
+  padding: 0.5rem 1rem;
   .header {
     text-transform: capitalize;
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+`
+
+export const StyledSidebarWrapper = styled.div`
+  border-radius: 1rem;
+  border: ${({theme}): string => `2px solid ${theme.border}`};
+  transition: border ${({theme}): string => theme.transition};
+
+  > div + div {
+    border-top: ${({theme}): string => `2px solid ${theme.border}`};
+    transition: border-top ${({theme}): string => theme.transition};
   }
 `
 

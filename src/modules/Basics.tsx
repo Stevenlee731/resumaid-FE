@@ -6,25 +6,15 @@ import StyledPortrait from '../styles/StyledPortrait'
 import StyledProfile from '../styles/StyledProfile'
 
 const Basics: React.FC<BasicsModuleProps> = props => {
-  const {
-    data: {
-      name = '',
-      label = '',
-      image = '',
-      summary = '',
-      email = '',
-      location = '',
-      profiles = [],
-    } = {},
-  } = props
+  const {name, label, image, summary, email, location, profiles} = props
 
   return (
     <>
       <StyledBasics background={''}>
         <div className="headline">
           <h1 title="basics">
-            {label && <span>{`I'm a ${label},`}</span>}
-            <span>
+            {label && <span title="label">{`I'm a ${label},`}</span>}
+            <span title="location">
               {location && location.city && ` based in ${location.city}`}
             </span>
             <span className="period">.</span>

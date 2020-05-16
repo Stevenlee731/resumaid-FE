@@ -1,6 +1,8 @@
 import * as React from 'react'
-import {SidebarSectionProps} from '../types'
-import {StyledSidebarSection} from '../styles/Section'
+import {SidebarSectionProps} from '../../types'
+import {StyledSidebarSection} from '../../styles/Section'
+import StyledButton from '../../styles/StyledButton'
+import {Chevron} from '../../assets/svg'
 
 export default function SidebarSection({
   children,
@@ -21,7 +23,9 @@ export default function SidebarSection({
     <StyledSidebarSection>
       <div className="header">
         <h3>{module}</h3>
-        <button onClick={(e): void => handleClose(e)}>x</button>
+        <StyledButton onClick={(e): void => handleClose(e)}>
+          <Chevron direction={isOpen ? 'up' : 'down'} />
+        </StyledButton>
       </div>
 
       {isOpen ? children : null}

@@ -15,15 +15,13 @@ import {theme, darkTheme} from './util/cssHelpers'
 import {ThemeProvider} from 'styled-components'
 import Page from './components/Page'
 import Users from './components/Users'
-
-if (process.env.NODE_ENV === 'development') {
-  require('./mocks')
-}
+import StyledFooter from './styles/StyledFooter'
+import {endpoint, prodEndpoint} from './config'
 
 const client = new ApolloClient({
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({addTypename: false}),
   link: new HttpLink({
-    uri: 'http://localhost:3000/admin/api',
+    uri: process.env.NODE_ENV === 'development' ? endpoint : prodEndpoint,
   }),
 })
 
@@ -54,6 +52,7 @@ const App = (): JSX.Element => {
               element={<Users isDark={isDark} handleTheme={handleTheme} />}
             />
           </Routes>
+          <StyledFooter>footer</StyledFooter>
         </Page>
       </ThemeProvider>
     </ApolloProvider>

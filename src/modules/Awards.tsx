@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react'
-import {AwardsProps, AwardsModuleProps} from '../types'
+import {AwardsModuleProps} from '../types'
 import StyledAwards from '../styles/StyledAwards'
 import {StyledSectionHeader} from '../styles/Section'
 

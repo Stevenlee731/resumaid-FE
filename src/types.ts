@@ -54,7 +54,14 @@ export type BasicsProps = {
 }
 
 export interface BasicsModuleProps extends BaseModuleProps {
-  data: BasicsProps
+  name?: string
+  label?: string
+  image?: string
+  summary?: string
+  website?: string
+  email?: string
+  location?: Location
+  profiles?: Array<Profile>
 }
 //#endregion Basics
 
@@ -112,7 +119,7 @@ export interface ReferencesModuleProps extends BaseModuleProps {
 export type SkillsProps = {
   level: string
   name: string
-  keywords: Array<string>
+  keywords: Array<{keyword: string}>
 }
 
 export interface SkillsModuleProps extends BaseModuleProps {

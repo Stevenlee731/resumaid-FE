@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import {useQuery, gql} from '@apollo/client'
 import Header from '../components/Header'
 import {Routes, Route, Link, useParams} from 'react-router-dom'
 import Modules from './Modules'
@@ -9,9 +10,15 @@ import {
   StyledContentWrapper,
 } from '../styles/Section'
 import Basics from '../modules/Basics'
-import StyledSidebar from '../styles/StyledSidebar'
+import {GET_USER} from '../graphql/Queries'
+
+import {
+  Sidebar,
+  SidebarSection,
+  SidebarWrapper,
+} from '../components/Sidebar/index'
+
 import Profile from '../modules/Profile'
-import SidebarSection from './SidebarSection'
 
 const Users = ({
   handleTheme,
@@ -21,71 +28,57 @@ const Users = ({
   isDark: boolean
 }): JSX.Element => {
   const {userId} = useParams()
-  console.log(userId, 'user')
-  const [user, setUser] = useState<{basics: any; modules: Array<any>} | null>(
-    null,
-  )
 
-  useEffect(() => {
-    fetch(
-      'https://gist.githubusercontent.com/Stevenlee731/dde8a4a37620642b13e3c6336703a243/raw/3ce6af234c6117ac9e461c854685e76b54bbfaa8/resume.json',
-    )
-      .then(res => res.json())
-      .then(res => setUser(res))
-  }, [])
+  const {loading, error, data} = useQuery(GET_USER, {
+    variables: {username: userId},
+  })
 
-  if (user) {
-    const {basics, modules} = user || []
+  if (loading) return <div>...loading</div>
+  if (error || (data && data.allUsers.length < 1)) return <div>Error!</div>
 
-    const {refs, sidebar, main} =
-      modules &&
-      modules.reduce<any>((acc, value) => {
-        if (acc.refs) {
-          acc.refs[value.module] = React.createRef()
-        } else {
-          acc.refs = {}
-          acc.refs[value.module] = React.createRef()
-        }
+  const {allUsers} = data
+  const {basics, ...rest} = (allUsers && allUsers[0]) || {}
 
-        if (value.slot === 'main') {
-          if (acc.main) {
-            acc.main.push(value)
-          } else {
-            acc.main = []
-            acc.main.push(value)
-          }
-        }
+  const main = []
+  const sidebar = []
 
-        if (value.slot === 'sidebar') {
-          if (acc.sidebar) {
-            acc.sidebar.push(value)
-          } else {
-            acc.sidebar = []
-            acc.sidebar.push(value)
-          }
-        }
+  for (const property in rest) {
+    if (rest[property]) {
+      if (rest[property].slot === 'main') {
+        main.push(rest[property])
+      } else {
+        sidebar.push(rest[property])
+      }
+    }
+  }
 
-        return acc
-      }, {})
+  const refs =
+    main &&
+    main.reduce<any>((acc, value) => {
+      acc[value.module] = React.createRef()
+      return acc
+    }, {})
 
-    return (
-      <>
-        <Header
-          handleTheme={handleTheme}
-          isDark={isDark}
-          modules={main}
-          name={basics.name}
-          website={basics.website}
-          refs={refs}
-        />
-        {basics && <Basics data={basics} layout="" background={'primary'} />}
+  return (
+    <>
+      <Header
+        handleTheme={handleTheme}
+        isDark={isDark}
+        modules={main}
+        name={basics.name}
+        website={basics.website}
+        refs={refs}
+      />
+      {basics && <Basics {...basics} layout="" background={'primary'} />}
 
-        {sidebar && (
-          <StyledSidebar>
-            <SidebarSection module={'basics'}>
-              <Profile {...basics} />
-            </SidebarSection>
+      {sidebar && (
+        <Sidebar>
+          <SidebarWrapper>
+            <Profile {...basics} />
+          </SidebarWrapper>
+          <SidebarWrapper>
             {sidebar.map((section: any) => {
+              // console.log(section.module, 'module')
               return (
                 <SidebarSection module={section.module} key={section.module}>
                   <Modules
@@ -97,33 +90,31 @@ const Users = ({
                 </SidebarSection>
               )
             })}
-          </StyledSidebar>
-        )}
+          </SidebarWrapper>
+        </Sidebar>
+      )}
 
-        {main && (
-          <StyledContentWrapper>
-            {main.map((section: any, index: any) => {
-              return (
-                <StyledMainSection
-                  key={section.module}
-                  ref={refs[section.module]}
-                >
-                  <Modules
-                    module={section.module}
-                    data={section.content}
-                    slot={section.slot}
-                    background={index % 2 === 0 ? 'primary' : 'secondary'}
-                  />
-                </StyledMainSection>
-              )
-            })}
-          </StyledContentWrapper>
-        )}
-      </>
-    )
-  } else {
-    return <div></div>
-  }
+      {main && (
+        <StyledContentWrapper>
+          {main.map((section: any, index: any) => {
+            return (
+              <StyledMainSection
+                key={section.module}
+                ref={refs[section.module]}
+              >
+                <Modules
+                  module={section.module}
+                  data={section.content}
+                  slot={section.slot}
+                  background={index % 2 === 0 ? 'primary' : 'secondary'}
+                />
+              </StyledMainSection>
+            )
+          })}
+        </StyledContentWrapper>
+      )}
+    </>
+  )
 }
 
 export default Users
