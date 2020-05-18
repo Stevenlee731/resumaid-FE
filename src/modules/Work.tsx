@@ -1,19 +1,15 @@
 import * as React from 'react'
-import {BaseModuleProps, WorkProps} from '../types'
+import {BaseModuleProps, WorkProps, WorkModuleProps} from '../types'
 import StyledWork from '../styles/StyledWork'
 import {StyledSectionHeader} from '../styles/Section'
 
-interface WorkModuleProps extends BaseModuleProps {
-  data: Array<WorkProps>
-}
-
 const WorkModule: React.FC<WorkModuleProps> = (props): JSX.Element => {
-  const {data, background, slot} = props
+  const {content, background, slot} = props
   return (
     <StyledWork slot={slot} background={background}>
       <StyledSectionHeader slot={slot}>Work</StyledSectionHeader>
       <div className="inner">
-        {data.map(item => (
+        {content.map(item => (
           <Work
             key={item.company}
             company={item.company}

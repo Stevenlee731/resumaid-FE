@@ -1,24 +1,38 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {useEffect, useState} from 'react'
-import {useQuery, gql} from '@apollo/client'
-import Header from '../components/Header'
-import {Routes, Route, Link, useParams} from 'react-router-dom'
+import {useQuery, useMutation, useApolloClient, gql} from '@apollo/client'
+import Header from './Header'
+import {useParams} from 'react-router-dom'
 import Modules from './Modules'
 import {formatResumeData} from '../util/helpers'
-import {
-  StyledMainSection,
-  StyledSidebarSection,
-  StyledContentWrapper,
-} from '../styles/Section'
+import {StyledMainSection, StyledContentWrapper} from '../styles/Section'
 import Basics from '../modules/Basics'
-import {GET_USER} from '../graphql/Queries'
+import {GET_USER, GET_USER_MODULES} from '../graphql/Queries'
 
-import {
-  Sidebar,
-  SidebarSection,
-  SidebarWrapper,
-} from '../components/Sidebar/index'
+import {Sidebar, SidebarSection, SidebarWrapper} from './Sidebar/index'
 
 import Profile from '../modules/Profile'
+import {ModulesProps} from '../types'
+
+const TOGGLE_TODO = gql`
+  mutation ToggleTodo($id: Int!) {
+    toggleTodo(id: $id) @client
+  }
+`
+
+const GET_TODOS = gql`
+  query GetTodos {
+    todos @client {
+      id
+    }
+  }
+`
+
+const GET_VISIBILITY_FILTER = gql`
+  query GetVisibilityFilter {
+    visibilityFilter @client
+  }
+`
 
 const Users = ({
   handleTheme,
@@ -33,41 +47,28 @@ const Users = ({
     variables: {username: userId},
   })
 
+  const client = useApolloClient()
+
   if (loading) return <div>...loading</div>
   if (error || (data && data.allUsers.length < 1)) return <div>Error!</div>
 
   const {allUsers} = data
   const {basics, ...rest} = (allUsers && allUsers[0]) || {}
 
-  const main = []
-  const sidebar = []
+  const [main, sidebar] = formatResumeData(rest)
 
-  for (const property in rest) {
-    if (rest[property]) {
-      if (rest[property].slot === 'main') {
-        main.push(rest[property])
-      } else {
-        sidebar.push(rest[property])
-      }
-    }
-  }
-
-  const refs =
-    main &&
-    main.reduce<any>((acc, value) => {
-      acc[value.module] = React.createRef()
-      return acc
-    }, {})
+  client.writeQuery({
+    query: GET_USER_MODULES,
+    data: {main, sidebar},
+  })
 
   return (
     <>
       <Header
         handleTheme={handleTheme}
         isDark={isDark}
-        modules={main}
         name={basics.name}
         website={basics.website}
-        refs={refs}
       />
       {basics && <Basics {...basics} layout="" background={'primary'} />}
 
@@ -77,13 +78,13 @@ const Users = ({
             <Profile {...basics} />
           </SidebarWrapper>
           <SidebarWrapper>
-            {sidebar.map((section: any) => {
-              // console.log(section.module, 'module')
+            {sidebar.map((section: ModulesProps) => {
               return (
                 <SidebarSection module={section.module} key={section.module}>
                   <Modules
                     module={section.module}
-                    data={section.content}
+                    order={section.order}
+                    content={section.content}
                     slot={section.slot}
                     background={''}
                   />
@@ -96,15 +97,13 @@ const Users = ({
 
       {main && (
         <StyledContentWrapper>
-          {main.map((section: any, index: any) => {
+          {main.map((section: ModulesProps, index: number) => {
             return (
-              <StyledMainSection
-                key={section.module}
-                ref={refs[section.module]}
-              >
+              <StyledMainSection key={section.module}>
                 <Modules
                   module={section.module}
-                  data={section.content}
+                  order={section.order}
+                  content={section.content}
                   slot={section.slot}
                   background={index % 2 === 0 ? 'primary' : 'secondary'}
                 />

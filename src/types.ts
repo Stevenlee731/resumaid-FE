@@ -1,19 +1,38 @@
 //#region Modules
 
 export type ModuleList = {
-  basics: React.FC<BasicsModuleProps>
+  basics: ModulesProps
+  skills: ModulesProps
+  awards: ModulesProps
+  education: ModulesProps
+  interests: ModulesProps
+  references: ModulesProps
+  work: ModulesProps
+}
+
+export type ModuleComponentList = {
+  basics: any
   skills: any
   awards: any
-  education: React.FC<EducationModuleProps>
+  education: any
   interests: any
-  references: any
   work: any
+  references: any
 }
 
 export type ModulesProps = {
-  module: keyof ModuleList
-  data: any
+  module: keyof ModuleComponentList
+  content: Array<
+    | WorkProps
+    | BasicsProps
+    | EducationProps
+    | SkillsProps
+    | AwardsProps
+    | ReferencesProps
+    | InterestsProps
+  >
   background: string
+  order: number
   slot: string
 }
 
@@ -75,7 +94,7 @@ export type EducationProps = {
 }
 
 export interface EducationModuleProps extends BaseModuleProps {
-  data: Array<EducationProps>
+  content: Array<EducationProps>
 }
 
 //#endregion Education
@@ -87,7 +106,7 @@ export type InterestsProps = {
 }
 
 export interface InterestsModuleProps extends BaseModuleProps {
-  data: Array<InterestsProps>
+  content: Array<InterestsProps>
 }
 //#endregion Interests
 
@@ -99,7 +118,7 @@ export type AwardsProps = {
 }
 
 export interface AwardsModuleProps extends BaseModuleProps {
-  data: Array<AwardsProps>
+  content: Array<AwardsProps>
 }
 //#endregion Awards
 
@@ -110,7 +129,7 @@ export type ReferencesProps = {
 }
 
 export interface ReferencesModuleProps extends BaseModuleProps {
-  data: Array<ReferencesProps>
+  content: Array<ReferencesProps>
 }
 
 //#endregion References
@@ -123,7 +142,7 @@ export type SkillsProps = {
 }
 
 export interface SkillsModuleProps extends BaseModuleProps {
-  data: Array<SkillsProps>
+  content: Array<SkillsProps>
 }
 
 //#endregion Skills
@@ -140,26 +159,30 @@ export type WorkProps = {
   website?: string
 }
 
+export interface WorkModuleProps extends BaseModuleProps {
+  content: Array<WorkProps>
+}
+
 //#endregion Work
 
 //#region Style Props
 
 export type StyledPageProps = {
-  readonly theme: any
+  readonly theme: {}
 }
 
 export type StyledSectionProps = {
-  readonly theme: any
+  readonly theme: {}
 }
 
 export type StyledBaseModuleProps = {
-  readonly theme: any
+  readonly theme: {}
   background: string
 }
 
 export type SidebarSectionProps = {
   children: React.ReactChild
-  module: any
+  module: keyof ModuleComponentList
 }
 
 //#endregion Style Props

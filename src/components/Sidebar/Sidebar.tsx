@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import StyledSidebar from '../../styles/StyledSidebar'
 
 import * as React from 'react'

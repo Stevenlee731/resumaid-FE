@@ -14,18 +14,18 @@ const Award = (props: {awarder?: string; title?: string}): JSX.Element => {
 }
 
 const Awards: React.FC<AwardsModuleProps> = (props): JSX.Element => {
-  const {data, slot, background} = props
+  const {content, slot, background} = props
   return (
     <StyledAwards slot={slot} background={background}>
       <StyledSectionHeader slot={slot}>Awards</StyledSectionHeader>
       <div className="inner">
-        {data &&
-          data.map(award => {
+        {content &&
+          content.map(content => {
             return (
               <Award
-                key={award.title}
-                awarder={award.awarder}
-                title={award.title}
+                key={content.title}
+                awarder={content.awarder}
+                title={content.title}
               />
             )
           })}

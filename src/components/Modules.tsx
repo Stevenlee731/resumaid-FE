@@ -7,9 +7,9 @@ import Work from '../modules/Work'
 import Interests from '../modules/Interests'
 import Basics from '../modules/Basics'
 
-import {ModuleList, ModulesProps} from '../types'
+import {ModuleComponentList, ModulesProps} from '../types'
 
-const moduleList: ModuleList = {
+const moduleList: ModuleComponentList = {
   basics: Basics,
   awards: Awards,
   skills: Skills,
@@ -20,10 +20,10 @@ const moduleList: ModuleList = {
 }
 
 const Modules: FC<ModulesProps> = props => {
-  if (typeof moduleList[props.module] !== 'undefined') {
+  if (props.module && typeof moduleList[props.module] !== 'undefined') {
     return React.createElement(moduleList[props.module], {
       key: props.module,
-      data: props.data,
+      content: props.content,
       background: props.background,
       slot: props.slot,
     })

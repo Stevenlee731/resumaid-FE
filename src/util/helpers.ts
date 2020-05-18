@@ -1,13 +1,21 @@
-export function formatResumeData(data: any): {module: any; data: any}[] {
-  const formatted = []
-  console.log(data)
-  for (const block in data) {
-    const obj = {
-      module: block,
-      data: data[block],
+import {ModuleList, ModulesProps} from '../types'
+
+export function formatResumeData(
+  modules: ModuleList,
+): [Array<ModulesProps>, Array<ModulesProps>] {
+  const main = []
+  const sidebar = []
+
+  for (const module of Object.values(modules)) {
+    if (!module.slot) {
+      continue
     }
-    formatted.push(obj)
+    if (module.slot === 'main') {
+      main.push(module)
+    } else {
+      sidebar.push(module)
+    }
   }
 
-  return formatted
+  return [main, sidebar]
 }

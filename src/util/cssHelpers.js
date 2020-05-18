@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import {css} from 'styled-components'
 
 export const sizes = {

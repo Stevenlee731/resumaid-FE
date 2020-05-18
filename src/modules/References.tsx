@@ -6,10 +6,10 @@ import {StyledReferences} from '../styles/References'
 import {StyledSectionHeader} from '../styles/Section'
 
 const References: React.FC<ReferencesModuleProps> = (props): JSX.Element => {
-  const {data, background, slot} = props
+  const {content, background, slot} = props
 
   const [reference, setReference] = React.useState<ReferencesProps | null>(
-    data && data[0] ? data[0] : null,
+    content && content[0] ? content[0] : null,
   )
 
   const handleClick = (reference: ReferencesProps): void => {
@@ -21,9 +21,9 @@ const References: React.FC<ReferencesModuleProps> = (props): JSX.Element => {
       <StyledSectionHeader slot={slot}>References</StyledSectionHeader>
       <div className="inner">
         {reference?.reference && <Quote quote={reference?.reference} />}
-        {data && (
+        {content && (
           <div className="reference-group">
-            {data.map(item => {
+            {content.map(item => {
               return (
                 <Reference
                   key={item.name}

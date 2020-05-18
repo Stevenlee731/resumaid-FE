@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react'
 import {SkillsProps, SkillsModuleProps} from '../types'
 import StyledSkills from '../styles/StyledSkills'
@@ -18,12 +19,12 @@ const Skill: React.FC<SkillsProps> = (props): JSX.Element => {
 }
 
 const SkillsModule: React.FC<SkillsModuleProps> = (props): JSX.Element => {
-  const {data, background, slot} = props
+  const {content, background, slot} = props
   return (
     <StyledSkills slot={slot} background={background}>
       <StyledSectionHeader slot={slot}>Skills</StyledSectionHeader>
       <div className="inner">
-        {data.map(skill => (
+        {content.map(skill => (
           <Skill
             key={skill.name}
             name={skill.name}

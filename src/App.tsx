@@ -17,22 +17,54 @@ import Page from './components/Page'
 import Users from './components/Users'
 import StyledFooter from './styles/StyledFooter'
 import {endpoint, prodEndpoint} from './config'
+import {IS_DARK_MODE} from './graphql/Queries'
 
+const cache = new InMemoryCache()
 const client = new ApolloClient({
-  cache: new InMemoryCache({addTypename: false}),
+  cache,
   link: new HttpLink({
     uri: process.env.NODE_ENV === 'development' ? endpoint : prodEndpoint,
   }),
+  resolvers: {
+    Mutation: {
+      toggleTodo: (_root, variables, {cache}) => {
+        const user = cache.identify({
+          __typename: 'User',
+          user: variables.user,
+        })
+
+        cache.modify(user, {
+          completed(value: any) {
+            return !value
+          },
+        })
+        return null
+      },
+    },
+  },
+})
+
+cache.writeQuery({
+  query: gql`
+    query GetTodosNetworkStatusAndFilter {
+      user
+    }
+  `,
+  data: {
+    user: [],
+  },
 })
 
 const App = (): JSX.Element => {
   const cachedDarkMode = localStorage.getItem('isDarkMode') === 'true'
+
   const [isDark, setIsDark] = useState<boolean>(cachedDarkMode)
 
   const handleTheme = (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
   ): void => {
     e.preventDefault()
+
     setIsDark(!isDark)
   }
 

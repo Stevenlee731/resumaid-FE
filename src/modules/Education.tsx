@@ -21,12 +21,12 @@ const Institution: React.FC<EducationProps> = (props): JSX.Element => {
 }
 
 const Education: React.FC<EducationModuleProps> = (props): JSX.Element => {
-  const {data, background, slot} = props
+  const {content, background, slot} = props
   return (
     <StyledEducation slot={slot} background={background}>
       <StyledSectionHeader slot={slot}>Education</StyledSectionHeader>
       <div className="inner">
-        {data.map(item => {
+        {content.map(item => {
           return <Institution key={item.institution} {...item} />
         })}
       </div>

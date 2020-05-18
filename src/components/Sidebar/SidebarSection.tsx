@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react'
 import {SidebarSectionProps} from '../../types'
 import {StyledSidebarSection} from '../../styles/Section'
@@ -8,7 +9,7 @@ export default function SidebarSection({
   children,
   module,
 }: SidebarSectionProps): JSX.Element {
-  const [isOpen, setIsOpen] = React.useState(false)
+  const [isOpen, setIsOpen] = React.useState<boolean>(false)
 
   const handleClose = (e: React.MouseEvent): void => {
     e.preventDefault()

@@ -90,3 +90,17 @@ export const GET_USER = gql`
     }
   }
 `
+
+export const GET_USER_MODULES = gql`
+  query GetUserModules {
+    main @client
+    sidebar @client
+    basics @client
+  }
+`
+
+export const IS_DARK_MODE = gql`
+  query IsDarkMode {
+    isDarkMode @client
+  }
+`
