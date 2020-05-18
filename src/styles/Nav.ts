@@ -137,3 +137,9 @@ export const StyledToggle = styled.span`
     top: 15px;
   }
 `
+
+export const StyledNavSection = styled.div`
+  padding-left: 1.5rem;
+  display: flex;
+  align-items: center;
+`

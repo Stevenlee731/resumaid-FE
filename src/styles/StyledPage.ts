@@ -12,13 +12,32 @@ const StyledPage = styled.div<StyledPageProps>`
   grid-template-columns:
     [viewport-start] minmax(20px, 1fr) [content-start] minmax(0, 45rem)
     [content-end] minmax(0, 15rem) [sidebar-end] minmax(20px, 1fr) [viewport-end];
+
+  grid-template-columns: ${(props): string =>
+    props.hasSidebar
+      ? `[viewport-start] minmax(20px, 1fr) [content-start] minmax(0, 45rem)
+    [content-end] minmax(0, 15rem) [sidebar-end] minmax(20px, 1fr) [viewport-end]`
+      : `[viewport-start] minmax(20px, 1fr) [content-start] minmax(0, 60rem)
+      [content-end]  minmax(20px, 1fr) [viewport-end]`};
+
   grid-template-areas:
     'header header header header'
     '. subheader subheader .'
     '. content sidebar .'
     'footer footer footer footer';
 
-  ${({theme}): string => theme.tablet`
+  grid-template-areas: ${(props): string =>
+    props.hasSidebar
+      ? `    'header header header header'
+    '. subheader subheader .'
+    '. content sidebar .'
+    'footer footer footer footer'`
+      : `'header header header header'
+      '. subheader subheader .'
+      '. content content .'
+      'footer footer footer footer'`};
+
+  grid-template-areas: ${({theme}): string => theme.tablet`
     grid-row-gap: 1rem;
     grid-template-areas:
     'header header header'
@@ -29,7 +48,7 @@ const StyledPage = styled.div<StyledPageProps>`
     grid-template-columns:
     [viewport-start] minmax(20px, 1fr) [content-start] minmax(0, 45rem)
     [content-end] minmax(20px, 1fr) [viewport-end];
-    `}
+    `};
 `
 
 export default StyledPage

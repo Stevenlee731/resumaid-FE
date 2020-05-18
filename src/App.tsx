@@ -17,7 +17,7 @@ import Page from './components/Page'
 import Users from './components/Users'
 import StyledFooter from './styles/StyledFooter'
 import {endpoint, prodEndpoint} from './config'
-import {IS_DARK_MODE} from './graphql/Queries'
+import Home from './components/Home'
 
 const cache = new InMemoryCache()
 const client = new ApolloClient({
@@ -75,17 +75,27 @@ const App = (): JSX.Element => {
   return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={isDark ? darkTheme : theme}>
-        <Page>
-          <Routes>
-            <Route path="/" element={<div>Home</div>} />
-            <Route path="create" element={<div>create</div>} />
-            <Route
-              path=":userId"
-              element={<Users isDark={isDark} handleTheme={handleTheme} />}
-            />
-          </Routes>
-          <StyledFooter>footer</StyledFooter>
-        </Page>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Page hasSidebar={false}>
+                <Home handleTheme={handleTheme} isDark={isDark} />
+              </Page>
+            }
+          />
+          <Route path="/login" element={<div>Login</div>} />
+          <Route path="create" element={<div>create</div>} />
+          <Route
+            path=":userId"
+            element={
+              <Page hasSidebar={true}>
+                <Users isDark={isDark} handleTheme={handleTheme} />
+              </Page>
+            }
+          />
+        </Routes>
+        <StyledFooter>footer</StyledFooter>
       </ThemeProvider>
     </ApolloProvider>
   )

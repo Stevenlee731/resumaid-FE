@@ -99,8 +99,9 @@ export const GET_USER_MODULES = gql`
   }
 `
 
-export const IS_DARK_MODE = gql`
-  query IsDarkMode {
-    isDarkMode @client
+export const IS_USER_AUTHED = gql`
+  query IsUserAuthed {
+    isSignedIn @client
+    user @client
   }
 `

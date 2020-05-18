@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react'
-import {StyledNav, StyledToggle} from '../styles/Nav'
+import {StyledNav, StyledToggle, StyledNavSection} from '../styles/Nav'
+import {IS_USER_AUTHED} from '../graphql/Queries'
 
 const Header = ({
   handleTheme,
@@ -10,8 +11,8 @@ const Header = ({
 }: {
   handleTheme: Function
   isDark: boolean
-  name: string
-  website: string
+  name?: string
+  website?: string
 }): JSX.Element => {
   return (
     <StyledNav className="navigation">
@@ -28,15 +29,27 @@ const Header = ({
             </div>
           </div>
           <div className="nav-right">
-            <span className="dark-mode">
-              {isDark ? 'Dark Mode' : 'Light Mode'}
-            </span>
-            <StyledToggle
-              className={`switch ${isDark ? 'on' : 'off'}`}
-              onClick={(
-                e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
-              ): void => handleTheme(e)}
-            />
+            <StyledNavSection>
+              {true ? (
+                <button>Sign In</button>
+              ) : (
+                <>
+                  <span>{`Welcome user`}</span>
+                  <button>Sign Out</button>
+                </>
+              )}
+            </StyledNavSection>
+            <StyledNavSection>
+              <span className="dark-mode">
+                {isDark ? 'Dark Mode' : 'Light Mode'}
+              </span>
+              <StyledToggle
+                className={`switch ${isDark ? 'on' : 'off'}`}
+                onClick={(
+                  e: React.MouseEvent<HTMLSpanElement, MouseEvent>,
+                ): void => handleTheme(e)}
+              />
+            </StyledNavSection>
           </div>
         </div>
       </div>

@@ -169,6 +169,7 @@ export interface WorkModuleProps extends BaseModuleProps {
 
 export type StyledPageProps = {
   readonly theme: {}
+  hasSidebar: boolean
 }
 
 export type StyledSectionProps = {
