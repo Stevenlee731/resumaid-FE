@@ -28,12 +28,12 @@ export const StyledSidebarWrapper = styled.div`
 `
 
 export const StyledSectionHeader = styled.h3`
-  font-size: ${({slot}): string => (slot === 'main' ? '4rem' : '1.5rem')};
+  font-size: ${({slot}): string => (slot === 'main' ? '3rem' : '1.5rem')};
   grid-area: header;
   font-weight: 700;
   align-self: flex-start;
   margin: 0;
-  top: ${({slot}): string => (slot === 'main' ? '-2rem' : 'initial')};
+  top: ${({slot}): string => (slot === 'main' ? '-1.5rem' : 'initial')};
   position: ${({slot}): string => (slot === 'main' ? 'absolute' : 'relative')};
 
   ${({theme}): string => theme.mobileM`

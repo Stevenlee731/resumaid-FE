@@ -12,7 +12,7 @@ import {
   useQuery,
 } from '@apollo/client'
 import {theme, darkTheme} from './util/cssHelpers'
-import {ThemeProvider} from 'styled-components'
+import {ThemeProvider, createGlobalStyle} from 'styled-components'
 import Page from './components/Page'
 import Users from './components/Users'
 import {endpoint, prodEndpoint} from './config'
@@ -55,6 +55,13 @@ cache.writeQuery({
   },
 })
 
+const GlobalStyle = createGlobalStyle<{theme: typeof theme}>`
+  html,
+  body {
+    background: ${({theme}): string => theme.background};
+  }
+`
+
 const App = (): JSX.Element => {
   const cachedDarkMode = localStorage.getItem('isDarkMode') === 'true'
   const [isDark, setIsDark] = useState<boolean>(cachedDarkMode)
@@ -74,6 +81,7 @@ const App = (): JSX.Element => {
   return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={isDark ? darkTheme : theme}>
+        <GlobalStyle />
         <Routes>
           <Route
             path="/"

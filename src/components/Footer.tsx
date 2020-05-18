@@ -10,9 +10,9 @@ export default function Footer(props: FooterProps) {
   return (
     <StyledFooter>
       <div>
-        <span>Made with</span>
+        <span>Made with </span>
         <Heart>&hearts;</Heart>
-        <span>in Switzerland</span>
+        <span> in Los Angeles</span>
       </div>
     </StyledFooter>
   )
