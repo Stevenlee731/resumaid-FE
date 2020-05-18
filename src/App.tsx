@@ -15,9 +15,9 @@ import {theme, darkTheme} from './util/cssHelpers'
 import {ThemeProvider} from 'styled-components'
 import Page from './components/Page'
 import Users from './components/Users'
-import StyledFooter from './styles/StyledFooter'
 import {endpoint, prodEndpoint} from './config'
 import Home from './components/Home'
+import Footer from './components/Footer'
 
 const cache = new InMemoryCache()
 const client = new ApolloClient({
@@ -57,7 +57,6 @@ cache.writeQuery({
 
 const App = (): JSX.Element => {
   const cachedDarkMode = localStorage.getItem('isDarkMode') === 'true'
-
   const [isDark, setIsDark] = useState<boolean>(cachedDarkMode)
 
   const handleTheme = (
@@ -79,8 +78,9 @@ const App = (): JSX.Element => {
           <Route
             path="/"
             element={
-              <Page hasSidebar={false}>
+              <Page>
                 <Home handleTheme={handleTheme} isDark={isDark} />
+                <Footer isDark={isDark} />
               </Page>
             }
           />
@@ -89,13 +89,13 @@ const App = (): JSX.Element => {
           <Route
             path=":userId"
             element={
-              <Page hasSidebar={true}>
+              <Page>
                 <Users isDark={isDark} handleTheme={handleTheme} />
+                <Footer isDark={isDark} />
               </Page>
             }
           />
         </Routes>
-        <StyledFooter>footer</StyledFooter>
       </ThemeProvider>
     </ApolloProvider>
   )

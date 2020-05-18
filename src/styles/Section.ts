@@ -43,7 +43,7 @@ export const StyledSectionHeader = styled.h3`
 `
 
 export const StyledContentWrapper = styled.main`
-  grid-area: content;
+  grid-area: main;
   display: grid;
   grid-row-gap: 2rem;
 

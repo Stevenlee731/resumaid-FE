@@ -13,6 +13,7 @@ import {Sidebar, SidebarSection, SidebarWrapper} from './Sidebar/index'
 
 import Profile from '../modules/Profile'
 import {ModulesProps} from '../types'
+import StyledLayout from '../styles/StyledLayout'
 
 const TOGGLE_TODO = gql`
   mutation ToggleTodo($id: Int!) {
@@ -71,47 +72,48 @@ const Users = ({
         website={basics.website}
       />
       {basics && <Basics {...basics} layout="" background={'primary'} />}
+      <StyledLayout hasSidebar={true}>
+        {sidebar && (
+          <Sidebar>
+            <SidebarWrapper>
+              <Profile {...basics} />
+            </SidebarWrapper>
+            <SidebarWrapper>
+              {sidebar.map((section: ModulesProps) => {
+                return (
+                  <SidebarSection module={section.module} key={section.module}>
+                    <Modules
+                      module={section.module}
+                      order={section.order}
+                      content={section.content}
+                      slot={section.slot}
+                      background={''}
+                    />
+                  </SidebarSection>
+                )
+              })}
+            </SidebarWrapper>
+          </Sidebar>
+        )}
 
-      {sidebar && (
-        <Sidebar>
-          <SidebarWrapper>
-            <Profile {...basics} />
-          </SidebarWrapper>
-          <SidebarWrapper>
-            {sidebar.map((section: ModulesProps) => {
+        {main && (
+          <StyledContentWrapper>
+            {main.map((section: ModulesProps, index: number) => {
               return (
-                <SidebarSection module={section.module} key={section.module}>
+                <StyledMainSection key={section.module}>
                   <Modules
                     module={section.module}
                     order={section.order}
                     content={section.content}
                     slot={section.slot}
-                    background={''}
+                    background={index % 2 === 0 ? 'primary' : 'secondary'}
                   />
-                </SidebarSection>
+                </StyledMainSection>
               )
             })}
-          </SidebarWrapper>
-        </Sidebar>
-      )}
-
-      {main && (
-        <StyledContentWrapper>
-          {main.map((section: ModulesProps, index: number) => {
-            return (
-              <StyledMainSection key={section.module}>
-                <Modules
-                  module={section.module}
-                  order={section.order}
-                  content={section.content}
-                  slot={section.slot}
-                  background={index % 2 === 0 ? 'primary' : 'secondary'}
-                />
-              </StyledMainSection>
-            )
-          })}
-        </StyledContentWrapper>
-      )}
+          </StyledContentWrapper>
+        )}
+      </StyledLayout>
     </>
   )
 }
