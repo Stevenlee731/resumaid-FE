@@ -61,10 +61,19 @@ h6 {
 div,
 summary,
 p,
+button,
 a {
   font-family: 'Fira Sans', sans-serif;
   font-weight: 300;
 }
+
+/* button {
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.3rem 0.75rem;
+} */
 
 /* Generic styles */
 

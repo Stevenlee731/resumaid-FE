@@ -18,6 +18,7 @@ import Users from './components/Users'
 import {endpoint, prodEndpoint} from './config'
 import Home from './components/Home'
 import Footer from './components/Footer'
+import Signup from './components/Signup'
 
 const cache = new InMemoryCache()
 const client = new ApolloClient({
@@ -92,7 +93,15 @@ const App = (): JSX.Element => {
               </Page>
             }
           />
-          <Route path="/login" element={<div>Login</div>} />
+          <Route
+            path="/signup"
+            element={
+              <Page>
+                <Signup />
+                <Footer isDark={isDark} />
+              </Page>
+            }
+          />
           <Route path="create" element={<div>create</div>} />
           <Route
             path=":userId"

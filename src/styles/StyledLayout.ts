@@ -6,7 +6,6 @@ const StyledLayout = styled.div<StyledLayoutProps>`
   transition: all ${({theme}): string => theme.transition};
   color: ${({theme}): string => theme.textDark};
   display: grid;
-  overflow-x: hidden;
   grid-gap: 2rem;
   min-height: 100%;
   grid-area: content;
@@ -17,9 +16,10 @@ const StyledLayout = styled.div<StyledLayoutProps>`
   grid-template-areas: ${(props): string =>
     props.hasSidebar ? `'main sidebar'` : `'main'`};
 
-  grid-template-areas: ${({theme}): string => theme.tablet`
+  ${({theme}): string => theme.mobileL`
     grid-row-gap: 1rem;
     grid-template-areas: 'main';
+    grid-template-columns: 1fr;
     grid-gap: initial;`};
 `
 

@@ -20,13 +20,13 @@ const StyledPage = styled.div<StyledPageProps>`
     '. content  .'
     'footer footer footer';
 
-  grid-template-areas: ${({theme}): string => theme.tablet`
+  ${({theme}): string => theme.tablet`
     grid-row-gap: 1rem;
-    grid-gap: initial;
+    grid-column-gap: initial;
     grid-template-columns:
     [viewport-start] minmax(20px, 1fr) [content-start] minmax(0, 45rem)
     [content-end] minmax(20px, 1fr) [viewport-end];
-    `};
+  `}
 `
 
 export default StyledPage
