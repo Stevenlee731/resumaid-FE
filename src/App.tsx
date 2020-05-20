@@ -11,7 +11,7 @@ import {
   gql,
   useQuery,
 } from '@apollo/client'
-import {theme, darkTheme} from './util/cssHelpers'
+import {theme, darkTheme, breakpoints} from './util/cssHelpers'
 import {ThemeProvider, createGlobalStyle} from 'styled-components'
 import Page from './components/Page'
 import Users from './components/Users'
@@ -19,6 +19,8 @@ import {endpoint, prodEndpoint} from './config'
 import Home from './components/Home'
 import Footer from './components/Footer'
 import Signup from './components/Signup'
+import useDimensions from 'react-cool-dimensions'
+import {GET_VIEWPORT_INFO} from './graphql/Queries'
 
 const cache = new InMemoryCache()
 const client = new ApolloClient({
@@ -45,16 +47,7 @@ const client = new ApolloClient({
   },
 })
 
-cache.writeQuery({
-  query: gql`
-    query GetTodosNetworkStatusAndFilter {
-      user
-    }
-  `,
-  data: {
-    user: [],
-  },
-})
+// cache.writeQuery(GET_SAMPLE_QUERY)
 
 const GlobalStyle = createGlobalStyle<{theme: typeof theme}>`
   html,
@@ -65,13 +58,34 @@ const GlobalStyle = createGlobalStyle<{theme: typeof theme}>`
 
 const App = (): JSX.Element => {
   const cachedDarkMode = localStorage.getItem('isDarkMode') === 'true'
+  const ref = React.useRef<HTMLDivElement>(null)
+  const {currentBreakpoint, width} = useDimensions(ref, {
+    breakpoints,
+    onResize: ({
+      currentBreakpoint,
+      width,
+    }: {
+      currentBreakpoint: string
+      width: number
+    }) => {
+      client.writeQuery({
+        query: GET_VIEWPORT_INFO,
+        data: {currentBreakpoint, width},
+      })
+    },
+  })
+
+  client.writeQuery({
+    query: GET_VIEWPORT_INFO,
+    data: {currentBreakpoint, width},
+  })
+
   const [isDark, setIsDark] = useState<boolean>(cachedDarkMode)
 
   const handleTheme = (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
   ): void => {
     e.preventDefault()
-
     setIsDark(!isDark)
   }
 
@@ -83,36 +97,38 @@ const App = (): JSX.Element => {
     <ApolloProvider client={client}>
       <ThemeProvider theme={isDark ? darkTheme : theme}>
         <GlobalStyle />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Page>
-                <Home handleTheme={handleTheme} isDark={isDark} />
-                <Footer isDark={isDark} />
-              </Page>
-            }
-          />
-          <Route
-            path="/signup"
-            element={
-              <Page>
-                <Signup />
-                <Footer isDark={isDark} />
-              </Page>
-            }
-          />
-          <Route path="create" element={<div>create</div>} />
-          <Route
-            path=":userId"
-            element={
-              <Page>
-                <Users isDark={isDark} handleTheme={handleTheme} />
-                <Footer isDark={isDark} />
-              </Page>
-            }
-          />
-        </Routes>
+        <div style={{height: '100%'}} ref={ref}>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Page>
+                  <Home handleTheme={handleTheme} isDark={isDark} />
+                  <Footer isDark={isDark} />
+                </Page>
+              }
+            />
+            <Route
+              path="/signup"
+              element={
+                <Page>
+                  <Signup />
+                  <Footer isDark={isDark} />
+                </Page>
+              }
+            />
+            <Route path="create" element={<div>create</div>} />
+            <Route
+              path=":userId"
+              element={
+                <Page>
+                  <Users isDark={isDark} handleTheme={handleTheme} />
+                  <Footer isDark={isDark} />
+                </Page>
+              }
+            />
+          </Routes>
+        </div>
       </ThemeProvider>
     </ApolloProvider>
   )

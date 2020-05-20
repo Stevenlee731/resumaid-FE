@@ -8,6 +8,8 @@ export const StyledNav = styled.nav`
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   grid-area: header;
   z-index: 9999;
+  position: sticky;
+  top: 0;
 
   .outer-container {
     padding: 0 2rem;
@@ -71,11 +73,6 @@ export const StyledNav = styled.nav`
       color: ${({theme}): string => theme.textLight};
     }
   }
-
-  ${({theme}): string => theme.mobileL`
-    position: sticky;
-    top: 0;
-  `};
 `
 
 export const StyledNavSection = styled.div`

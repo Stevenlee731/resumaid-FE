@@ -105,3 +105,10 @@ export const IS_USER_AUTHED = gql`
     user @client
   }
 `
+
+export const GET_VIEWPORT_INFO = gql`
+  query GetViewportInfo {
+    currentBreakpoint @client
+    width @client
+  }
+`

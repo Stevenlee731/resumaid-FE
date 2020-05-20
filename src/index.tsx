@@ -6,9 +6,9 @@ import App from './App'
 import * as serviceWorker from './serviceWorker'
 import {BrowserRouter} from 'react-router-dom'
 
-if (process.env.NODE_ENV === 'development') {
-  require('./mocks')
-}
+// if (process.env.NODE_ENV === 'development') {
+//   require('./mocks')
+// }
 
 ReactDOM.render(
   <React.StrictMode>

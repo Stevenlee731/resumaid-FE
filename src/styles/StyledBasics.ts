@@ -4,6 +4,7 @@ import StyledBaseModule from './StyledBaseModule'
 const StyledBasics = styled(StyledBaseModule)`
   grid-template-rows: 1fr;
   margin-top: 0;
+  margin-bottom: 0;
   padding: 0;
   grid-area: subheader;
   .headline {

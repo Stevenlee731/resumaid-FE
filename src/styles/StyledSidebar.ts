@@ -10,11 +10,11 @@ const StyledSidebar = styled.aside`
   .social-icon + .social-icon {
     margin-left: 10px;
   }
-
+/* 
   ${({theme}): string => theme.mobileM`
       flex-direction: column;
       display: none
-   `}
+   `} */
 `
 
 export default StyledSidebar

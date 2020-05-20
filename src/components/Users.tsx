@@ -7,31 +7,32 @@ import Modules from './Modules'
 import {formatResumeData} from '../util/helpers'
 import {StyledMainSection, StyledContentWrapper} from '../styles/Section'
 import Basics from '../modules/Basics'
-import {GET_USER, GET_USER_MODULES} from '../graphql/Queries'
+import {GET_USER, GET_USER_MODULES, GET_VIEWPORT_INFO} from '../graphql/Queries'
 
 import {Sidebar, SidebarSection, SidebarWrapper} from './Sidebar/index'
 
 import Profile from '../modules/Profile'
-import {ModulesProps} from '../types'
+import {ModulesProps, ViewportInfoProps} from '../types'
 import StyledLayout from '../styles/StyledLayout'
+import {ThumbsDown} from '../assets/svg'
+import styled, {ThemeConsumer} from 'styled-components'
+import useDimensions from 'react-cool-dimensions'
+import {breakpoints} from '../util/cssHelpers'
+import {MainLoader, SidebarLoader, SubheaderLoader} from '../components/Loaders'
 
-const TOGGLE_TODO = gql`
-  mutation ToggleTodo($id: Int!) {
-    toggleTodo(id: $id) @client
-  }
-`
+const StyledIconContainer = styled.div`
+  display: flex;
+  height: 4rem;
+  width: 4rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: ${({theme}) => theme.secondary};
+  margin-bottom: 1rem;
 
-const GET_TODOS = gql`
-  query GetTodos {
-    todos @client {
-      id
-    }
-  }
-`
-
-const GET_VISIBILITY_FILTER = gql`
-  query GetVisibilityFilter {
-    visibilityFilter @client
+  svg {
+    height: 2rem;
+    width: 2rem;
   }
 `
 
@@ -43,15 +44,51 @@ const Users = ({
   isDark: boolean
 }): JSX.Element => {
   const {userId} = useParams()
+  const client = useApolloClient()
+
+  const {data: viewportInfo} = useQuery<ViewportInfoProps>(GET_VIEWPORT_INFO)
+  const {width, currentBreakpoint} = viewportInfo || {width: 300}
 
   const {loading, error, data} = useQuery(GET_USER, {
     variables: {username: userId},
   })
 
-  const client = useApolloClient()
-
-  if (loading) return <div>...loading</div>
-  if (error || (data && data.allUsers.length < 1)) return <div>Error!</div>
+  if (loading)
+    return (
+      <>
+        <Header handleTheme={handleTheme} isDark={isDark} />
+        <SubheaderLoader />
+        <StyledLayout hasSidebar={true}>
+          <MainLoader itemCount={3} />
+          {width > 812 && <SidebarLoader />}
+        </StyledLayout>
+      </>
+    )
+  if (error || (data && data.allUsers.length < 1))
+    return (
+      <>
+        <Header handleTheme={handleTheme} isDark={isDark} />
+        <StyledLayout hasSidebar={false}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+            }}
+          >
+            <ThemeConsumer>
+              {(theme): JSX.Element => (
+                <StyledIconContainer>
+                  <ThumbsDown fill={theme.textDark} />
+                </StyledIconContainer>
+              )}
+            </ThemeConsumer>
+            Error Loading User
+          </div>
+        </StyledLayout>
+      </>
+    )
 
   const {allUsers} = data
   const {basics, ...rest} = (allUsers && allUsers[0]) || {}
@@ -60,7 +97,7 @@ const Users = ({
 
   client.writeQuery({
     query: GET_USER_MODULES,
-    data: {main, sidebar},
+    data: {main, sidebar, basics},
   })
 
   return (
@@ -72,8 +109,8 @@ const Users = ({
         website={basics.website}
       />
       {basics && <Basics {...basics} layout="" background={'primary'} />}
-      <StyledLayout hasSidebar={true}>
-        {sidebar && (
+      <StyledLayout hasSidebar={width > 812}>
+        {width > 812 && sidebar && (
           <Sidebar>
             <SidebarWrapper>
               <Profile {...basics} />

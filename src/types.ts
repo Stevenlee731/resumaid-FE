@@ -191,3 +191,8 @@ export type SidebarSectionProps = {
 }
 
 //#endregion Style Props
+
+export type ViewportInfoProps = {
+  width: number
+  currentBreakpoint: string
+}

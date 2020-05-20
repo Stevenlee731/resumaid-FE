@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import {css} from 'styled-components'
 
-export const sizes = {
+export const breakpoints = {
   mobileS: 320,
   mobileM: 375,
   mobileL: 425,
@@ -11,9 +11,9 @@ export const sizes = {
   desktop: 2560,
 }
 
-const mediaQueries = Object.keys(sizes).reduce((acc, label) => {
+const mediaQueries = Object.keys(breakpoints).reduce((acc, label) => {
   acc[label] = (...args) => css`
-    @media (max-width: ${sizes[label]}px) {
+    @media (max-width: ${breakpoints[label]}px) {
       ${css(...args)};
     }
   `

@@ -51,3 +51,21 @@ export const StyledContentWrapper = styled.main`
     grid-row-gap: 1rem;
   `}
 `
+
+export const StyledMainLoader = styled.div`
+  grid-area: main;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  svg {
+    padding-top: 1rem;
+  }
+`
+
+export const StyledSidebarLoader = styled.div`
+  grid-area: sidebar;
+`
+
+export const StyledSubheaderLoader = styled.div`
+  grid-area: subheader;
+`

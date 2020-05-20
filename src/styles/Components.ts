@@ -15,6 +15,8 @@ export const StyledLogin = styled.div`
     color: ${({theme}): string => theme.textDark};
     align-items: center;
     background: transparent;
+    border-radius: 1rem;
+    padding: 0.375rem 0.75rem;
     border: 1px solid ${({theme}): string => theme.textDark};
     transition: all ${({theme}): string => theme.transition};
   }
@@ -87,7 +89,9 @@ export const StyledToggle = styled.span`
   }
 `
 
-export const StyledDropdown = styled.div<{isDropdownOpen: boolean}>`
+export const StyledDropdown = styled.div<{
+  isDropdownOpen: boolean
+}>`
   text-align: left;
   position: relative;
   display: inline-block;
