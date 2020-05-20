@@ -32,6 +32,7 @@ export const StyledToggle = styled.span`
   color: #000;
   border: 1px solid ${({theme}): string => theme.secondary};
   transition: all ${({theme}): string => theme.transition};
+  box-sizing: initial;
 
   &.off,
   &.on {
@@ -89,9 +90,34 @@ export const StyledToggle = styled.span`
   }
 `
 
-export const StyledDropdown = styled.div<{
-  isDropdownOpen: boolean
-}>`
+export const StyledButton = styled.div<{inverted: boolean}>`
+  box-shadow: ${({theme}): string => theme.boxShadow};
+  border-radius: 0.375rem;
+  margin: 0 0.5rem;
+
+  > a {
+    padding: 1rem 2.5rem;
+    font-size: 1.125rem;
+    transition-duration: 0.15s;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-property: background-color, border-color, color, fill, stroke,
+      opacity, box-shadow, transform;
+    width: 100%;
+    color: ${({theme, inverted}): string =>
+      inverted ? theme.background : theme.textDark};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-width: 1px;
+    border-radius: 0.375rem;
+    border-color: transparent;
+    background-color: ${({theme, inverted}): string =>
+      inverted ? theme.textDark : theme.primary};
+    font-weight: 700;
+  }
+`
+
+export const StyledDropdown = styled.div<{isDropdownOpen: boolean}>`
   text-align: left;
   position: relative;
   display: inline-block;
@@ -163,4 +189,17 @@ export const StyledDropdown = styled.div<{
       color: ${({theme}): string => theme.background};
     }
   }
+`
+
+export const StyledWave = styled.svg`
+  position: absolute;
+  bottom: 0;
+
+  path {
+    fill: ${({theme}) => theme.primary};
+  }
+/* 
+  ${({theme}): string => theme.mobileL`
+    height: 50%;
+  `}; */
 `

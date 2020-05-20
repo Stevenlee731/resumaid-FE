@@ -9,6 +9,7 @@ const StyledPage = styled.div<StyledPageProps>`
   grid-gap: 2rem;
   grid-template-rows: auto auto 1fr auto;
   min-height: 100%;
+  position: relative;
 
   grid-template-columns:
     [viewport-start] minmax(20px, 1fr) [content-start] minmax(0, 60rem)

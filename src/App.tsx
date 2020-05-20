@@ -21,6 +21,9 @@ import Footer from './components/Footer'
 import Signup from './components/Signup'
 import useDimensions from 'react-cool-dimensions'
 import {GET_VIEWPORT_INFO} from './graphql/Queries'
+import Header from './components/Header'
+import styled from 'styled-components'
+import {Wave} from './assets/svg'
 
 const cache = new InMemoryCache()
 const client = new ApolloClient({
@@ -28,26 +31,7 @@ const client = new ApolloClient({
   link: new HttpLink({
     uri: process.env.NODE_ENV === 'development' ? endpoint : prodEndpoint,
   }),
-  resolvers: {
-    Mutation: {
-      toggleTodo: (_root, variables, {cache}) => {
-        const user = cache.identify({
-          __typename: 'User',
-          user: variables.user,
-        })
-
-        cache.modify(user, {
-          completed(value: any) {
-            return !value
-          },
-        })
-        return null
-      },
-    },
-  },
 })
-
-// cache.writeQuery(GET_SAMPLE_QUERY)
 
 const GlobalStyle = createGlobalStyle<{theme: typeof theme}>`
   html,
@@ -103,7 +87,9 @@ const App = (): JSX.Element => {
               path="/"
               element={
                 <Page>
-                  <Home handleTheme={handleTheme} isDark={isDark} />
+                  <Header handleTheme={handleTheme} isDark={isDark} />
+                  <Home />
+                  <Wave width={width} />
                   <Footer isDark={isDark} />
                 </Page>
               }

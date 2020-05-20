@@ -1,10 +1,11 @@
 import styled from 'styled-components'
 
 const StyledFooter = styled.footer`
-  height: 2rem;
+  height: 3rem;
   grid-area: footer;
   display: grid;
   align-items: center;
+  z-index: 1000;
 
   border-top: 2px solid ${({theme}): string => theme.border};
   background-color: ${({theme}): string => theme.background};
