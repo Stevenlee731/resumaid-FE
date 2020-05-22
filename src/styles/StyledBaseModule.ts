@@ -28,8 +28,7 @@ const StyledBaseModule = styled.div<StyledBaseModuleProps>`
     display: grid;
     height: 100%;
     width: 100%;
-    padding: ${({slot}): string =>
-      slot === 'main' ? '2.5rem 2rem 2rem 2rem' : '0'};
+    padding: ${({slot}): string => (slot === 'main' ? '2.5rem 0 2rem 0' : '0')};
 
     ${({theme}): string => theme.mobileM`
       padding: 1.5rem 1rem 1rem 1rem;

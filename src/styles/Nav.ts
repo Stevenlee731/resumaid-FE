@@ -12,7 +12,6 @@ export const StyledNav = styled.nav`
   top: 0;
 
   .outer-container {
-    padding: 0 2rem;
     max-width: ${({theme}): string => theme.maxWidth};
     margin-left: auto;
     margin-right: auto;
@@ -45,10 +44,16 @@ export const StyledNav = styled.nav`
     width: min-content;
 
     a {
+      display: flex;
+      align-items: center;
       color: ${({theme}): string => theme.textDark};
       word-spacing: 9999px;
       text-align: left;
       font-weight: 700;
+    }
+
+    span {
+      margin-left: 0.5rem;
     }
   }
 

@@ -20,6 +20,26 @@ import Signin from './components/Signin'
 import Create from './components/Create'
 import Template from './components/Template'
 
+// function PrivateRoute({children: any, ...rest}) {
+//   return (
+//     <Route
+//       {...rest}
+//       render={({location}) =>
+//         fakeAuth.isAuthenticated ? (
+//           children
+//         ) : (
+//           <Redirect
+//             to={{
+//               pathname: '/login',
+//               state: {from: location},
+//             }}
+//           />
+//         )
+//       }
+//     />
+//   )
+// }
+
 const App = (): JSX.Element => {
   const {client} = usePersistedApolloClient()
 
@@ -76,7 +96,17 @@ const App = (): JSX.Element => {
                 </Template>
               }
             />
-            <Route path="create" element={<Create />} />
+
+            <Route
+              path="create"
+              element={
+                <Template hasSubheader={false}>
+                  <Header handleTheme={handleTheme} isDark={isDark} />
+                  <Create />
+                  <Footer isDark={isDark} />
+                </Template>
+              }
+            />
             <Route
               path=":userId"
               element={

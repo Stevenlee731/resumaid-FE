@@ -22,6 +22,8 @@ const StyledHome = styled.main`
 
   .header {
     margin: 0;
+    font-family: 'Fira Sans';
+    font-weight: 700;
   }
 
   .text-primary {

@@ -1,5 +1,18 @@
 import styled from 'styled-components'
 
+export const StyledSVGContainer = styled.div<{height: string; width: string}>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: ${({height}): string => height};
+  width: ${({width}): string => width};
+  svg {
+    height: 100%;
+    width: 100%;
+  }
+`
+
 export const StyledCenteredContainer = styled.div`
   grid-area: content;
   display: flex;
@@ -210,4 +223,58 @@ export const StyledWave = styled.svg`
   ${({theme}): string => theme.mobileL`
     height: 50%;
   `}; */
+`
+
+export const StyledFormOptions = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+`
+
+export const StyledInput = styled.div`
+  width: 100%;
+  position: relative;
+  border: 0 solid #d2d6dc;
+
+  > div {
+    border: 0 solid #d2d6dc;
+  }
+
+  input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border-width: 1px;
+    display: block;
+    border-color: #d2d6dc;
+    line-height: 1.25;
+  }
+`
+
+export const StyledForm = styled.form`
+  > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  p {
+    margin: 0;
+  }
+  h2 {
+    font-size: 2rem;
+    font-family: 'fira sans';
+    font-weight: 700;
+    margin: 1rem 0 0.5rem 0;
+  }
+  fieldset {
+    border: 0 solid #d2d6dc;
+    padding: 0;
+    margin-top: 2rem;
+  }
+
+  button {
+    background: ${({theme}) => theme.sitePrimary};
+    padding: 0.5rem 1rem;
+    width: 100%;
+  }
 `

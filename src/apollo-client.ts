@@ -6,6 +6,7 @@ import {
   concat,
   NormalizedCacheObject,
 } from '@apollo/client'
+import {onError} from '@apollo/link-error'
 import {endpoint, prodEndpoint} from './config'
 
 export const createApolloClient = (): ApolloClient<NormalizedCacheObject> => {
@@ -21,14 +22,29 @@ export const createApolloClient = (): ApolloClient<NormalizedCacheObject> => {
     return forward(operation)
   })
 
+  const errorLink = onError(({graphQLErrors, networkError}) => {
+    if (graphQLErrors)
+      graphQLErrors.forEach(({message, locations, path}) =>
+        console.log(
+          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+        ),
+      )
+    if (networkError)
+      console.log(
+        `[Network error]: ${networkError}. Backend is unreachable. Is it running?`,
+      )
+  })
+
   const link = new HttpLink({
     uri: process.env.NODE_ENV === 'development' ? endpoint : prodEndpoint,
   })
+
+  const composedLinks = ApolloLink.from([errorLink, authMiddleware, link])
 
   const cache = new InMemoryCache()
   return new ApolloClient({
     cache,
     credentials: 'include',
-    link: concat(authMiddleware, link),
+    link: composedLinks,
   })
 }

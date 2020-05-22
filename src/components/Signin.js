@@ -3,43 +3,32 @@ import {useMutation, useQuery, useApolloClient} from '@apollo/client'
 import {StyledCenteredContainer} from '../styles/Components'
 import {CURRENT_USER_QUERY} from '../graphql/Queries'
 import {SIGNIN_MUTATION} from '../graphql/Mutations'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
+import styled from 'styled-components'
+import {useForm} from '../util/hooks'
+import {Logo} from '../assets/svg'
+import {
+  StyledSVGContainer,
+  StyledFormOptions,
+  StyledInput,
+  StyledForm,
+} from '../styles/Components'
 
-function useForm(initial = {}) {
-  const [inputs, setInputs] = useState(initial)
-
-  function handleChange(e) {
-    let {value} = e.target
-    const {name, type} = e.target
-    if (type === 'number') {
-      value = parseInt(value)
-    }
-    if (type === 'file') {
-      ;[value] = e.target.files
-    }
-    setInputs({
-      ...inputs,
-      [name]: value,
-    })
-  }
-
-  function resetForm() {
-    setInputs(initial)
-  }
-
-  function clearForm() {
-    const blankState = Object.fromEntries(
-      Object.entries(inputs).map(([key]) => [key, '']),
-    )
-    setInputs(blankState)
-  }
-
-  return {
-    inputs,
-    handleChange,
-    resetForm,
-    clearForm,
-  }
+const Input = ({type, value, handleChange}) => {
+  return (
+    <StyledInput>
+      <div>
+        <input
+          type={type}
+          name={type}
+          placeholder={type}
+          value={value}
+          onChange={handleChange}
+          autoComplete={type}
+        />
+      </div>
+    </StyledInput>
+  )
 }
 
 function Signin() {
@@ -60,6 +49,11 @@ function Signin() {
     // },
   })
 
+  if (error) {
+    console.log(error)
+    return <div>error</div>
+  }
+
   if (data) {
     const {authenticateUserWithPassword} = data || {}
     const {item, token} = authenticateUserWithPassword || {}
@@ -74,68 +68,53 @@ function Signin() {
 
   return (
     <StyledCenteredContainer>
-      <form
+      <StyledForm
         method="post"
         onSubmit={async e => {
           e.preventDefault()
-          const res = await signin()
-          console.log(res)
-          resetForm()
+          try {
+            await signin()
+          } catch (e) {
+            console.error(e)
+          }
         }}
       >
+        <div>
+          <StyledSVGContainer height={'4rem'} width={'4rem'}>
+            <Logo />
+          </StyledSVGContainer>
+          <h2>Sign into your account</h2>
+          <p>
+            or <Link to="/signup">Sign up with a free account!</Link>
+          </p>
+        </div>
         <fieldset disabled={loading} aria-busy={loading}>
-          {/* <Error error={error} /> */}
-          <div>
-            <div>Image</div>
-            <h2>Sign into your account</h2>
-            <p>
-              or <Link to="/signup">Sign up with a free account!</Link>
-            </p>
-          </div>
-          <div>
-            <div>
-              <input
-                type="email"
-                name="email"
-                placeholder="email"
-                value={inputs.email}
-                onChange={handleChange}
-                autoComplete="email"
-              />
-            </div>
-            <div>
-              <input
-                type="password"
-                name="password"
-                placeholder="password"
-                value={inputs.password}
-                onChange={handleChange}
-                autoComplete="new-password"
-              />
-            </div>
-            <div class="mt-6 flex items-center justify-between">
-              <div class="flex items-center">
-                <input
-                  id="remember_me"
-                  type="checkbox"
-                  class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"
-                />
-                <label
-                  for="remember_me"
-                  class="ml-2 block text-sm leading-5 text-gray-900"
-                >
-                  Remember me
-                </label>
+          <div className="field-container">
+            <Input
+              type={'email'}
+              value={inputs.email}
+              handleChange={handleChange}
+            />
+            <Input
+              type={'password'}
+              value={inputs.password}
+              handleChange={handleChange}
+            />
+
+            <StyledFormOptions>
+              <div>
+                <input id="remember_me" type="checkbox" />
+                <label htmlFor="remember_me">Remember me</label>
               </div>
 
-              <div class="text-sm leading-5">
+              <div>
                 <Link to={'/'}>Forget Your Password?</Link>
               </div>
-            </div>
+            </StyledFormOptions>
           </div>
           <button type="submit">Sign In!</button>
         </fieldset>
-      </form>
+      </StyledForm>
     </StyledCenteredContainer>
   )
 }

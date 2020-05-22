@@ -4,13 +4,18 @@ import * as React from 'react'
 import {Link} from 'react-router-dom'
 import useDimensions from 'react-cool-dimensions'
 import {StyledNav, StyledNavSection} from '../styles/Nav'
-import {StyledToggle, StyledLogin} from '../styles/Components'
+import {
+  StyledToggle,
+  StyledLogin,
+  StyledSVGContainer,
+} from '../styles/Components'
 import Dropdown from '../components/Dropdown'
 import {CURRENT_USER_QUERY} from '../graphql/Queries'
 import {UNAUTHENTICATE_USER_MUTATION} from '../graphql/Mutations'
 import {useQuery, useMutation, ApolloClient, FetchResult} from '@apollo/client'
 import {breakpoints} from '../util/cssHelpers.js'
 import throttle from 'lodash.throttle'
+import {Logo} from '../assets/svg'
 
 const unAuth = (apolloClient: ApolloClient<any>, unAuthMutation: any): void => {
   unAuthMutation()
@@ -49,7 +54,12 @@ const Header = ({
         <div className="inner-container">
           <div className="nav-left">
             <div className="logo">
-              <a href="#">{name}</a>
+              <Link to="/">
+                <StyledSVGContainer height={'2rem'} width={'2rem'}>
+                  <Logo />
+                </StyledSVGContainer>
+                <span>PortfoliOrca</span>
+              </Link>
             </div>
             <div className="outer-directory">
               <div className="inner-directory">
