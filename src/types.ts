@@ -171,6 +171,11 @@ export type StyledPageProps = {
   readonly theme: {}
 }
 
+export type StyledTemplateProps = {
+  readonly theme: {}
+  hasSubheader: boolean
+}
+
 export type StyledLayoutProps = {
   readonly theme: {}
   hasSidebar: boolean

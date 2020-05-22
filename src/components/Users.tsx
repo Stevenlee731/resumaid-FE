@@ -7,7 +7,11 @@ import Modules from './Modules'
 import {formatResumeData} from '../util/helpers'
 import {StyledMainSection, StyledContentWrapper} from '../styles/Section'
 import Basics from '../modules/Basics'
-import {GET_USER, GET_USER_MODULES, GET_VIEWPORT_INFO} from '../graphql/Queries'
+import {
+  GET_USER_QUERY,
+  GET_USER_MODULES_QUERY,
+  GET_VIEWPORT_INFO_QUERY,
+} from '../graphql/Queries'
 
 import {Sidebar, SidebarSection, SidebarWrapper} from './Sidebar/index'
 
@@ -46,10 +50,12 @@ const Users = ({
   const {userId} = useParams()
   const client = useApolloClient()
 
-  const {data: viewportInfo} = useQuery<ViewportInfoProps>(GET_VIEWPORT_INFO)
+  const {data: viewportInfo} = useQuery<ViewportInfoProps>(
+    GET_VIEWPORT_INFO_QUERY,
+  )
   const {width, currentBreakpoint} = viewportInfo || {width: 300}
 
-  const {loading, error, data} = useQuery(GET_USER, {
+  const {loading, error, data} = useQuery(GET_USER_QUERY, {
     variables: {username: userId},
   })
 
@@ -96,7 +102,7 @@ const Users = ({
   const [main, sidebar] = formatResumeData(rest)
 
   client.writeQuery({
-    query: GET_USER_MODULES,
+    query: GET_USER_MODULES_QUERY,
     data: {main, sidebar, basics},
   })
 

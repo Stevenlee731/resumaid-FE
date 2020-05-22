@@ -1,5 +1,5 @@
 import React from 'react'
-import {GET_USER_MODULES} from '../graphql/Queries'
+import {GET_USER_MODULES_QUERY} from '../graphql/Queries'
 import {useQuery} from '@apollo/client'
 import {useOnClickOutside} from '../util/hooks'
 import {StyledDropdown, StyledToggle, StyledLogin} from '../styles/Components'
@@ -12,7 +12,7 @@ const Dropdown = ({
   isDark: boolean
   handleTheme: Function
 }): JSX.Element => {
-  const {data} = useQuery(GET_USER_MODULES)
+  const {data} = useQuery(GET_USER_MODULES_QUERY)
 
   const ref = React.useRef<HTMLDivElement>(null)
   const [isDropdownOpen, setIsDropdownOpen] = React.useState(false)

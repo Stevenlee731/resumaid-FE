@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import {css} from 'styled-components'
+import {css, createGlobalStyle} from 'styled-components'
 
 export const breakpoints = {
   mobileS: 320,
@@ -37,6 +37,9 @@ export const theme = {
   secondary: '#ffefe8',
   primary: '#bfd3da',
   border: 'rgba(0,0,0,0.06)',
+  sitePrimary: '#457B9D',
+  siteSecondary: '#457B9D',
+  siteInverted: '#457B9D',
   ...defaultStyle,
   ...mediaQueries,
 }
@@ -50,6 +53,16 @@ export const darkTheme = {
   secondary: '#242526',
   primary: '#33353a',
   border: '#3A3B3D',
+  sitePrimary: '#242526',
+  siteSecondary: '#33353a',
+  siteInverted: '#fff',
   ...defaultStyle,
   ...mediaQueries,
 }
+
+export const GlobalStyle = createGlobalStyle`
+  html,
+  body {
+    background: ${({theme}) => theme.background};
+  }
+`

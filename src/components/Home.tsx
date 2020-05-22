@@ -4,11 +4,6 @@ import {Link} from 'react-router-dom'
 import StyledHome from '../styles/StyledHome'
 import {StyledButton} from '../styles/Components'
 
-type HomeProps = {
-  isDark: boolean
-  handleTheme: Function
-}
-
 export default function Home(): JSX.Element {
   return (
     <StyledHome>
@@ -23,7 +18,7 @@ export default function Home(): JSX.Element {
             <Link to="/signup">Get Started</Link>
           </StyledButton>
           <StyledButton inverted={true}>
-            <Link to="/signup">Sign in!</Link>
+            <Link to="/signin">Sign in!</Link>
           </StyledButton>
         </div>
       </div>

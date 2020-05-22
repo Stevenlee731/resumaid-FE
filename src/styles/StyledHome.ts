@@ -29,7 +29,7 @@ const StyledHome = styled.main`
   }
 
   .text-secondary {
-    color: ${({theme}): string => theme.primary};
+    color: ${({theme}): string => theme.siteInverted};
   }
 
   .subheader {

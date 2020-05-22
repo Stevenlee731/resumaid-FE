@@ -1,5 +1,9 @@
 import React from 'react'
 import {StyledWave} from '../styles/Components'
+import {GET_VIEWPORT_INFO_QUERY} from '../graphql/Queries'
+import {useQuery} from '@apollo/client'
+import {ViewportInfoProps} from '../types'
+
 export const Chevron = ({
   direction = 'down',
 }: {
@@ -90,15 +94,20 @@ export const ThumbsDown = ({fill}: {fill: string}): JSX.Element => (
   </svg>
 )
 
-export const Wave = ({width}: {width: number}): JSX.Element => (
-  <StyledWave
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox={`0 0 ${width > 1440 ? 1440 : width} 320`}
-  >
-    <path
-      fill="#0099ff"
-      fillOpacity="1"
-      d="M0,192L80,202.7C160,213,320,235,480,202.7C640,171,800,85,960,58.7C1120,32,1280,64,1360,80L1440,96L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
-    ></path>
-  </StyledWave>
-)
+export const Wave = (): JSX.Element => {
+  const {data} = useQuery<ViewportInfoProps>(GET_VIEWPORT_INFO_QUERY)
+  const {width, currentBreakpoint} = data || {width: 300}
+
+  return (
+    <StyledWave
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox={`0 0 ${width > 1440 ? 1440 : width} 320`}
+    >
+      <path
+        fill="#0099ff"
+        fillOpacity="1"
+        d="M0,192L80,202.7C160,213,320,235,480,202.7C640,171,800,85,960,58.7C1120,32,1280,64,1360,80L1440,96L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
+      ></path>
+    </StyledWave>
+  )
+}

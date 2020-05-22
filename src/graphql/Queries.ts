@@ -1,6 +1,6 @@
 import {gql} from '@apollo/client'
 
-export const GET_USER = gql`
+export const GET_USER_QUERY = gql`
   query GetUser($username: String!) {
     allUsers(where: {username: $username}) {
       basics {
@@ -91,7 +91,7 @@ export const GET_USER = gql`
   }
 `
 
-export const GET_USER_MODULES = gql`
+export const GET_USER_MODULES_QUERY = gql`
   query GetUserModules {
     main @client
     sidebar @client
@@ -106,9 +106,20 @@ export const IS_USER_AUTHED = gql`
   }
 `
 
-export const GET_VIEWPORT_INFO = gql`
+export const GET_VIEWPORT_INFO_QUERY = gql`
   query GetViewportInfo {
     currentBreakpoint @client
     width @client
+  }
+`
+
+export const CURRENT_USER_QUERY = gql`
+  query {
+    authenticatedUser @client {
+      username
+      basics {
+        name
+      }
+    }
   }
 `

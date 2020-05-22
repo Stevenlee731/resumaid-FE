@@ -1,5 +1,12 @@
 import styled from 'styled-components'
 
+export const StyledCenteredContainer = styled.div`
+  grid-area: content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
 export const StyledLogin = styled.div`
   display: flex;
   align-items: center;
@@ -12,13 +19,16 @@ export const StyledLogin = styled.div`
   button {
     display: flex;
     justify-content: center;
-    color: ${({theme}): string => theme.textDark};
     align-items: center;
     background: transparent;
     border-radius: 1rem;
     padding: 0.375rem 0.75rem;
     border: 1px solid ${({theme}): string => theme.textDark};
-    transition: all ${({theme}): string => theme.transition};
+  }
+
+  a {
+    color: ${({theme}): string => theme.textDark};
+    /* transition: all ${({theme}): string => theme.transition}; */
   }
 `
 
@@ -28,7 +38,7 @@ export const StyledToggle = styled.span`
   width: 2rem;
   height: 1rem;
   min-width: 2rem;
-  background-color: ${({theme}): string => theme.primary};
+  background-color: ${({theme}): string => theme.siteSecondary};
   color: #000;
   border: 1px solid ${({theme}): string => theme.secondary};
   transition: all ${({theme}): string => theme.transition};
@@ -59,10 +69,9 @@ export const StyledToggle = styled.span`
     width: 1rem;
     left: 4px;
     top: 5px;
-    background-color: ${({theme}): string => theme.secondary};
+    background-color: #fff;
     transition: all ${({theme}): string => theme.transition};
     border-radius: 50%;
-    box-shadow: inset -8px -8px 6px -6px ${({theme}): string => theme.secondary};
   }
 
   &.off:after {
@@ -103,8 +112,6 @@ export const StyledButton = styled.div<{inverted: boolean}>`
     transition-property: background-color, border-color, color, fill, stroke,
       opacity, box-shadow, transform;
     width: 100%;
-    color: ${({theme, inverted}): string =>
-      inverted ? theme.background : theme.textDark};
     display: flex;
     justify-content: center;
     align-items: center;
@@ -112,7 +119,8 @@ export const StyledButton = styled.div<{inverted: boolean}>`
     border-radius: 0.375rem;
     border-color: transparent;
     background-color: ${({theme, inverted}): string =>
-      inverted ? theme.textDark : theme.primary};
+      inverted ? theme.textLight : theme.sitePrimary};
+    color: #fff;
     font-weight: 700;
   }
 `
@@ -196,7 +204,7 @@ export const StyledWave = styled.svg`
   bottom: 0;
 
   path {
-    fill: ${({theme}) => theme.primary};
+    fill: ${({theme}): string => theme.sitePrimary};
   }
 /* 
   ${({theme}): string => theme.mobileL`
