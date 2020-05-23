@@ -7,7 +7,6 @@ const StyledLayout = styled.div<StyledLayoutProps>`
   color: ${({theme}): string => theme.textDark};
   display: grid;
   grid-gap: 2rem;
-  min-height: 100%;
   grid-area: content;
 
   grid-template-columns: ${(props): string =>
@@ -18,7 +17,7 @@ const StyledLayout = styled.div<StyledLayoutProps>`
 
   ${({theme}): string => theme.mobileL`
     grid-row-gap: 1rem;
-    grid-template-areas: 'main';
+    grid-template-areas: 'sidebar' 'main';
     grid-template-columns: 1fr;
     grid-gap: initial;`};
 `

@@ -38,6 +38,7 @@ export const StyledLogin = styled.div`
     border-radius: 1rem;
     padding: 0.375rem 0.75rem;
     border: 1px solid ${({theme}): string => theme.textDark};
+
   }
 
   a {
@@ -196,6 +197,7 @@ export const StyledDropdown = styled.div<{isDropdownOpen: boolean}>`
       line-height: 1.25rem;
       color: ${({theme}): string => theme.background};
       display: block;
+      width: 100%;
     }
 
     div {
@@ -272,5 +274,7 @@ export const StyledForm = styled.form`
     background: ${({theme}) => theme.sitePrimary};
     padding: 0.5rem 1rem;
     width: 100%;
+    border-radius: 0.375rem;
+    color: ${({theme}) => theme.white};
   }
 `

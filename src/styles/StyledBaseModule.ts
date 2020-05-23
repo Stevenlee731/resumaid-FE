@@ -31,7 +31,7 @@ const StyledBaseModule = styled.div<StyledBaseModuleProps>`
     padding: ${({slot}): string => (slot === 'main' ? '2.5rem 0 2rem 0' : '0')};
 
     ${({theme}): string => theme.mobileM`
-      padding: 1.5rem 1rem 1rem 1rem;
+      padding: 1.5rem 0 1rem 0;
     `};
   }
 

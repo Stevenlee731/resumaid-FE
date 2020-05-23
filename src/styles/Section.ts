@@ -20,6 +20,7 @@ export const StyledSidebarWrapper = styled.div`
   border-radius: 1rem;
   border: ${({theme}): string => `2px solid ${theme.border}`};
   transition: border ${({theme}): string => theme.transition};
+  height: max-content;
 
   > div + div {
     border-top: ${({theme}): string => `2px solid ${theme.border}`};
@@ -48,7 +49,7 @@ export const StyledContentWrapper = styled.main`
   grid-row-gap: 2rem;
 
   ${({theme}): string => theme.mobileM`
-    grid-row-gap: 1rem;
+    grid-row-gap: 0;
   `}
 `
 

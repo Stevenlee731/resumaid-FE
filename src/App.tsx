@@ -2,7 +2,7 @@
 import React, {useState, useEffect} from 'react'
 import './normalize.css'
 import './App.css'
-import {Routes, Route} from 'react-router-dom'
+import {Route, Switch} from 'react-router-dom'
 import {ApolloProvider} from '@apollo/client'
 
 import {usePersistedApolloClient} from './util/hooks'
@@ -64,61 +64,46 @@ const App = (): JSX.Element => {
       <ThemeProvider theme={isDark ? darkTheme : theme}>
         <GlobalStyle />
         <Page>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <Template hasSubheader={false}>
-                  <Header handleTheme={handleTheme} isDark={isDark} />
-                  <Home />
-                  <Wave />
-                  <Footer isDark={isDark} />
-                </Template>
-              }
-            />
-            <Route
-              path="/signup"
-              element={
-                <Template hasSubheader={false}>
-                  <Header handleTheme={handleTheme} isDark={isDark} />
-                  <Signup />
-                  <Wave />
-                  <Footer isDark={isDark} />
-                </Template>
-              }
-            />
-            <Route
-              path="/signin"
-              element={
-                <Template hasSubheader={false}>
-                  <Header handleTheme={handleTheme} isDark={isDark} />
-                  <Signin />
-                  <Wave />
-                  <Footer isDark={isDark} />
-                </Template>
-              }
-            />
+          <Switch>
+            <Route exact path="/">
+              <Template hasSubheader={false}>
+                <Header handleTheme={handleTheme} isDark={isDark} />
+                <Home />
+                <Wave />
+                <Footer isDark={isDark} />
+              </Template>
+            </Route>
+            <Route path="/signup">
+              <Template hasSubheader={false}>
+                <Header handleTheme={handleTheme} isDark={isDark} />
+                <Signup />
+                <Wave />
+                <Footer isDark={isDark} />
+              </Template>
+            </Route>
+            <Route path="/signin">
+              <Template hasSubheader={false}>
+                <Header handleTheme={handleTheme} isDark={isDark} />
+                <Signin />
+                <Wave />
+                <Footer isDark={isDark} />
+              </Template>
+            </Route>
 
-            <Route
-              path="create"
-              element={
-                <Template hasSubheader={false}>
-                  <Header handleTheme={handleTheme} isDark={isDark} />
-                  <Create />
-                  <Footer isDark={isDark} />
-                </Template>
-              }
-            />
-            <Route
-              path=":userId"
-              element={
-                <Template hasSubheader={true}>
-                  <Users isDark={isDark} handleTheme={handleTheme} />
-                  <Footer isDark={isDark} />
-                </Template>
-              }
-            />
-          </Routes>
+            <Route path="/create">
+              <Template hasSubheader={false}>
+                <Header handleTheme={handleTheme} isDark={isDark} />
+                <Create />
+                <Footer isDark={isDark} />
+              </Template>
+            </Route>
+            <Route path="/:userId">
+              <Template hasSubheader={true}>
+                <Users isDark={isDark} handleTheme={handleTheme} />
+                <Footer isDark={isDark} />
+              </Template>
+            </Route>
+          </Switch>
         </Page>
       </ThemeProvider>
     </ApolloProvider>

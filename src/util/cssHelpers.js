@@ -29,6 +29,7 @@ const defaultStyle = {
 
 export const theme = {
   black: '#393939',
+  white: '#fff',
   textDark: '#393939',
   textLight: '#868893',
   maxWidth: '60rem',
@@ -46,6 +47,7 @@ export const theme = {
 
 export const darkTheme = {
   black: '#393939',
+  white: '#fff',
   textDark: '#fff',
   textLight: '#c3c3c3',
   nav: '#242526',

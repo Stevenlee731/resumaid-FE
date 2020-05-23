@@ -21,7 +21,7 @@ import StyledLayout from '../styles/StyledLayout'
 import {ThumbsDown} from '../assets/svg'
 import styled, {ThemeConsumer} from 'styled-components'
 import useDimensions from 'react-cool-dimensions'
-import {breakpoints} from '../util/cssHelpers'
+import {breakpoints} from '../util/cssHelpers.js'
 import {MainLoader, SidebarLoader, SubheaderLoader} from '../components/Loaders'
 
 const StyledIconContainer = styled.div`
@@ -115,27 +115,32 @@ const Users = ({
         website={basics.website}
       />
       {basics && <Basics {...basics} layout="" background={'primary'} />}
-      <StyledLayout hasSidebar={width > 812}>
-        {width > 812 && sidebar && (
+      <StyledLayout hasSidebar={true}>
+        {sidebar && (
           <Sidebar>
-            <SidebarWrapper>
-              <Profile {...basics} />
-            </SidebarWrapper>
-            <SidebarWrapper>
-              {sidebar.map((section: ModulesProps) => {
-                return (
-                  <SidebarSection module={section.module} key={section.module}>
-                    <Modules
+            <div>
+              <SidebarWrapper>
+                <Profile {...basics} />
+              </SidebarWrapper>
+              <SidebarWrapper>
+                {sidebar.map((section: ModulesProps) => {
+                  return (
+                    <SidebarSection
                       module={section.module}
-                      order={section.order}
-                      content={section.content}
-                      slot={section.slot}
-                      background={''}
-                    />
-                  </SidebarSection>
-                )
-              })}
-            </SidebarWrapper>
+                      key={section.module}
+                    >
+                      <Modules
+                        module={section.module}
+                        order={section.order}
+                        content={section.content}
+                        slot={section.slot}
+                        background={''}
+                      />
+                    </SidebarSection>
+                  )
+                })}
+              </SidebarWrapper>
+            </div>
           </Sidebar>
         )}
 

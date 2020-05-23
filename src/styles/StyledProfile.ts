@@ -33,10 +33,10 @@ const StyledProfile = styled.div`
     color: ${({theme}): string => theme.textLight};
     line-height: 1.5;
     font-size: 1rem;
-
-    ${({theme}): string => theme.mobileM`
-      margin: 1rem 0;
-   `}
   }
+
+  ${({theme}): string => theme.mobileM`
+      margin-bottom: 0;
+   `}
 `
 export default StyledProfile

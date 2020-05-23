@@ -58,7 +58,7 @@ const StyledHome = styled.main`
       align-items: center;
 
       > div {
-        width: 75%;
+        width: 100%;
       }
 
       > * + * {

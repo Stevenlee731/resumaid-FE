@@ -72,7 +72,7 @@ function Signin() {
       data: {authenticatedUser: item},
     })
 
-    return <div>data</div>
+    return <Redirect to="create" />
   }
 
   return (
