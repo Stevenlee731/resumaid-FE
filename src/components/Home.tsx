@@ -9,7 +9,7 @@ export default function Home(): JSX.Element {
     <StyledHome>
       <div className="hero">
         <h2 className="header">
-          <span className="text-primary">Leave a great</span>
+          <span className="text-primary">Leave a killer</span>
           <span className="text-secondary">(digital) impression</span>
         </h2>
         <p className="subheader">Create a free online portfolio in minutes!</p>
