@@ -4,7 +4,7 @@ import {StyledCenteredContainer} from '../styles/Components'
 import {CURRENT_USER_QUERY} from '../graphql/Queries'
 import {SIGNIN_MUTATION} from '../graphql/Mutations'
 import {Link, Redirect} from 'react-router-dom'
-import styled from 'styled-components'
+import {ThemeConsumer} from 'styled-components'
 import {useForm} from '../util/hooks'
 import {Logo} from '../assets/svg'
 import {
@@ -32,6 +32,10 @@ const Input = ({type, value, handleChange}) => {
 }
 
 function Signin() {
+  // const {data: currentUser} = useQuery(CURRENT_USER_QUERY, {
+  //   fetchPolicy: 'network-only',
+  // })
+
   const {inputs, handleChange, resetForm} = useForm({
     email: '',
     password: '',
@@ -48,6 +52,11 @@ function Signin() {
     //   })
     // },
   })
+
+  // if (currentUser && currentUser.authenticatedUser) {
+  //   console.log(currentUser.authenticatedUser)
+  //   return <StyledCenteredContainer>Already authed</StyledCenteredContainer>
+  // }
 
   if (error) {
     console.log(error)
@@ -81,9 +90,11 @@ function Signin() {
       >
         <div>
           <StyledSVGContainer height={'4rem'} width={'4rem'}>
-            <Logo />
+            <ThemeConsumer>
+              {theme => <Logo fill={theme.siteInverted} />}
+            </ThemeConsumer>
           </StyledSVGContainer>
-          <h2>Sign into your account</h2>
+          <h2>Sign in to your account</h2>
           <p>
             or <Link to="/signup">Sign up with a free account!</Link>
           </p>

@@ -82,6 +82,7 @@ const App = (): JSX.Element => {
                 <Template hasSubheader={false}>
                   <Header handleTheme={handleTheme} isDark={isDark} />
                   <Signup />
+                  <Wave />
                   <Footer isDark={isDark} />
                 </Template>
               }
@@ -92,6 +93,7 @@ const App = (): JSX.Element => {
                 <Template hasSubheader={false}>
                   <Header handleTheme={handleTheme} isDark={isDark} />
                   <Signin />
+                  <Wave />
                   <Footer isDark={isDark} />
                 </Template>
               }

@@ -18,6 +18,7 @@ export const StyledCenteredContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 100;
 `
 
 export const StyledLogin = styled.div`
@@ -213,16 +214,9 @@ export const StyledDropdown = styled.div<{isDropdownOpen: boolean}>`
 `
 
 export const StyledWave = styled.svg`
-  position: absolute;
-  bottom: 0;
-
   path {
     fill: ${({theme}): string => theme.sitePrimary};
   }
-/* 
-  ${({theme}): string => theme.mobileL`
-    height: 50%;
-  `}; */
 `
 
 export const StyledFormOptions = styled.div`
@@ -251,6 +245,8 @@ export const StyledInput = styled.div`
 `
 
 export const StyledForm = styled.form`
+  margin-bottom: 25%;
+
   > div {
     display: flex;
     flex-direction: column;

@@ -1,7 +1,7 @@
 /* eslint-disable prefer-rest-params */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react'
-import {Link} from 'react-router-dom'
+import {Link, NavLink} from 'react-router-dom'
 import useDimensions from 'react-cool-dimensions'
 import {StyledNav, StyledNavSection} from '../styles/Nav'
 import {
@@ -16,6 +16,7 @@ import {useQuery, useMutation, ApolloClient, FetchResult} from '@apollo/client'
 import {breakpoints} from '../util/cssHelpers.js'
 import throttle from 'lodash.throttle'
 import {Logo} from '../assets/svg'
+import {ThemeConsumer} from 'styled-components'
 
 const unAuth = (apolloClient: ApolloClient<any>, unAuthMutation: any): void => {
   unAuthMutation()
@@ -56,7 +57,9 @@ const Header = ({
             <div className="logo">
               <Link to="/">
                 <StyledSVGContainer height={'2rem'} width={'2rem'}>
-                  <Logo />
+                  <ThemeConsumer>
+                    {(theme): JSX.Element => <Logo fill={theme.siteInverted} />}
+                  </ThemeConsumer>
                 </StyledSVGContainer>
                 <span>PortfoliOrca</span>
               </Link>
@@ -73,7 +76,7 @@ const Header = ({
                 {data ? (
                   <StyledLogin>
                     <span>{`Welcome ${username}`}</span>
-                    <button
+                    {/* <button
                       onClick={async () => {
                         const data = await unAuth()
                         console.log(data, 'unauth')
@@ -81,7 +84,18 @@ const Header = ({
                       }}
                     >
                       Log Out
-                    </button>
+                    </button> */}
+
+                    <NavLink
+                      to="/"
+                      onClick={async () => {
+                        const data = await unAuth()
+                        console.log(data, 'unauth')
+                        client.resetStore()
+                      }}
+                    >
+                      Log Out
+                    </NavLink>
                   </StyledLogin>
                 ) : (
                   <StyledLogin>
@@ -104,7 +118,12 @@ const Header = ({
               </StyledNavSection>
             </div>
           )}
-          {!isDesktop && <Dropdown isDark={isDark} handleTheme={handleTheme} />}
+          <Dropdown
+            unAuth={unAuth}
+            isDesktop={isDesktop}
+            isDark={isDark}
+            handleTheme={handleTheme}
+          />
         </div>
       </div>
     </StyledNav>

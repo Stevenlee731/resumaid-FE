@@ -78,6 +78,12 @@ export const StyledNav = styled.nav`
       color: ${({theme}): string => theme.textLight};
     }
   }
+
+  ${({theme}): string => theme.mobileL`
+    .outer-container {
+      padding: 0 20px;
+    }
+  `}
 `
 
 export const StyledNavSection = styled.div`
