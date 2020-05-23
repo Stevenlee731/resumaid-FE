@@ -5,6 +5,7 @@ import {useQuery, useApolloClient} from '@apollo/client'
 import {useOnClickOutside} from '../util/hooks'
 import {StyledDropdown, StyledToggle, StyledLogin} from '../styles/Components'
 import {Hamburger} from '../assets/svg'
+import {unAuthAndClearCache} from '../util/helpers'
 
 const Dropdown = ({
   handleTheme,
@@ -64,11 +65,7 @@ const Dropdown = ({
 
                   <NavLink
                     to="/"
-                    onClick={async () => {
-                      const data = await unAuth()
-                      console.log(data, 'unauth')
-                      client.resetStore()
-                    }}
+                    onClick={() => unAuthAndClearCache(client, unAuth)}
                   >
                     Log Out
                   </NavLink>

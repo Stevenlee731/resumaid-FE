@@ -1,9 +1,27 @@
-import React from 'react'
-import {useQuery} from '@apollo/client'
+import React, {useEffect} from 'react'
+import {useLazyQuery} from '@apollo/client'
 import {CURRENT_USER_QUERY} from '../graphql/Queries'
 
 export default function Create() {
-  const {data} = useQuery(CURRENT_USER_QUERY)
-  console.log(data)
-  return <div style={{gridArea: 'content'}}>create</div>
+  const [getCurrentUser, {data, loading, error}] = useLazyQuery(
+    CURRENT_USER_QUERY,
+  )
+
+  let isMounted = true
+  useEffect(() => {
+    if (isMounted) {
+      getCurrentUser()
+    }
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
+  return (
+    <>
+      <div style={{gridArea: 'left'}}>Left</div>
+      <div style={{gridArea: 'content'}}>create</div>
+      <div style={{gridArea: 'right'}}>right</div>
+    </>
+  )
 }

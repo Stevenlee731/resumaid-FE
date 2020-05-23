@@ -18,9 +18,15 @@ import throttle from 'lodash.throttle'
 import {Logo} from '../assets/svg'
 import {ThemeConsumer} from 'styled-components'
 
-const unAuth = (apolloClient: ApolloClient<any>, unAuthMutation: any): void => {
-  unAuthMutation()
-  apolloClient.resetStore()
+const unAuthAndClearCache = async (
+  apolloClient: ApolloClient<any>,
+  unAuthMutation: any,
+) => {
+  const {data} = await unAuthMutation()
+  if (data?.unauthenticateUser?.success) {
+    apolloClient.resetStore()
+  }
+  //trigger modal for unsuccessful logout
 }
 
 const Header = ({
@@ -76,23 +82,9 @@ const Header = ({
                 {data ? (
                   <StyledLogin>
                     <span>{`Welcome ${username}`}</span>
-                    {/* <button
-                      onClick={async () => {
-                        const data = await unAuth()
-                        console.log(data, 'unauth')
-                        client.resetStore()
-                      }}
-                    >
-                      Log Out
-                    </button> */}
-
                     <NavLink
                       to="/"
-                      onClick={async () => {
-                        const data = await unAuth()
-                        console.log(data, 'unauth')
-                        client.resetStore()
-                      }}
+                      onClick={() => unAuthAndClearCache(client, unAuth)}
                     >
                       Log Out
                     </NavLink>

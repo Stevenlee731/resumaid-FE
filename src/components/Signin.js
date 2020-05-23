@@ -1,5 +1,10 @@
 import React, {useState, useEffect} from 'react'
-import {useMutation, useQuery, useApolloClient} from '@apollo/client'
+import {
+  useMutation,
+  useQuery,
+  useLazyQuery,
+  useApolloClient,
+} from '@apollo/client'
 import {StyledCenteredContainer} from '../styles/Components'
 import {CURRENT_USER_QUERY} from '../graphql/Queries'
 import {SIGNIN_MUTATION} from '../graphql/Mutations'
@@ -32,10 +37,6 @@ const Input = ({type, value, handleChange}) => {
 }
 
 function Signin() {
-  // const {data: currentUser} = useQuery(CURRENT_USER_QUERY, {
-  //   fetchPolicy: 'network-only',
-  // })
-
   const {inputs, handleChange, resetForm} = useForm({
     email: '',
     password: '',
@@ -43,20 +44,23 @@ function Signin() {
   const client = useApolloClient()
   const [signin, {error, loading, data}] = useMutation(SIGNIN_MUTATION, {
     variables: inputs,
-    // update(cache, {data: {signin}}) {
-    //   const x = cache.readQuery({query: CURRENT_USER_QUERY})
-    //   console.log(x)
-    //   cache.writeQuery({
-    //     query: CURRENT_USER_QUERY,
-    //     data: {authenticatedUser: signin},
-    //   })
-    // },
   })
 
-  // if (currentUser && currentUser.authenticatedUser) {
-  //   console.log(currentUser.authenticatedUser)
-  //   return <StyledCenteredContainer>Already authed</StyledCenteredContainer>
-  // }
+  const [getCurrentUser, {data: currentUser}] = useLazyQuery(CURRENT_USER_QUERY)
+
+  let isMounted = true
+  useEffect(() => {
+    if (isMounted) {
+      getCurrentUser()
+    }
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
+  if (currentUser && currentUser.authenticatedUser) {
+    return <Redirect to="create" />
+  }
 
   if (error) {
     console.log(error)

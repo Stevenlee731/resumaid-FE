@@ -20,10 +20,10 @@ const StyledTemplate = styled.div<StyledTemplateProps>`
     hasSubheader
       ? `'header header header'
     '. subheader .'
-    '. content  .'
+    'left content  right'
     'footer footer footer';`
       : `'header header header'
-    '. content  .'
+    'left content  right'
     'footer footer footer';`};
 
   ${({theme}): string => theme.tablet`

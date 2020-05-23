@@ -1,7 +1,7 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {StyledWave} from '../styles/Components'
 import {GET_VIEWPORT_INFO_QUERY} from '../graphql/Queries'
-import {useQuery} from '@apollo/client'
+import {useQuery, useLazyQuery} from '@apollo/client'
 import {ViewportInfoProps} from '../types'
 
 export const Chevron = ({
@@ -95,8 +95,21 @@ export const ThumbsDown = ({fill}: {fill: string}): JSX.Element => (
 )
 
 export const Wave = (): JSX.Element => {
-  const {data} = useQuery<ViewportInfoProps>(GET_VIEWPORT_INFO_QUERY)
-  const {width, currentBreakpoint} = data || {width: 1440}
+  const [getCurrentViewport, {data}] = useLazyQuery<ViewportInfoProps>(
+    GET_VIEWPORT_INFO_QUERY,
+  )
+
+  let isMounted = true
+  useEffect(() => {
+    if (isMounted) {
+      getCurrentViewport()
+    }
+    return (): void => {
+      isMounted = false
+    }
+  }, [])
+
+  const {width} = data || {width: 1440}
 
   if (data) {
     return (
