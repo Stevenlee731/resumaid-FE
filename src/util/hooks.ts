@@ -93,3 +93,15 @@ export function useForm(initial = {}) {
     clearForm,
   }
 }
+
+export function useSafeUnMount(fn: Function): void {
+  let isMounted = true
+  useEffect(() => {
+    if (isMounted) {
+      fn()
+    }
+    return (): void => {
+      isMounted = false
+    }
+  }, [])
+}

@@ -19,6 +19,7 @@ import Header from './components/Header'
 import Signin from './components/Signin'
 import Create from './components/Create'
 import Template from './components/Template'
+import StyledPage from './styles/StyledPage'
 
 // function PrivateRoute({children: any, ...rest}) {
 //   return (
@@ -50,13 +51,19 @@ const App = (): JSX.Element => {
     localStorage.setItem('isDarkMode', isDark.toString())
   }, [isDark])
 
-  if (client === undefined) return <div>Loading...</div>
-
   const handleTheme = (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
   ): void => {
     e.preventDefault()
     setIsDark(!isDark)
+  }
+
+  if (client === undefined) {
+    return (
+      <div style={{height: '100%', position: 'relative'}}>
+        <div>Loading</div>
+      </div>
+    )
   }
 
   return (
