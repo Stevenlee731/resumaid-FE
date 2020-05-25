@@ -3,7 +3,7 @@ import React from 'react'
 import {render} from '@testing-library/react'
 import Basics from '../modules/Basics'
 import {ThemeProvider} from 'styled-components'
-import {theme} from '../util/cssHelpers'
+import {theme} from '../util/cssHelpers.js'
 
 const renderComponent = ({
   theme,
