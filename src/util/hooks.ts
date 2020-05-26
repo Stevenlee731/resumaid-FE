@@ -5,6 +5,11 @@ import {
   ApolloLink,
   concat,
   NormalizedCacheObject,
+  OperationVariables,
+  DocumentNode,
+  QueryHookOptions,
+  QueryResult,
+  useQuery,
 } from '@apollo/client'
 import {persistCache} from 'apollo-cache-persist'
 import React, {useState, useEffect} from 'react'
@@ -104,4 +109,23 @@ export function useSafeUnMount(fn: Function): void {
       isMounted = false
     }
   }, [])
+}
+
+export function useImperativeQuery<
+  TData = any,
+  TVariables = OperationVariables
+>(
+  query: DocumentNode,
+  options: QueryHookOptions<TData, TVariables> = {},
+): QueryResult<TData, TVariables>['refetch'] {
+  const {refetch} = useQuery<TData, TVariables>(query, {
+    ...options,
+    skip: true,
+  })
+
+  const imperativelyCallQuery = (queryVariables: TVariables) => {
+    return refetch(queryVariables)
+  }
+
+  return imperativelyCallQuery
 }

@@ -1,11 +1,16 @@
 import {ModuleList, ModulesProps} from '../types'
 import {ApolloClient} from '@apollo/client'
+import sortBy from 'lodash.sortby'
 
 export function formatResumeData(
   modules: ModuleList,
 ): [Array<ModulesProps>, Array<ModulesProps>] {
-  const main = []
-  const sidebar = []
+  const main: ModulesProps[] = []
+  const sidebar: ModulesProps[] = []
+
+  if (!modules) {
+    return [main, sidebar]
+  }
 
   for (const module of Object.values(modules)) {
     if (!module.slot) {
@@ -18,7 +23,7 @@ export function formatResumeData(
     }
   }
 
-  return [main, sidebar]
+  return [sortBy(main, ['order']), sortBy(sidebar, ['order'])]
 }
 
 export const unAuthAndClearCache = async (
@@ -30,4 +35,15 @@ export const unAuthAndClearCache = async (
     apolloClient.resetStore()
   }
   //trigger modal for unsuccessful logout
+}
+
+export async function handleValidate(
+  value: string,
+  fn: Function,
+  variables: {},
+): Promise<boolean> {
+  const {data, error} = await fn(variables)
+  if (error) return false
+
+  return data?.allUsers?.length === 0
 }

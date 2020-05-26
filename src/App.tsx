@@ -100,7 +100,7 @@ const App = (): JSX.Element => {
             <Route path="/create">
               <Template hasSubheader={false}>
                 <Header handleTheme={handleTheme} isDark={isDark} />
-                <Create />
+                <Create isDark={isDark} handleTheme={handleTheme} />
                 <Footer isDark={isDark} />
               </Template>
             </Route>

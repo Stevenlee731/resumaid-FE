@@ -20,8 +20,6 @@ import {ModulesProps, ViewportInfoProps} from '../types'
 import StyledLayout from '../styles/StyledLayout'
 import {ThumbsDown} from '../assets/svg'
 import styled, {ThemeConsumer} from 'styled-components'
-import useDimensions from 'react-cool-dimensions'
-import {breakpoints} from '../util/cssHelpers.js'
 import {MainLoader, SidebarLoader, SubheaderLoader} from '../components/Loaders'
 
 const StyledIconContainer = styled.div`

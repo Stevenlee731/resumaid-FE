@@ -123,3 +123,19 @@ export const GET_VIEWPORT_INFO_QUERY = gql`
     width @client
   }
 `
+
+export const CHECK_USER_NAME_QUERY = gql`
+  query IsUserNameAvailable($username: String) {
+    allUsers(where: {username: $username}) {
+      id
+    }
+  }
+`
+
+export const CHECK_USER_EMAIL_QUERY = gql`
+  query IsUserEmailAvailable($email: String) {
+    allUsers(where: {email: $email}) {
+      id
+    }
+  }
+`
