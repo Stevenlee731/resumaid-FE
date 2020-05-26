@@ -64,8 +64,6 @@ export default function Create({isDark, handleTheme}) {
 
   useSafeUnMount(getCurrentUser)
 
-  console.log(data)
-
   if (loading) {
     return <div>Loading</div>
   }

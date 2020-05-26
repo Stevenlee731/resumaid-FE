@@ -45,7 +45,6 @@ const Header = ({
   const {authenticatedUser} = data || {}
   const {username} = authenticatedUser || {}
 
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false)
   const [isDesktop, setIsDesktop] = React.useState<boolean>(false)
   const ref = React.useRef<HTMLElement>(null)
   const {currentBreakpoint} = useDimensions(ref, {
@@ -79,7 +78,7 @@ const Header = ({
           {isDesktop && (
             <div className="nav-right">
               <StyledNavSection>
-                {data ? (
+                {authenticatedUser ? (
                   <StyledLogin>
                     <span>{`Welcome ${username}`}</span>
                     <NavLink

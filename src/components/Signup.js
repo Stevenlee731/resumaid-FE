@@ -55,7 +55,6 @@ function Signup() {
   const checkUserEmailAvailability = useImperativeQuery(CHECK_USER_EMAIL_QUERY)
 
   const onSubmit = async fields => {
-    console.log(fields, 'sdasd')
     const {username, email, password} = fields
     await signup({variables: {username, email, password}})
   }
@@ -68,11 +67,11 @@ function Signup() {
   if (signupData && signupData?.createUser) {
     return (
       <StyledCenteredContainer>
-        <div>
+        <div style={{marginBottom: '20%'}}>
           <h2>Thank you for signing up!</h2>
           <div className="button-group">
             <StyledButton inverted={false}>
-              <Link to="/create">Edit your resume</Link>
+              <Link to="/signin">Sign in</Link>
             </StyledButton>
           </div>
         </div>
@@ -93,10 +92,11 @@ function Signup() {
         </div>
         <fieldset>
           <div className="field-container">
-            <StyledInput>
+            <StyledInput className="input-container">
               <div>
                 <input
                   type="text"
+                  autoComplete="username"
                   placeholder={'Username'}
                   name="username"
                   ref={register({
@@ -114,25 +114,27 @@ function Signup() {
                   })}
                 />
               </div>
+              <ErrorMessage errors={errors} name="username">
+                {({messages}) =>
+                  messages &&
+                  Object.entries(messages).map(([type, message]) => (
+                    <p key={type}>
+                      {type === 'pattern'
+                        ? 'Please enter a valid username'
+                        : 'Username is already in use'}
+                    </p>
+                  ))
+                }
+              </ErrorMessage>
             </StyledInput>
-            <ErrorMessage errors={errors} name="username">
-              {({messages}) =>
-                messages &&
-                Object.entries(messages).map(([type, message]) => (
-                  <p key={type}>
-                    {type === 'pattern'
-                      ? 'Please enter a valid username'
-                      : 'Username is already in use'}
-                  </p>
-                ))
-              }
-            </ErrorMessage>
-            <StyledInput>
+
+            <StyledInput className="input-container">
               <div>
                 <input
                   type="text"
                   placeholder={'Email'}
                   name="email"
+                  autoComplete="email"
                   ref={register({
                     required: true,
                     message: 'Invalid email address',
@@ -152,25 +154,26 @@ function Signup() {
                   })}
                 />
               </div>
+              <ErrorMessage errors={errors} name="email">
+                {({messages}) =>
+                  messages &&
+                  Object.entries(messages).map(([type, message]) => (
+                    <p key={type}>
+                      {type === 'pattern'
+                        ? 'Please enter a valid email'
+                        : 'Email is already in use'}
+                    </p>
+                  ))
+                }
+              </ErrorMessage>
             </StyledInput>
 
-            <ErrorMessage errors={errors} name="email">
-              {({messages}) =>
-                messages &&
-                Object.entries(messages).map(([type, message]) => (
-                  <p key={type}>
-                    {type === 'pattern'
-                      ? 'Please enter a valid email'
-                      : 'Email is already in use'}
-                  </p>
-                ))
-              }
-            </ErrorMessage>
-            <StyledInput>
+            <StyledInput className="input-container">
               <div>
                 <input
                   placeholder={'Password'}
                   type="password"
+                  autoComplete="new-password"
                   name={'password'}
                   ref={register({
                     required: true,
@@ -181,14 +184,16 @@ function Signup() {
                   })}
                 />
               </div>
+              {errors.password1 && <p>{errors.password1.message}</p>}
             </StyledInput>
-            {errors.password1 && <p>{errors.password1.message}</p>}
-            <StyledInput>
+
+            <StyledInput className="input-container">
               <div>
                 <input
                   placeholder={'Repeat password'}
                   type="password"
                   name={'password2'}
+                  autoComplete="new-password"
                   ref={register({
                     required: true,
                     message: 'You must specify a password',
@@ -202,10 +207,12 @@ function Signup() {
                   })}
                 />
               </div>
+              {errors.password2 && <p>{errors.password2.message}</p>}
             </StyledInput>
-            {errors.password2 && <p>{errors.password2.message}</p>}
           </div>
-          <button type="submit">Trigger</button>
+          <button type="submit">
+            {mutateLoading ? 'Signing up' : 'Sign Up!'}
+          </button>
         </fieldset>
       </StyledForm>
     </StyledCenteredContainer>

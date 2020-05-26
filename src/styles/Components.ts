@@ -215,12 +215,6 @@ export const StyledDropdown = styled.div<{isDropdownOpen: boolean}>`
   }
 `
 
-export const StyledWave = styled.svg`
-  path {
-    fill: ${({theme}): string => theme.sitePrimary};
-  }
-`
-
 export const StyledFormOptions = styled.div`
   display: flex;
   justify-content: space-between;
@@ -270,7 +264,18 @@ export const StyledForm = styled.form`
     margin-top: 2rem;
   }
 
+  .field-container {
+    > .input-container + .input-container {
+      margin-top: 1.5rem;
+    }
+
+    p {
+      position: absolute;
+    }
+  }
+
   button {
+    margin-top: 2rem;
     background: ${({theme}) => theme.sitePrimary};
     padding: 0.5rem 1rem;
     width: 100%;

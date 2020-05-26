@@ -21,7 +21,7 @@ import {
 
 const Input = ({type, value, handleChange}) => {
   return (
-    <StyledInput>
+    <StyledInput className="input-container">
       <div>
         <input
           type={type}
@@ -63,7 +63,6 @@ function Signin() {
   }
 
   if (error) {
-    console.log(error)
     return <div>error</div>
   }
 
@@ -117,7 +116,7 @@ function Signin() {
             />
 
             <StyledFormOptions>
-              <div>
+              <div className="form-options">
                 <input id="remember_me" type="checkbox" />
                 <label htmlFor="remember_me">Remember me</label>
               </div>

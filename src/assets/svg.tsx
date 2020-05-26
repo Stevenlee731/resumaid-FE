@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react'
-import {StyledWave} from '../styles/Components'
 import {GET_VIEWPORT_INFO_QUERY} from '../graphql/Queries'
 import {useQuery, useLazyQuery} from '@apollo/client'
 import {ViewportInfoProps} from '../types'
@@ -94,7 +93,7 @@ export const ThumbsDown = ({fill}: {fill: string}): JSX.Element => (
   </svg>
 )
 
-export const Wave = (): JSX.Element => {
+export const Wave = ({fill}: {fill: string}): JSX.Element => {
   const [getCurrentViewport, {data}] = useLazyQuery<ViewportInfoProps>(
     GET_VIEWPORT_INFO_QUERY,
   )
@@ -114,32 +113,44 @@ export const Wave = (): JSX.Element => {
   if (data) {
     return (
       <div style={{position: 'absolute', bottom: '0', width: '100%'}}>
-        <StyledWave
+        <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox={`0 0 ${width > 1440 ? 1440 : width} 320`}
         >
+          <defs>
+            <linearGradient id="myGradient">
+              <stop offset="40%" stopColor={fill} />
+              <stop offset="100%" stopColor={`${fill}99`} />
+            </linearGradient>
+          </defs>
           <path
-            fill="#0099ff"
+            fill="url('#myGradient')"
             fillOpacity="1"
             d="M0,192L80,202.7C160,213,320,235,480,202.7C640,171,800,85,960,58.7C1120,32,1280,64,1360,80L1440,96L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
           ></path>
-        </StyledWave>
+        </svg>
       </div>
     )
   }
 
   return (
     <div style={{position: 'absolute', bottom: '0', width: '100%'}}>
-      <StyledWave
+      <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox={`0 0 ${width > 1440 ? 1440 : width} 320`}
       >
+        <defs>
+          <linearGradient id="myGradient">
+            <stop offset="40%" stopColor={fill} />
+            <stop offset="100%" stopColor={`${fill}99`} />
+          </linearGradient>
+        </defs>
         <path
-          fill="#0099ff"
+          fill="url('#myGradient')"
           fillOpacity="1"
           d="M0,192L80,202.7C160,213,320,235,480,202.7C640,171,800,85,960,58.7C1120,32,1280,64,1360,80L1440,96L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
         ></path>
-      </StyledWave>
+      </svg>
     </div>
   )
 }

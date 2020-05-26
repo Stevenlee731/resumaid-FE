@@ -7,7 +7,11 @@ import {ApolloProvider} from '@apollo/client'
 
 import {usePersistedApolloClient} from './util/hooks'
 import {theme, darkTheme, GlobalStyle} from './util/cssHelpers.js'
-import {ThemeProvider, createGlobalStyle} from 'styled-components'
+import {
+  ThemeProvider,
+  createGlobalStyle,
+  ThemeConsumer,
+} from 'styled-components'
 import {Wave} from './assets/svg'
 
 import Page from './components/Page'
@@ -76,7 +80,9 @@ const App = (): JSX.Element => {
               <Template hasSubheader={false}>
                 <Header handleTheme={handleTheme} isDark={isDark} />
                 <Home />
-                <Wave />
+                <ThemeConsumer>
+                  {theme => <Wave fill={theme.sitePrimary} />}
+                </ThemeConsumer>
                 <Footer isDark={isDark} />
               </Template>
             </Route>
@@ -84,7 +90,9 @@ const App = (): JSX.Element => {
               <Template hasSubheader={false}>
                 <Header handleTheme={handleTheme} isDark={isDark} />
                 <Signup />
-                <Wave />
+                <ThemeConsumer>
+                  {theme => <Wave fill={theme.sitePrimary} />}
+                </ThemeConsumer>
                 <Footer isDark={isDark} />
               </Template>
             </Route>
@@ -92,7 +100,10 @@ const App = (): JSX.Element => {
               <Template hasSubheader={false}>
                 <Header handleTheme={handleTheme} isDark={isDark} />
                 <Signin />
-                <Wave />
+                <ThemeConsumer>
+                  {theme => <Wave fill={theme.sitePrimary} />}
+                </ThemeConsumer>
+
                 <Footer isDark={isDark} />
               </Template>
             </Route>
