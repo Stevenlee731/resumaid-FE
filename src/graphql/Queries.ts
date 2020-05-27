@@ -88,6 +88,7 @@ interests {
 export const GET_USER_QUERY = gql`
   query GetUser($username: String!) {
     allUsers(where: {username: $username}) {
+      id
       ${user}      
     }
   }
@@ -96,6 +97,7 @@ export const GET_USER_QUERY = gql`
 export const CURRENT_USER_QUERY = gql`
   query SignedInUser @client{
     authenticatedUser {
+      id
       username
       ${user}
     }

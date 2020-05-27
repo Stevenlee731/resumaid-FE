@@ -14,7 +14,6 @@ import {CURRENT_USER_QUERY} from '../graphql/Queries'
 import {UNAUTHENTICATE_USER_MUTATION} from '../graphql/Mutations'
 import {useQuery, useMutation, ApolloClient, FetchResult} from '@apollo/client'
 import {breakpoints} from '../util/cssHelpers.js'
-import throttle from 'lodash.throttle'
 import {Logo} from '../assets/svg'
 import {ThemeConsumer} from 'styled-components'
 
@@ -32,21 +31,19 @@ const unAuthAndClearCache = async (
 const Header = ({
   handleTheme,
   isDark,
-  name,
-  website,
 }: {
   handleTheme: Function
   isDark: boolean
-  name?: string
-  website?: string
 }): JSX.Element => {
+  const ref = React.useRef<HTMLElement>(null)
   const {client, data} = useQuery(CURRENT_USER_QUERY)
-  const [unAuth] = useMutation(UNAUTHENTICATE_USER_MUTATION)
+  const [unAuth] = useMutation(UNAUTHENTICATE_USER_MUTATION, {
+    errorPolicy: 'all',
+  })
   const {authenticatedUser} = data || {}
   const {username} = authenticatedUser || {}
 
   const [isDesktop, setIsDesktop] = React.useState<boolean>(false)
-  const ref = React.useRef<HTMLElement>(null)
   const {currentBreakpoint} = useDimensions(ref, {
     breakpoints,
     onResize: ({width}: {width: number}) => {
@@ -70,9 +67,9 @@ const Header = ({
               </Link>
             </div>
             <div className="outer-directory">
-              <div className="inner-directory">
+              {/* <div className="inner-directory">
                 {website && <a href={website}>Website</a>}
-              </div>
+              </div> */}
             </div>
           </div>
           {isDesktop && (

@@ -10,7 +10,7 @@ import {CURRENT_USER_QUERY} from '../graphql/Queries'
 import {SIGNIN_MUTATION} from '../graphql/Mutations'
 import {Link, Redirect} from 'react-router-dom'
 import {ThemeConsumer} from 'styled-components'
-import {useForm} from '../util/hooks'
+import {useForm, useSafeUnMount} from '../util/hooks'
 import {Logo} from '../assets/svg'
 import {
   StyledSVGContainer,
@@ -47,16 +47,7 @@ function Signin() {
   })
 
   const [getCurrentUser, {data: currentUser}] = useLazyQuery(CURRENT_USER_QUERY)
-
-  let isMounted = true
-  useEffect(() => {
-    if (isMounted) {
-      getCurrentUser()
-    }
-    return () => {
-      isMounted = false
-    }
-  }, [])
+  useSafeUnMount(getCurrentUser)
 
   if (currentUser && currentUser.authenticatedUser) {
     return <Redirect to="create" />

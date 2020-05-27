@@ -1,31 +1,23 @@
-import React, {forwardRef, useState, useEffect} from 'react'
-import {
-  useMutation,
-  useQuery,
-  useLazyQuery,
-  useApolloClient,
-  gql,
-} from '@apollo/client'
+import React, {forwardRef} from 'react'
+import {useMutation, useQuery} from '@apollo/client'
 import {StyledCenteredContainer, StyledButton} from '../styles/Components'
 import {
   CURRENT_USER_QUERY,
   CHECK_USER_EMAIL_QUERY,
   CHECK_USER_NAME_QUERY,
 } from '../graphql/Queries'
-import {SIGNIN_MUTATION, CREATE_USER_MUTATION} from '../graphql/Mutations'
-import {Link, Redirect} from 'react-router-dom'
+import {
+  CREATE_USER_MUTATION,
+  UNAUTHENTICATE_USER_MUTATION,
+} from '../graphql/Mutations'
+import {Link} from 'react-router-dom'
 import {ThemeConsumer} from 'styled-components'
 import {Logo} from '../assets/svg'
-import {
-  StyledSVGContainer,
-  StyledFormOptions,
-  StyledInput,
-  StyledForm,
-} from '../styles/Components'
+import {StyledSVGContainer, StyledInput, StyledForm} from '../styles/Components'
 import {useForm, ErrorMessage} from 'react-hook-form'
 import {useSafeUnMount, useImperativeQuery} from '../util/hooks'
 import AwesomeDebouncePromise from 'awesome-debounce-promise'
-import {handleValidate} from '../util/helpers'
+import {handleValidate, unAuthAndClearCache} from '../util/helpers'
 
 const Input = forwardRef(({type, value, handleChange}, ref) => {
   return (
@@ -63,6 +55,35 @@ function Signup() {
     signup,
     {error: mutateError, loading: mutateLoading, data: signupData},
   ] = useMutation(CREATE_USER_MUTATION, {errorPolicy: 'all'})
+  const [unAuth] = useMutation(UNAUTHENTICATE_USER_MUTATION, {
+    errorPolicy: 'all',
+  })
+  const {client, data} = useQuery(CURRENT_USER_QUERY)
+  const {authenticatedUser} = data || {}
+
+  if (authenticatedUser) {
+    return (
+      <StyledCenteredContainer>
+        <div style={{marginBottom: '20%'}}>
+          <h2>
+            <span>{`Hi ${authenticatedUser.basics?.name},`}</span>
+            <span>Looks like you are already signed up!</span>
+          </h2>
+          <div className="button-group">
+            <StyledButton inverted={true}>
+              <Link to="/create">Edit your resume</Link>
+            </StyledButton>
+            <StyledButton inverted={false}>
+              <Link
+                onClick={() => unAuthAndClearCache(client, unAuth)}
+                to="/signup"
+              >{`Not ${authenticatedUser.basics?.name}?`}</Link>
+            </StyledButton>
+          </div>
+        </div>
+      </StyledCenteredContainer>
+    )
+  }
 
   if (signupData && signupData?.createUser) {
     return (

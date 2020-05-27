@@ -1,5 +1,4 @@
-import React, {useEffect} from 'react'
-import Header from '../components/Header'
+import React from 'react'
 import {Link} from 'react-router-dom'
 import StyledHome from '../styles/StyledHome'
 import {StyledButton} from '../styles/Components'
@@ -7,21 +6,14 @@ import {useLazyQuery, useApolloClient, useMutation} from '@apollo/client'
 import {CURRENT_USER_QUERY} from '../graphql/Queries'
 import {UNAUTHENTICATE_USER_MUTATION} from '../graphql/Mutations'
 import {unAuthAndClearCache} from '../util/helpers'
+import {useSafeUnMount} from '../util/hooks'
 
 export default function Home(): JSX.Element {
   const client = useApolloClient()
   const [getCurrentUser, {data}] = useLazyQuery(CURRENT_USER_QUERY)
   const [unAuth] = useMutation(UNAUTHENTICATE_USER_MUTATION)
 
-  let isMounted = true
-  useEffect(() => {
-    if (isMounted) {
-      getCurrentUser()
-    }
-    return () => {
-      isMounted = false
-    }
-  }, [])
+  useSafeUnMount(getCurrentUser)
 
   const {authenticatedUser} = data || {}
 

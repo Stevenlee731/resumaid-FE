@@ -60,7 +60,6 @@ const Users = ({
   if (loading)
     return (
       <>
-        <Header handleTheme={handleTheme} isDark={isDark} />
         <SubheaderLoader />
         <StyledLayout hasSidebar={true}>
           <MainLoader itemCount={3} />
@@ -71,7 +70,6 @@ const Users = ({
   if (error || (data && data.allUsers.length < 1))
     return (
       <>
-        <Header handleTheme={handleTheme} isDark={isDark} />
         <StyledLayout hasSidebar={false}>
           <div
             style={{
@@ -106,12 +104,6 @@ const Users = ({
 
   return (
     <>
-      <Header
-        handleTheme={handleTheme}
-        isDark={isDark}
-        name={basics.name}
-        website={basics.website}
-      />
       {basics && <Basics {...basics} layout="" background={'primary'} />}
       <StyledLayout hasSidebar={true}>
         {sidebar && (

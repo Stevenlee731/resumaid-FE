@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react'
 import './normalize.css'
 import './App.css'
 import {Route, Switch} from 'react-router-dom'
-import {ApolloProvider} from '@apollo/client'
+import {ApolloProvider, useLazyQuery, useQuery} from '@apollo/client'
 
 import {usePersistedApolloClient} from './util/hooks'
 import {theme, darkTheme, GlobalStyle} from './util/cssHelpers.js'
@@ -24,6 +24,7 @@ import Signin from './components/Signin'
 import Create from './components/Create'
 import Template from './components/Template'
 import StyledPage from './styles/StyledPage'
+import {CURRENT_USER_QUERY} from './graphql/Queries'
 
 // function PrivateRoute({children: any, ...rest}) {
 //   return (
@@ -65,7 +66,7 @@ const App = (): JSX.Element => {
   if (client === undefined) {
     return (
       <div style={{height: '100%', position: 'relative'}}>
-        <div>Loading</div>
+        <div></div>
       </div>
     )
   }
@@ -103,11 +104,9 @@ const App = (): JSX.Element => {
                 <ThemeConsumer>
                   {theme => <Wave fill={theme.sitePrimary} />}
                 </ThemeConsumer>
-
                 <Footer isDark={isDark} />
               </Template>
             </Route>
-
             <Route path="/create">
               <Template hasSubheader={false}>
                 <Header handleTheme={handleTheme} isDark={isDark} />
@@ -117,6 +116,7 @@ const App = (): JSX.Element => {
             </Route>
             <Route path="/:userId">
               <Template hasSubheader={true}>
+                <Header handleTheme={handleTheme} isDark={isDark} />
                 <Users isDark={isDark} handleTheme={handleTheme} />
                 <Footer isDark={isDark} />
               </Template>

@@ -13,7 +13,7 @@ export function formatResumeData(
   }
 
   for (const module of Object.values(modules)) {
-    if (!module.slot) {
+    if (!module || !module.slot) {
       continue
     }
     if (module.slot === 'main') {

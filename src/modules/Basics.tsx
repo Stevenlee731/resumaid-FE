@@ -10,7 +10,9 @@ const Basics: React.FC<BasicsModuleProps> = props => {
       {label && location && (
         <div className="headline">
           <h1 title="basics">
-            <span title="label">{`I'm a ${label},`}</span>
+            <span title="label">{`I'm a ${label}${
+              location?.city ? ',' : ''
+            }`}</span>
             <span title="location">
               {location?.city && ` based in ${location?.city}`}
             </span>

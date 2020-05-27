@@ -31,3 +31,42 @@ export const CREATE_USER_MUTATION = gql`
     }
   }
 `
+
+//#region Create
+export const CREATE_BASIC = gql`
+  mutation CreateBasic(
+    $name: String!
+    $city: String
+    $label: String
+    $website: String
+  ) {
+    createBasic(
+      data: {
+        name: $name
+        location: {create: {city: $city}}
+        label: $label
+        website: $website
+      }
+    ) {
+      id
+    }
+  }
+`
+
+//#endregion Create
+
+//#region Update
+
+export const UPDATE_USER = gql`
+  mutation update($id: ID!, $data: UserUpdateInput) {
+    updateUser(id: $id, data: $data) {
+      id
+      basics {
+        name
+        website
+      }
+    }
+  }
+`
+
+//#endregion Update
