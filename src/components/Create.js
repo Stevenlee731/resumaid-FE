@@ -8,7 +8,8 @@ import {useSafeUnMount} from '../util/hooks'
 import Profile from '../modules/Profile'
 import Basics from '../modules/Basics'
 import {formatResumeData} from '../util/helpers'
-import {useForm} from 'react-hook-form'
+import {useForm, useFieldArray, Controller} from 'react-hook-form'
+import Form from './Form'
 
 import Modules from './Modules'
 import {StyledMainSection, StyledContentWrapper} from '../styles/Section'
@@ -16,7 +17,7 @@ import {StyledMainSection, StyledContentWrapper} from '../styles/Section'
 import {Sidebar, SidebarSection, SidebarWrapper} from './Sidebar/index'
 
 import {ModulesProps, ViewportInfoProps} from '../types'
-import {ThumbsDown} from '../assets/svg'
+import {ThumbsDown, Chevron} from '../assets/svg'
 import styled, {ThemeConsumer} from 'styled-components'
 import {MainLoader, SidebarLoader, SubheaderLoader} from '../components/Loaders'
 import {
@@ -192,7 +193,7 @@ export default function Create({isDark, handleTheme}) {
   }
 
   const [main, sidebar] = formatResumeData(rest)
-  console.log(sidebar)
+  console.log(rest)
   const config = {}
 
   return (
@@ -203,7 +204,38 @@ export default function Create({isDark, handleTheme}) {
         <div>
           <ul>
             <li>Basics</li>
+            <li>
+              <Form
+                id={id}
+                module="education"
+                initialData={rest.education || {}}
+                updateUser={updateUser}
+                inputObj={{
+                  institution: '',
+                  startDate: '',
+                  endDate: '',
+                  area: '',
+                  studyType: '',
+                }}
+              />
+            </li>
+            <li>
+              <Form
+                id={id}
+                module="skills"
+                initialData={rest.skills || {}}
+                updateUser={updateUser}
+                inputObj={{
+                  level: '',
+                  name: '',
+                  keywords: [{keyword: ''}],
+                }}
+              />
+            </li>
+            <li>Work</li>
+            <li>References</li>
             <li>Education</li>
+            <li>Awards</li>
           </ul>
         </div>
       </div>
@@ -270,3 +302,142 @@ export default function Create({isDark, handleTheme}) {
     </>
   )
 }
+
+// function EducationForm({id, initialData, updateUser, module}) {
+//   const [isOpen, setIsOpen] = React.useState(false)
+
+//   const handleClose = e => {
+//     e.preventDefault()
+//     setIsOpen(!isOpen)
+//   }
+
+//   const {content, order, slot} = initialData
+
+//   const {register, control, handleSubmit, reset} = useForm({
+//     defaultValues: {
+//       education: content || [],
+//     },
+//   })
+
+//   const {fields, append, remove} = useFieldArray({
+//     control,
+//     name: module,
+//   })
+
+//   const onSubmit = async data => {
+//     const {education, order} = data
+//     console.log(data)
+//     const formatted = education.filter(input => {
+//       return Object.values(input).some(prop => prop)
+//     })
+
+//     console.log(formatted, order)
+
+//     const mutation = await updateUser({
+//       variables: {
+//         id,
+//         data: {
+//           education: {
+//             create: {
+//               order: parseInt(order),
+//               module: 'education',
+//               slot: 'main',
+//               content: {create: formatted},
+//             },
+//           },
+//         },
+//       },
+//     })
+//     console.log(mutation, 'basic')
+//   }
+
+//   return (
+//     <div>
+//       <div style={{display: 'flex', justifyContent: 'space-between'}}>
+//         <h3>Education</h3>
+//         <StyledButton
+//           style={{height: '4rem', width: '4rem'}}
+//           onClick={e => handleClose(e)}
+//         >
+//           <Chevron direction={isOpen ? 'up' : 'down'} />
+//         </StyledButton>
+//       </div>
+
+//       {isOpen && (
+//         <form onSubmit={handleSubmit(onSubmit)}>
+//           <label>Order</label>
+//           <input name={'order'} defaultValue={order || 1} ref={register()} />
+//           <label>slot</label>
+//           <input name={'slot'} defaultValue={slot || 'main'} ref={register()} />
+//           <ul>
+//             {fields.map((item, index) => {
+//               return (
+//                 <li key={item.id}>
+//                   <input
+//                     name={`education[${index}].institution`}
+//                     defaultValue={`${item.institution}`} // make sure to set up defaultValue
+//                     ref={register()}
+//                   />
+//                   <input
+//                     name={`education[${index}].startDate`}
+//                     defaultValue={`${item.startDate}`} // make sure to set up defaultValue
+//                     ref={register()}
+//                   />
+
+//                   <input
+//                     name={`education[${index}].endDate`}
+//                     defaultValue={`${item.endDate}`} // make sure to set up defaultValue
+//                     ref={register()}
+//                   />
+
+//                   <input
+//                     name={`education[${index}].area`}
+//                     defaultValue={`${item.area}`} // make sure to set up defaultValue
+//                     ref={register()}
+//                   />
+//                   <input
+//                     name={`education[${index}].studyType`}
+//                     defaultValue={`${item.studyType}`} // make sure to set up defaultValue
+//                     ref={register()}
+//                   />
+//                   <button type="button" onClick={() => remove(index)}>
+//                     Delete
+//                   </button>
+//                 </li>
+//               )
+//             })}
+//           </ul>
+//           <section>
+//             <button
+//               type="button"
+//               onClick={() => {
+//                 append({
+//                   institution: '',
+//                   startDate: '',
+//                   endDate: '',
+//                   area: '',
+//                   studyType: '',
+//                 })
+//               }}
+//             >
+//               append
+//             </button>
+
+//             <button
+//               type="button"
+//               onClick={() =>
+//                 reset({
+//                   education: content || [],
+//                 })
+//               }
+//             >
+//               reset
+//             </button>
+//           </section>
+
+//           <input type="submit" />
+//         </form>
+//       )}
+//     </div>
+//   )
+// }

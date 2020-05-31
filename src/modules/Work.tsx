@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {BaseModuleProps, WorkProps, WorkModuleProps} from '../types'
+import {WorkProps, WorkModuleProps} from '../types'
 import StyledWork from '../styles/StyledWork'
 import {StyledSectionHeader} from '../styles/Section'
 

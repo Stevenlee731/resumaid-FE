@@ -56,9 +56,15 @@ export type Profile = {
 }
 
 export type BaseModuleProps = {
+  slot?: string
+  order?: string
+  module?: string
+  content: any
+}
+
+export interface ModuleViewProps extends BaseModuleProps {
   background: string
   layout?: string
-  slot?: string
 }
 
 export type BasicsProps = {
@@ -72,7 +78,7 @@ export type BasicsProps = {
   profiles?: Array<Profile>
 }
 
-export interface BasicsModuleProps extends BaseModuleProps {
+export interface BasicsModuleProps extends ModuleViewProps {
   name?: string
   label?: string
   image?: string
@@ -93,7 +99,7 @@ export type EducationProps = {
   studyType?: string
 }
 
-export interface EducationModuleProps extends BaseModuleProps {
+export interface EducationModuleProps extends ModuleViewProps {
   content: Array<EducationProps>
 }
 
@@ -105,7 +111,7 @@ export type InterestsProps = {
   name?: string
 }
 
-export interface InterestsModuleProps extends BaseModuleProps {
+export interface InterestsModuleProps extends ModuleViewProps {
   content: Array<InterestsProps>
 }
 //#endregion Interests
@@ -117,7 +123,7 @@ export type AwardsProps = {
   title?: string
 }
 
-export interface AwardsModuleProps extends BaseModuleProps {
+export interface AwardsModuleProps extends ModuleViewProps {
   content: Array<AwardsProps>
 }
 //#endregion Awards
@@ -128,7 +134,7 @@ export type ReferencesProps = {
   reference?: string
 }
 
-export interface ReferencesModuleProps extends BaseModuleProps {
+export interface ReferencesModuleProps extends ModuleViewProps {
   content: Array<ReferencesProps>
 }
 
@@ -141,7 +147,7 @@ export type SkillsProps = {
   keywords: Array<{keyword: string}>
 }
 
-export interface SkillsModuleProps extends BaseModuleProps {
+export interface SkillsModuleProps extends ModuleViewProps {
   content: Array<SkillsProps>
 }
 
@@ -159,7 +165,7 @@ export type WorkProps = {
   website?: string
 }
 
-export interface WorkModuleProps extends BaseModuleProps {
+export interface WorkModuleProps extends ModuleViewProps {
   content: Array<WorkProps>
 }
 
