@@ -203,7 +203,30 @@ export default function Create({isDark, handleTheme}) {
 
         <div>
           <ul>
-            <li>Basics</li>
+            <li>
+              <Form
+                id={id}
+                module="basics"
+                initialData={basics || {}}
+                updateUser={updateUser}
+                inputObj={{
+                  name: '',
+                  label: '',
+                  image: '',
+                  summary: '',
+                  website: '',
+                  location: '',
+                  email: '',
+                  profiles: [
+                    {
+                      username: '',
+                      network: '',
+                      url: '',
+                    },
+                  ],
+                }}
+              />
+            </li>
             <li>
               <Form
                 id={id}
@@ -232,10 +255,64 @@ export default function Create({isDark, handleTheme}) {
                 }}
               />
             </li>
-            <li>Work</li>
-            <li>References</li>
-            <li>Education</li>
-            <li>Awards</li>
+            <li>
+              <Form
+                id={id}
+                module="work"
+                initialData={rest.work || {}}
+                updateUser={updateUser}
+                inputObj={{
+                  summary: '',
+                  website: '',
+                  company: '',
+                  pinned: false,
+                  location: '',
+                  position: '',
+                  startDate: '',
+                  endDate: '',
+                  highlights: [
+                    {
+                      highlight: '',
+                    },
+                  ],
+                }}
+              />
+            </li>
+            <li>
+              <Form
+                id={id}
+                module="references"
+                initialData={rest.references || {}}
+                updateUser={updateUser}
+                inputObj={{
+                  reference: '',
+                  name: '',
+                }}
+              />
+            </li>
+            <li>
+              <Form
+                id={id}
+                module="awards"
+                initialData={rest.awards || {}}
+                updateUser={updateUser}
+                inputObj={{
+                  title: '',
+                  awarder: '',
+                }}
+              />
+            </li>
+            <li>
+              <Form
+                id={id}
+                module="interests"
+                initialData={rest.interests || {}}
+                updateUser={updateUser}
+                inputObj={{
+                  name: '',
+                }}
+              />
+            </li>
           </ul>
         </div>
       </div>

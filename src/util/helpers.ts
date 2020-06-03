@@ -47,3 +47,21 @@ export async function handleValidate(
 
   return data?.allUsers?.length === 0
 }
+
+export const formatDataForGraphQL = (formatted: Array<any>) => {
+  return formatted.map((inputData: {}) => {
+    let formattedObjForGraphQL: {
+      [key: string]: any
+    } = {}
+    for (let [propertyName, value] of Object.entries<string>(inputData)) {
+      if (Array.isArray(value)) {
+        formattedObjForGraphQL[propertyName] = {
+          create: value,
+        }
+      } else {
+        formattedObjForGraphQL[propertyName] = value
+      }
+    }
+    return formattedObjForGraphQL
+  })
+}
