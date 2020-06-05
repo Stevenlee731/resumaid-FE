@@ -27,6 +27,7 @@ import {
   StyledInput,
 } from '../styles/Components'
 import {CREATE_BASIC, UPDATE_USER} from '../graphql/Mutations'
+import isPlainObject from 'lodash.isplainobject'
 
 export function Child() {
   // // The state is manteined during reparenting.
@@ -126,7 +127,7 @@ export default function Create({isDark, handleTheme}) {
   }
 
   const {basics, ...rest} = authenticatedUser || {}
-  console.log(authenticatedUser, 'basics')
+  console.log(basics, 'basicsasdasds')
   if (!basics) {
     return (
       <StyledCenteredContainer>
@@ -192,8 +193,27 @@ export default function Create({isDark, handleTheme}) {
     )
   }
 
+  const formatBasics = basics => {
+    const formattedObj = {}
+    for (const property in basics) {
+      if (isPlainObject(basics[property])) {
+        console.log('steve array')
+        formattedObj[property] = [basics[property]]
+      } else {
+        console.log('steve no array')
+        formattedObj[property] = basics[property]
+      }
+    }
+
+    return formattedObj
+  }
+
+  const formattedBasics = formatBasics(basics)
+  console.log(formattedBasics, 'look at this steve')
+
   const [main, sidebar] = formatResumeData(rest)
-  console.log(rest)
+  console.log(authenticatedUser, 'autheduser')
+  console.log(rest, 'rest')
   const config = {}
 
   return (
@@ -207,7 +227,9 @@ export default function Create({isDark, handleTheme}) {
               <Form
                 id={id}
                 module="basics"
-                initialData={basics || {}}
+                initialData={
+                  basics ? {module: 'basics', content: [basics]} : {}
+                }
                 updateUser={updateUser}
                 inputObj={{
                   name: '',
@@ -215,7 +237,9 @@ export default function Create({isDark, handleTheme}) {
                   image: '',
                   summary: '',
                   website: '',
-                  location: '',
+                  location: {
+                    city: '',
+                  },
                   email: '',
                   profiles: [
                     {

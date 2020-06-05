@@ -4,51 +4,52 @@ import StyledButton from '../styles/StyledButton'
 import {Chevron} from '../assets/svg'
 import {BaseModuleProps} from '../types'
 import {formatDataForGraphQL} from '../util/helpers'
-import isObject from 'lodash.isobject'
+import isPlainObject from 'lodash.isplainobject'
 
 const NestedFieldArray = (props: any) => {
-  const {nestIndex, control, register, propertyName, item, value} = props
+  const {
+    nestIndex,
+    control,
+    register,
+    propertyName,
+    item,
+    value,
+    hasMultiple,
+  } = props
   const {fields, remove, append} = useFieldArray({
     control,
     name: `content[${nestIndex}].${propertyName}`,
   })
 
-  console.log(fields, 'nested fields')
-  console.log(item, 'nested item')
-  console.log(value, 'nested value')
   return (
-    <div>
+    <li>
+      <label>{propertyName}</label>
       {fields.map((item, k) => {
-        const nestedItems = []
-
-        for (let [nestedKey, val] of Object.entries<any>(value[0])) {
-          console.log(`${nestedKey}: ${val}`, 'steve')
-
-          nestedItems.push(
-            <input
-              key={nestedKey}
-              name={`content[${nestIndex}].${propertyName}[${k}].${nestedKey}`}
-              ref={register()}
-              defaultValue={item[nestedKey]}
-              style={{marginRight: '25px'}}
-            />,
-          )
-        }
-
         return (
-          <div key={item.id} style={{marginLeft: 20}}>
-            {nestedItems}
+          <ul key={propertyName + k} style={{marginLeft: 20}}>
+            {Object.entries(value[0]).map(([nestedKey, value]: any) => {
+              return (
+                <li key={`${nestedKey}-${k}`}>
+                  <label>{nestedKey}</label>
+                  <input
+                    name={`content[${nestIndex}].${propertyName}[${k}].${nestedKey}`}
+                    ref={register()}
+                    defaultValue={item[nestedKey] ?? ''}
+                    style={{marginRight: '25px'}}
+                  />
+                </li>
+              )
+            })}
             <button type="button" onClick={() => remove(k)}>
               Delete
             </button>
-          </div>
+          </ul>
         )
       })}
-
       <button type="button" onClick={() => append(value[0])}>
         {`Add ${propertyName}`}
       </button>
-    </div>
+    </li>
   )
 }
 
@@ -67,38 +68,48 @@ const Fields = ({
   inputObj: {}
   control: any
 }) => {
-  const items = []
-
-  for (let [propertyName, value] of Object.entries<any>(inputObj)) {
-    console.log(`${propertyName}: ${value}`, 'steve')
-
-    if (isObject(value)) {
-      items.push(
-        <NestedFieldArray
-          key={propertyName}
-          nestIndex={index}
-          {...{control, register, propertyName, item, value}}
-        />,
-      )
-    } else {
-      items.push(
-        <input
-          key={propertyName}
-          name={`content[${index}].${propertyName}`}
-          defaultValue={`${item[propertyName]}`} // make sure to set up defaultValue
-          ref={register()}
-        />,
-      )
-    }
-  }
-
   return (
-    <li>
-      {items}
+    <>
+      {Object.entries(inputObj).map(([propertyName, value]: any) => {
+        if (Array.isArray(value)) {
+          return (
+            <NestedFieldArray
+              key={propertyName}
+              nestIndex={index}
+              hasMultiple={Array.isArray(value)}
+              {...{control, register, propertyName, item, value}}
+            />
+          )
+        } else {
+          return (
+            <li key={propertyName}>
+              <label>{propertyName}</label>
+              {isPlainObject(value) ? (
+                Object.entries(value).map(([nestedKey, nestedValue]) => {
+                  return (
+                    <input
+                      key={nestedKey}
+                      name={`content[${index}].${propertyName}.${nestedKey}`}
+                      defaultValue={`${nestedValue ?? ''}`} // make sure to set up defaultValue
+                      ref={register()}
+                    />
+                  )
+                })
+              ) : (
+                <input
+                  name={`content[${index}].${propertyName}`}
+                  defaultValue={`${item[propertyName] ?? ''}`} // make sure to set up defaultValue
+                  ref={register()}
+                />
+              )}
+            </li>
+          )
+        }
+      })}
       <button type="button" onClick={() => remove(index)}>
         Delete
       </button>
-    </li>
+    </>
   )
 }
 
@@ -143,12 +154,6 @@ function Form({
       },
     )
 
-    console.log(formatted, 'formatted')
-
-    const x = formatDataForGraphQL(formatted)
-
-    console.log(x, 'final')
-
     const mutation = await updateUser({
       variables: {
         id,
@@ -158,7 +163,7 @@ function Form({
               order: parseInt(order),
               module,
               slot,
-              content: {create: x},
+              content: {create: formatDataForGraphQL(formatted)},
             },
           },
         },
@@ -168,11 +173,15 @@ function Form({
     console.log(mutation, 'mutation response')
   }
 
-  console.log(fields, 'fields')
-
   return (
     <div>
-      <div style={{display: 'flex', justifyContent: 'space-between'}}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
         <h3>{module}</h3>
         <StyledButton onClick={(e: any): void => handleClose(e)}>
           <Chevron direction={isOpen ? 'up' : 'down'} />
@@ -181,11 +190,23 @@ function Form({
 
       {isOpen && (
         <form onSubmit={handleSubmit(onSubmit)}>
-          <label>Order</label>
-          <input name={'order'} defaultValue={order || '1'} ref={register()} />
-          <label>slot</label>
-          <input name={'slot'} defaultValue={slot || 'main'} ref={register()} />
           <ul>
+            <li>
+              <label>Order</label>
+              <input
+                name={'order'}
+                defaultValue={order || '1'}
+                ref={register()}
+              />
+            </li>
+            <li>
+              <label>slot</label>
+              <input
+                name={'slot'}
+                defaultValue={slot || 'main'}
+                ref={register()}
+              />
+            </li>
             {fields.map((item, index) => {
               return (
                 <Fields
@@ -221,7 +242,6 @@ function Form({
               reset
             </button>
           </section>
-
           <input type="submit" />
         </form>
       )}
