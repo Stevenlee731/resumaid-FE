@@ -1,6 +1,8 @@
 import {ModuleList, ModulesProps} from '../types'
 import {ApolloClient} from '@apollo/client'
 import sortBy from 'lodash.sortby'
+import isPlainObject from 'lodash.isplainobject'
+import isObject from 'lodash.isobject'
 
 export function formatResumeData(
   modules: ModuleList,
@@ -13,9 +15,10 @@ export function formatResumeData(
   }
 
   for (const module of Object.values(modules)) {
-    if (!module || !module.slot) {
+    if (!module || !module.slot || module.content.length === 0) {
       continue
     }
+
     if (module.slot === 'main') {
       main.push(module)
     } else {
@@ -54,7 +57,7 @@ export const formatDataForGraphQL = (formatted: Array<any>) => {
       [key: string]: any
     } = {}
     for (let [propertyName, value] of Object.entries<string>(inputData)) {
-      if (Array.isArray(value)) {
+      if (isObject(value)) {
         formattedObjForGraphQL[propertyName] = {
           create: value,
         }

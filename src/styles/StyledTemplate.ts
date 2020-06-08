@@ -6,7 +6,7 @@ const StyledTemplate = styled.div<StyledTemplateProps>`
   transition: all ${({theme}): string => theme.transition};
   color: ${({theme}): string => theme.textDark};
   display: grid;
-  grid-gap: 2rem;
+  grid-column-gap: 2rem;
   grid-template-rows: ${({hasSubheader}): string =>
     hasSubheader ? 'auto auto 1fr auto' : 'auto 1fr auto'};
   min-height: 100%;

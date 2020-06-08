@@ -55,6 +55,7 @@ const Users = ({
 
   const {loading, error, data} = useQuery(GET_USER_QUERY, {
     variables: {username: userId},
+    errorPolicy: 'all',
   })
 
   if (loading)

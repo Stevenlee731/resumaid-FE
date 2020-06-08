@@ -9,6 +9,8 @@ const StyledLayout = styled.div<StyledLayoutProps>`
   grid-gap: 2rem;
   grid-area: content;
 
+  margin-bottom: 2rem;
+
   grid-template-columns: ${(props): string =>
     props.hasSidebar ? `3fr 1fr` : `1fr`};
 

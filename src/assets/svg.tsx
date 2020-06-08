@@ -3,6 +3,53 @@ import {GET_VIEWPORT_INFO_QUERY} from '../graphql/Queries'
 import {useQuery, useLazyQuery} from '@apollo/client'
 import {ViewportInfoProps} from '../types'
 
+export const AddSVG = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    className="icon-add"
+  >
+    <path
+      className="secondary"
+      fillRule="evenodd"
+      d="M17 11a1 1 0 0 1 0 2h-4v4a1 1 0 0 1-2 0v-4H7a1 1 0 0 1 0-2h4V7a1 1 0 0 1 2 0v4h4z"
+    />
+  </svg>
+)
+
+export const AddItemSVG = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    className="icon-widget-add"
+  >
+    <path
+      className="primary"
+      d="M5 13h4a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4c0-1.1.9-2 2-2zm10 0h4a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-4c0-1.1.9-2 2-2zM5 3h4a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2z"
+    />
+    <path
+      className="secondary"
+      d="M18 6h2a1 1 0 0 1 0 2h-2v2a1 1 0 0 1-2 0V8h-2a1 1 0 0 1 0-2h2V4a1 1 0 0 1 2 0v2z"
+    />
+  </svg>
+)
+
+export const CloseSVG = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className="icon-close"
+    >
+      <path
+        className="secondary"
+        fillRule="evenodd"
+        d="M15.78 14.36a1 1 0 0 1-1.42 1.42l-2.82-2.83-2.83 2.83a1 1 0 1 1-1.42-1.42l2.83-2.82L7.3 8.7a1 1 0 0 1 1.42-1.42l2.83 2.83 2.82-2.83a1 1 0 0 1 1.42 1.42l-2.83 2.83 2.83 2.82z"
+      />
+    </svg>
+  )
+}
+
 export const Chevron = ({
   direction = 'down',
 }: {

@@ -9,7 +9,8 @@ import Profile from '../modules/Profile'
 import Basics from '../modules/Basics'
 import {formatResumeData} from '../util/helpers'
 import {useForm, useFieldArray, Controller} from 'react-hook-form'
-import Form from './Form'
+import Form from './InputForm/Form'
+import BasicsInputForm from './InputForm/BasicsInputForm'
 
 import Modules from './Modules'
 import {StyledMainSection, StyledContentWrapper} from '../styles/Section'
@@ -27,42 +28,25 @@ import {
   StyledInput,
 } from '../styles/Components'
 import {CREATE_BASIC, UPDATE_USER} from '../graphql/Mutations'
-import isPlainObject from 'lodash.isplainobject'
+import {Burger} from './Burger'
+import FormMenu from './InputForm/FormMenu'
 
-export function Child() {
-  // // The state is manteined during reparenting.
-  // const [state] = useState(() => Math.random().toFixed(10))
-
-  // // Logs the component lificycle.
-  // console.log('-- rendering the child')
-  // useEffect(() => {
-  //   // The component is mounted only one time.
-  //   console.log('---- mounting the child')
-  //   return () => {
-  //     // The component is never unmounted during reparenting.
-  //     console.log('------ unmounting the child')
-  //   }
-  // }, [])
-
-  return <div className="child">Child</div>
-}
-
-// const changeParent = useCallback(() => {
-//   setParent(parent => {
-//     const newParent = parent === 'A' ? 'B' : 'A'
-//     // The "send" method will also transfer the child DOM node.
-//     // (You can disable this feature, and transfer it manually).
-//     // send(parent, newParent, 0, 0) means that the first child of
-//     // "parent" will become the first child of "newParent" (0 is the index).
-//     // Try removing the send method and check what has changed in the console.
-//     sendReparentableChild(parent, newParent, 0, 0)
-//     // Return the new parent.
-//     return newParent
-//   })
-// }, [])
+const StyledFormMenuList = styled.ul`
+  margin-top: 2rem;
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  display: grid;
+  grid-auto-rows: min-content;
+  grid-row-gap: 1rem;
+  margin-bottom: 0;
+`
 
 export default function Create({isDark, handleTheme}) {
-  const [parent, setParent] = useState('A')
+  const [open, setOpen] = React.useState(true)
+  const node = React.useRef()
 
   const {register, errors, handleSubmit} = useForm()
   const [getCurrentUser, {data, loading, error}] = useLazyQuery(
@@ -71,20 +55,7 @@ export default function Create({isDark, handleTheme}) {
 
   useSafeUnMount(getCurrentUser)
 
-  const [
-    updateUser,
-    {
-      data: createBasicData,
-      loading: createBasicLoading,
-      error: createBasicError,
-    },
-  ] = useMutation(UPDATE_USER)
-
-  const children = {
-    parentA: parent === 'A' ? [<Child key={'1'} />] : [],
-    parentB: parent === 'B' ? [<Child key={'1'} />] : [],
-  }
-
+  const [updateUser, updateUserData] = useMutation(UPDATE_USER)
   if (loading) {
     return <div>Loading</div>
   }
@@ -105,7 +76,6 @@ export default function Create({isDark, handleTheme}) {
         },
       },
     })
-    console.log(basic, 'basic')
   }
 
   if (!authenticatedUser) {
@@ -127,218 +97,142 @@ export default function Create({isDark, handleTheme}) {
   }
 
   const {basics, ...rest} = authenticatedUser || {}
-  console.log(basics, 'basicsasdasds')
+
   if (!basics) {
     return (
-      <StyledCenteredContainer>
-        <StyledForm onSubmit={handleSubmit(onSubmit)}>
-          <div>
-            <h2>Let's Start With The Basics</h2>
-          </div>
-          <fieldset>
-            <div className="field-container">
-              <StyledInput className="input-container">
-                <div>
-                  <input
-                    type="text"
-                    autoComplete="name"
-                    placeholder={'Name'}
-                    name="name"
-                    ref={register({
-                      required: true,
-                      maxLength: 15,
-                    })}
-                  />
-                </div>
-              </StyledInput>
-
-              <StyledInput className="input-container">
-                <div>
-                  <input
-                    type="text"
-                    placeholder={'Website Url'}
-                    name="website"
-                    autoComplete="website"
-                    ref={register()}
-                  />
-                </div>
-              </StyledInput>
-
-              <StyledInput className="input-container">
-                <div>
-                  <input
-                    type="text"
-                    placeholder={'Job Title'}
-                    name="label"
-                    ref={register()}
-                  />
-                </div>
-              </StyledInput>
-
-              <StyledInput className="input-container">
-                <div>
-                  <input
-                    placeholder={'Current City'}
-                    type="text"
-                    name="city"
-                    ref={register()}
-                  />
-                </div>
-              </StyledInput>
-            </div>
-            <button type="submit">Update</button>
-          </fieldset>
-        </StyledForm>
-      </StyledCenteredContainer>
+      <BasicsInputForm
+        handleSubmit={handleSubmit}
+        onSubmit={onSubmit}
+        register={register}
+      />
     )
   }
 
-  const formatBasics = basics => {
-    const formattedObj = {}
-    for (const property in basics) {
-      if (isPlainObject(basics[property])) {
-        console.log('steve array')
-        formattedObj[property] = [basics[property]]
-      } else {
-        console.log('steve no array')
-        formattedObj[property] = basics[property]
-      }
-    }
-
-    return formattedObj
-  }
-
-  const formattedBasics = formatBasics(basics)
-  console.log(formattedBasics, 'look at this steve')
-
   const [main, sidebar] = formatResumeData(rest)
-  console.log(authenticatedUser, 'autheduser')
-  console.log(rest, 'rest')
-  const config = {}
+
+  console.log(main, 'main steve')
 
   return (
     <>
-      <div style={{gridArea: 'left'}}>
-        {/* <Reparentable id="A">{children.parentA}</Reparentable> */}
-
-        <div>
-          <ul>
-            <li>
-              <Form
-                id={id}
-                module="basics"
-                initialData={
-                  basics ? {module: 'basics', content: [basics]} : {}
-                }
-                updateUser={updateUser}
-                inputObj={{
-                  name: '',
-                  label: '',
-                  image: '',
-                  summary: '',
-                  website: '',
-                  location: {
-                    city: '',
+      <div
+        style={{
+          gridArea: 'left',
+          position: 'sticky',
+          top: '4rem',
+          height: 'auto',
+          maxHeight: 'calc(100vh - 4rem)',
+        }}
+      >
+        <Burger open={open} setOpen={setOpen} />
+        <FormMenu open={open} setOpen={setOpen}>
+          <StyledFormMenuList>
+            <Form
+              id={id}
+              module="basics"
+              initialData={basics ? {module: 'basics', content: [basics]} : {}}
+              updateUser={updateUser}
+              updateUserData={updateUserData}
+              inputObj={{
+                name: '',
+                label: '',
+                image: '',
+                summary: '',
+                website: '',
+                location: {
+                  city: '',
+                },
+                email: 'sdfds',
+                profiles: [
+                  {
+                    username: '',
+                    network: '',
+                    url: '',
                   },
-                  email: '',
-                  profiles: [
-                    {
-                      username: '',
-                      network: '',
-                      url: '',
-                    },
-                  ],
-                }}
-              />
-            </li>
-            <li>
-              <Form
-                id={id}
-                module="education"
-                initialData={rest.education || {}}
-                updateUser={updateUser}
-                inputObj={{
-                  institution: '',
-                  startDate: '',
-                  endDate: '',
-                  area: '',
-                  studyType: '',
-                }}
-              />
-            </li>
-            <li>
-              <Form
-                id={id}
-                module="skills"
-                initialData={rest.skills || {}}
-                updateUser={updateUser}
-                inputObj={{
-                  level: '',
-                  name: '',
-                  keywords: [{keyword: ''}],
-                }}
-              />
-            </li>
-            <li>
-              <Form
-                id={id}
-                module="work"
-                initialData={rest.work || {}}
-                updateUser={updateUser}
-                inputObj={{
-                  summary: '',
-                  website: '',
-                  company: '',
-                  pinned: false,
-                  location: '',
-                  position: '',
-                  startDate: '',
-                  endDate: '',
-                  highlights: [
-                    {
-                      highlight: '',
-                    },
-                  ],
-                }}
-              />
-            </li>
-            <li>
-              <Form
-                id={id}
-                module="references"
-                initialData={rest.references || {}}
-                updateUser={updateUser}
-                inputObj={{
-                  reference: '',
-                  name: '',
-                }}
-              />
-            </li>
-            <li>
-              <Form
-                id={id}
-                module="awards"
-                initialData={rest.awards || {}}
-                updateUser={updateUser}
-                inputObj={{
-                  title: '',
-                  awarder: '',
-                }}
-              />
-            </li>
-            <li>
-              <Form
-                id={id}
-                module="interests"
-                initialData={rest.interests || {}}
-                updateUser={updateUser}
-                inputObj={{
-                  name: '',
-                }}
-              />
-            </li>
-          </ul>
-        </div>
+                ],
+              }}
+            />
+            <Form
+              id={id}
+              module="education"
+              initialData={rest.education || {}}
+              updateUser={updateUser}
+              updateUserData={updateUserData}
+              inputObj={{
+                institution: '',
+                startDate: '',
+                endDate: '',
+                area: '',
+                studyType: '',
+              }}
+            />
+            <Form
+              id={id}
+              module="skills"
+              initialData={rest.skills || {}}
+              updateUser={updateUser}
+              updateUserData={updateUserData}
+              inputObj={{
+                level: '',
+                name: '',
+                keywords: [{keyword: ''}],
+              }}
+            />
+            <Form
+              id={id}
+              module="work"
+              initialData={rest.work || {}}
+              updateUser={updateUser}
+              updateUserData={updateUserData}
+              inputObj={{
+                summary: '',
+                website: '',
+                company: '',
+                pinned: false,
+                location: '',
+                position: '',
+                startDate: '',
+                endDate: '',
+                highlights: [
+                  {
+                    highlight: '',
+                  },
+                ],
+              }}
+            />
+            <Form
+              id={id}
+              module="references"
+              initialData={rest.references || {}}
+              updateUser={updateUser}
+              updateUserData={updateUserData}
+              inputObj={{
+                reference: '',
+                name: '',
+              }}
+            />
+            <Form
+              id={id}
+              module="awards"
+              initialData={rest.awards || {}}
+              updateUser={updateUser}
+              updateUserData={updateUserData}
+              inputObj={{
+                title: '',
+                awarder: '',
+              }}
+            />
+            <Form
+              id={id}
+              module="interests"
+              initialData={rest.interests || {}}
+              updateUser={updateUser}
+              updateUserData={updateUserData}
+              inputObj={{
+                name: '',
+              }}
+            />
+          </StyledFormMenuList>
+        </FormMenu>
       </div>
       <div
         style={{
@@ -403,142 +297,3 @@ export default function Create({isDark, handleTheme}) {
     </>
   )
 }
-
-// function EducationForm({id, initialData, updateUser, module}) {
-//   const [isOpen, setIsOpen] = React.useState(false)
-
-//   const handleClose = e => {
-//     e.preventDefault()
-//     setIsOpen(!isOpen)
-//   }
-
-//   const {content, order, slot} = initialData
-
-//   const {register, control, handleSubmit, reset} = useForm({
-//     defaultValues: {
-//       education: content || [],
-//     },
-//   })
-
-//   const {fields, append, remove} = useFieldArray({
-//     control,
-//     name: module,
-//   })
-
-//   const onSubmit = async data => {
-//     const {education, order} = data
-//     console.log(data)
-//     const formatted = education.filter(input => {
-//       return Object.values(input).some(prop => prop)
-//     })
-
-//     console.log(formatted, order)
-
-//     const mutation = await updateUser({
-//       variables: {
-//         id,
-//         data: {
-//           education: {
-//             create: {
-//               order: parseInt(order),
-//               module: 'education',
-//               slot: 'main',
-//               content: {create: formatted},
-//             },
-//           },
-//         },
-//       },
-//     })
-//     console.log(mutation, 'basic')
-//   }
-
-//   return (
-//     <div>
-//       <div style={{display: 'flex', justifyContent: 'space-between'}}>
-//         <h3>Education</h3>
-//         <StyledButton
-//           style={{height: '4rem', width: '4rem'}}
-//           onClick={e => handleClose(e)}
-//         >
-//           <Chevron direction={isOpen ? 'up' : 'down'} />
-//         </StyledButton>
-//       </div>
-
-//       {isOpen && (
-//         <form onSubmit={handleSubmit(onSubmit)}>
-//           <label>Order</label>
-//           <input name={'order'} defaultValue={order || 1} ref={register()} />
-//           <label>slot</label>
-//           <input name={'slot'} defaultValue={slot || 'main'} ref={register()} />
-//           <ul>
-//             {fields.map((item, index) => {
-//               return (
-//                 <li key={item.id}>
-//                   <input
-//                     name={`education[${index}].institution`}
-//                     defaultValue={`${item.institution}`} // make sure to set up defaultValue
-//                     ref={register()}
-//                   />
-//                   <input
-//                     name={`education[${index}].startDate`}
-//                     defaultValue={`${item.startDate}`} // make sure to set up defaultValue
-//                     ref={register()}
-//                   />
-
-//                   <input
-//                     name={`education[${index}].endDate`}
-//                     defaultValue={`${item.endDate}`} // make sure to set up defaultValue
-//                     ref={register()}
-//                   />
-
-//                   <input
-//                     name={`education[${index}].area`}
-//                     defaultValue={`${item.area}`} // make sure to set up defaultValue
-//                     ref={register()}
-//                   />
-//                   <input
-//                     name={`education[${index}].studyType`}
-//                     defaultValue={`${item.studyType}`} // make sure to set up defaultValue
-//                     ref={register()}
-//                   />
-//                   <button type="button" onClick={() => remove(index)}>
-//                     Delete
-//                   </button>
-//                 </li>
-//               )
-//             })}
-//           </ul>
-//           <section>
-//             <button
-//               type="button"
-//               onClick={() => {
-//                 append({
-//                   institution: '',
-//                   startDate: '',
-//                   endDate: '',
-//                   area: '',
-//                   studyType: '',
-//                 })
-//               }}
-//             >
-//               append
-//             </button>
-
-//             <button
-//               type="button"
-//               onClick={() =>
-//                 reset({
-//                   education: content || [],
-//                 })
-//               }
-//             >
-//               reset
-//             </button>
-//           </section>
-
-//           <input type="submit" />
-//         </form>
-//       )}
-//     </div>
-//   )
-// }

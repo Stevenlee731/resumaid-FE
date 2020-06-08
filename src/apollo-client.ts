@@ -39,7 +39,7 @@ export const createApolloClient = (): ApolloClient<NormalizedCacheObject> => {
     uri: process.env.NODE_ENV === 'development' ? endpoint : prodEndpoint,
   })
 
-  const composedLinks = ApolloLink.from([errorLink, authMiddleware, link])
+  const composedLinks = ApolloLink.from([authMiddleware, link])
 
   const cache = new InMemoryCache()
   return new ApolloClient({
